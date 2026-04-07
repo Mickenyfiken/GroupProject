@@ -1,0 +1,10 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using SportsonBackendShell.Data.Entities;
+
+namespace SportsonBackendShell.Data.Interfaces
+{
+    public interface ILoginRepo
+    {
+        string LogIn([FromBody] LoginParameters parameters);
+    }
+}
