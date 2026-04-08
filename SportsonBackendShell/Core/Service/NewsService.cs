@@ -18,7 +18,7 @@ namespace SportsonBackendShell.Core.Service
             throw new NotImplementedException();
         }
 
-        public List<ArticleSummary> GetNewsSummaryList()
+        public List<ArticleSummary> GetLatestNewsSummaryList()
         {
             throw new NotImplementedException();
         }

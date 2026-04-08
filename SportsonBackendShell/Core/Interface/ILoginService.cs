@@ -5,6 +5,6 @@ namespace SportsonBackendShell.Core.Interface
 {
     public interface ILoginService
     {
-        string LogIn([FromBody] LoginParameters parameters);
+        IActionResult LogIn([FromBody] LoginParameters parameters);
     }
 }

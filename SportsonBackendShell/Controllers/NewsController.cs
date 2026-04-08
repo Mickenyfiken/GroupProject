@@ -23,13 +23,19 @@ namespace SportsonBackendShell.Controllers
         }
 
         //157 conflicting med 162
-            //Vi hämtar väl aldrig hela artiklar till newfeeden? det är väl bara sammanfattningar och vid tryck hämtas hela artikeln?
-        [HttpGet]
-        public IActionResult GetNewsSummaryList() //ska vi haden här byDate eller/och att man kan skicka in hur många man vill ha?
+        //Vi hämtar väl aldrig hela artiklar till newfeeden? det är väl bara sammanfattningar och vid tryck hämtas hela artikeln?
+        //Antingen båda eller bara GetNewsArticleListByDate och frontend får sammmanfatta
+
+        //[HttpGet("{amount}")]
+        //public IActionResult GetNewsArticleListByDate(int amount)
+        //{
+        //    return Ok();
+        //}
+
+        [HttpGet("{amount}")]
+        public IActionResult GetLatestNewsSummaryList(int amount) //ska vi haden här byDate eller/och att man kan skicka in hur många man vill ha?
         {
             return Ok();
         }
-
-
     }
 }

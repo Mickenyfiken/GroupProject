@@ -6,9 +6,17 @@ namespace SportsonBackendShell.Data.Repos
 {
     public class LoginRepo : ILoginRepo
     {
-        public string LogIn([FromBody] LoginParameters parameters)
+        private readonly HttpClient _httpClient;
+
+        public LoginRepo(HttpClient httpClient)
         {
-            throw new NotImplementedException();
+            _httpClient = httpClient;
+        }
+
+        public async Task<IActionResult> LogIn([FromBody] LoginParameters parameters)
+        {
+            var response = await _httpClient.PostAsync(https://stage.api.sportson.se/Authorization/login)
+            return token;
         }
     }
 }

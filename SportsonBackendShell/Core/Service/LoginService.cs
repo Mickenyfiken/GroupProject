@@ -14,9 +14,12 @@ namespace SportsonBackendShell.Core.Service
             _loginRepo = loginRepo;
         }
 
-        public string LogIn([FromBody] LoginParameters parameters)
+        public IActionResult LogIn([FromBody] LoginParameters parameters)
         {
-            throw new NotImplementedException();
+            var respons = _loginRepo.LogIn(parameters);
+            
+
+            return 
         }
     }
 }

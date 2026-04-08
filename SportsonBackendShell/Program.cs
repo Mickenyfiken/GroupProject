@@ -13,6 +13,8 @@ builder.Services.AddScoped<INewsRepo, NewsRepo>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddHttpClient();
+
 
 
 var app = builder.Build();
