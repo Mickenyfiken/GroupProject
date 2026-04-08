@@ -9,6 +9,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddCors();
 
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<INewsRepo, NewsRepo>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<ILoginRepo, LoginRepo>();
@@ -28,5 +30,9 @@ app.UseCors(options =>
 
 app.UseRouting();
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+app.UseSwagger();
+
+app.UseSwaggerUI();
 
 app.Run();

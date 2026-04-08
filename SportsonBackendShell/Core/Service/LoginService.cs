@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
@@ -7,7 +9,7 @@ namespace SportsonBackendShell.Core.Service
 {
     public class LoginService : ILoginService
     {
-        //private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private readonly ILoginRepo _loginRepo;
 
         public LoginService(ILoginRepo loginRepo)
@@ -16,20 +18,21 @@ namespace SportsonBackendShell.Core.Service
             _loginRepo = loginRepo;
         }
 
-        public IActionResult LogIn([FromBody] LoginParameters parameters) 
+
+        public async Task<IActionResult> LogIn([FromBody] LoginParameters parameters) 
         {
             var response = _loginRepo.LogIn(parameters);
 
             var json = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            if (response)
             {
-                var data = JsonSerializer.Deserialize<>(json); //Fråga frontend json sträng till json objekt
-                return Ok(data.token);
+                var data = JsonSerializer.Deserialize(json); //Fråga frontend json sträng till json objekt
+                return data;
             }
             else
             {
-                return BadRequest(json);
+                return null;
             }
         }
     }
