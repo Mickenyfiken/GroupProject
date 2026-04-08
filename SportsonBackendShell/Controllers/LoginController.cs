@@ -17,7 +17,7 @@ namespace SportsonBackendShell.Controllers
         }
 
         [HttpPost]
-        public IActionResult LogIn([FromBody] LoginParameters parameters)
+        public async Task<IActionResult> LogIn([FromBody] LoginParameters parameters)
         {
             return Ok(_loginService.LogIn(parameters));
         }
