@@ -5,6 +5,6 @@ namespace SportsonBackendShell.Data.Interfaces
     public interface INewsRepo
     {
         ArticleFull GetFullNewsArticleById(int id);
-        List<ArticleSummary> GetNewsSummaryList();
+        List<ArticleSummary> GetLatestNewsSummaryList();
     }
 }
