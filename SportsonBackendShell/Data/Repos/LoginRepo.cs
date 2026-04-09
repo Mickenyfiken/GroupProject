@@ -16,30 +16,32 @@ namespace SportsonBackendShell.Data.Repos
             _httpClient = httpClient;
         }
 
-        public async Task<string> LogIn([FromBody] LoginParameters parameters)
+        public async Task<HttpResponseMessage> LogIn(LoginParameters parameters)
         {
             var url = "https://stage.api.sportson.se/Authorization/login";
             var parameterJSON = JsonSerializer.Serialize(parameters);
             var content = new StringContent(parameterJSON, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
 
-            var json = await response.Content.ReadAsStringAsync();
+            return response;
 
-            if (response.IsSuccessStatusCode)
-            {
-                var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
-                return data.Token;
-            }
-            //else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            //{
-            //    return new UnauthorizedResult();
-            //}
+            //var json = await response.Content.ReadAsStringAsync();
 
-            //else
+            //if (response.IsSuccessStatusCode)
             //{
-            //    return new BadRequestResult();
+            //    var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
+            //    return (true, data.Token, null);
             //}
-            return null;
+            ////else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            ////{
+            ////    return new UnauthorizedResult();
+            ////}
+
+            ////else
+            ////{
+            ////    return new BadRequestResult();
+            ////}
+            //return (false, null, "Login Failed");
         }
     }
 }
