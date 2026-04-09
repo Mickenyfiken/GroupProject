@@ -9,7 +9,7 @@ namespace SportsonBackendShell.Core.Service
 {
     public class LoginService : ILoginService
     {
-        private readonly HttpClient _httpClient;
+        //private readonly HttpClient _httpClient;
         private readonly ILoginRepo _loginRepo;
 
         public LoginService(ILoginRepo loginRepo)
@@ -19,11 +19,32 @@ namespace SportsonBackendShell.Core.Service
         }
 
 
-        public async Task<string> LogIn([FromBody] LoginParameters parameters) 
+        public async Task<(bool Success, string Token, string Error)> LogIn(LoginParameters parameters) 
         {
             var response = await _loginRepo.LogIn(parameters);
+            var json = await response.Content.ReadAsStringAsync();
 
-            return response;
+            if (response.IsSuccessStatusCode)
+            {
+                var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
+                return (true, data.Token, null);
+            }
+            //else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            //{
+            //    return new UnauthorizedResult();
+            //}
+
+            //else
+            //{
+            //    return new BadRequestResult();
+            //}
+            return (false, null, "Login Failed");
+            //var response = await _loginRepo.LogIn(parameters);
+            //if(response.Success == true)
+            //{
+            //    var success = new LoginSucess() { Token = response.Token };
+            //    return ;
+            //}
             //var json = await response.Content.ReadAsStringAsync();
 
             //if (response)
