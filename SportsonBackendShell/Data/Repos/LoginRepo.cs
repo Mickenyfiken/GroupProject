@@ -1,8 +1,9 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
+using System.Text;
+using System.Text.Json;
 
 namespace SportsonBackendShell.Data.Repos
 {
@@ -17,15 +18,17 @@ namespace SportsonBackendShell.Data.Repos
 
         public async Task<string> LogIn([FromBody] LoginParameters parameters)
         {
-            var uri = "https://stage.api.sportson.se/Authorization/login";
-            var response = await _httpClient.PostAsync(uri, parameters);
+            var url = "https://stage.api.sportson.se/Authorization/login";
+            var parameterJSON = JsonSerializer.Serialize(parameters);
+            var content = new StringContent(parameterJSON, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
 
             var json = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                var data = JsonSerializer.Deserialize(json); //Fråga frontend json sträng till json objekt
-                return data;
+                var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
+                return data.Token;
             }
             //else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             //{
