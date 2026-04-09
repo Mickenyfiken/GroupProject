@@ -19,21 +19,22 @@ namespace SportsonBackendShell.Core.Service
         }
 
 
-        public async Task<IActionResult> LogIn([FromBody] LoginParameters parameters) 
+        public async Task<string> LogIn([FromBody] LoginParameters parameters) 
         {
-            var response = _loginRepo.LogIn(parameters);
+            var response = await _loginRepo.LogIn(parameters);
 
-            var json = await response.Content.ReadAsStringAsync();
+            return response;
+            //var json = await response.Content.ReadAsStringAsync();
 
-            if (response)
-            {
-                var data = JsonSerializer.Deserialize(json); //Fråga frontend json sträng till json objekt
-                return data;
-            }
-            else
-            {
-                return null;
-            }
+            //if (response)
+            //{
+            //    var data = JsonSerializer.Deserialize(json); //Fråga frontend json sträng till json objekt
+            //    return data;
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
     }
 }
