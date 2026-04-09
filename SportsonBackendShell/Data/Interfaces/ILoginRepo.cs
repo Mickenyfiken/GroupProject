@@ -5,6 +5,6 @@ namespace SportsonBackendShell.Data.Interfaces
 {
     public interface ILoginRepo
     {
-        Task<HttpResponseMessage> LogIn(LoginParameters parameters);
+        Task<LoginSucess> LogIn(LoginParameters parameters);
     }
 }

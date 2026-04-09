@@ -22,13 +22,13 @@ namespace SportsonBackendShell.Core.Service
         public async Task<(bool Success, string Token, string Error)> LogIn(LoginParameters parameters) 
         {
             var response = await _loginRepo.LogIn(parameters);
-            var json = await response.Content.ReadAsStringAsync();
+            //var json = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
-                return (true, data.Token, null);
-            }
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
+            //    return (true, data.Token, null);
+            //}
             //else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             //{
             //    return new UnauthorizedResult();
