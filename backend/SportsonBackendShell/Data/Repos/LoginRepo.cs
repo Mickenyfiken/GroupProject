@@ -15,7 +15,7 @@ namespace SportsonBackendShell.Data.Repos
 
         public async Task<LoginResponse> LogIn(LoginParameters parameters)
         {
-            var url = "https://stage.api.sportson.se/Authorization/login";
+            var url = "https://stage.api.sportson.se/Authorization/login2";
             var response = await _httpClient.PostAsJsonAsync(url, parameters);
 
             var json = await response.Content.ReadAsStringAsync();

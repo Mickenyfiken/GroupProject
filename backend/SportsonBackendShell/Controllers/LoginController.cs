@@ -25,7 +25,7 @@ namespace SportsonBackendShell.Controllers
             }
             else
             {
-                return StatusCode(response.Code ?? 400, response.Message);
+                return StatusCode(response.Code, response.Message);
             }
             //var cookie = new CookieOptions()
         }
