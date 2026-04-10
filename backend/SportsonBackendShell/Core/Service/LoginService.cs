@@ -19,16 +19,16 @@ namespace SportsonBackendShell.Core.Service
         }
 
 
-        public async Task<(bool Success, string Token, string Error)> LogIn(LoginParameters parameters) 
+        public async Task<LoginSucess> LogIn(LoginParameters parameters) 
         {
             var response = await _loginRepo.LogIn(parameters);
             //var json = await response.Content.ReadAsStringAsync();
 
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
-            //    return (true, data.Token, null);
-            //}
+            if (response.Token != null)
+            {
+                //var data = JsonSerializer.Deserialize<LoginSucess>(json); //Fråga frontend json sträng till json objekt
+                return (response);
+            }
             //else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             //{
             //    return new UnauthorizedResult();
@@ -38,7 +38,7 @@ namespace SportsonBackendShell.Core.Service
             //{
             //    return new BadRequestResult();
             //}
-            return (false, null, "Login Failed");
+            return (response);
             //var response = await _loginRepo.LogIn(parameters);
             //if(response.Success == true)
             //{
