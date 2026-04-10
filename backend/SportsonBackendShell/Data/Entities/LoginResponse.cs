@@ -1,6 +1,6 @@
 ﻿namespace SportsonBackendShell.Data.Entities
 {
-    public class LoginSucess
+    public class LoginResponse
     {
         public string? Token { get; set; }
         public string? Message { get; set; }

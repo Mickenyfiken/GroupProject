@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Entities;
 
@@ -20,12 +19,15 @@ namespace SportsonBackendShell.Controllers
         public async Task<IActionResult> LogIn([FromBody] LoginParameters parameters)
         {
             var response = await _loginService.LogIn(parameters);
-            
-
+            if (response.Token != null)
+            {
+                return Ok(response.Token); 
+            }
+            else
+            {
+                return StatusCode(response.Code ?? 400, response.Message);
+            }
             //var cookie = new CookieOptions()
-
-
-            return Ok(response.Token);
         }
     }
 }
