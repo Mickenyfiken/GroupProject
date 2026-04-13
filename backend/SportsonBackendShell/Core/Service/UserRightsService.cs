@@ -1,4 +1,5 @@
-﻿using SportsonBackendShell.Core.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
+using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Interfaces;
 using SportsonBackendShell.Data.Repos;
 
@@ -22,5 +23,16 @@ namespace SportsonBackendShell.Core.Service
         {
             return await _userRightsRepo.GetUserRolesFromId(token, userId);
         }
+
+        //public async Task<string[]> GetUserRolesFromToken(string token)
+        //{
+        //    var idActionResult = await GetUserIdFromToken(userToken);
+        //    var id = (idActionResult as OkObjectResult)?.Value as string;
+        //    if (id == null) return StatusCode(400, "Invalid token");
+
+        //    var roles = await _userRightsService.GetUserRolesFromId(userToken, id);
+        //    if (roles == null) return StatusCode(400, "Could not get roles");
+
+        //}
     }
 }

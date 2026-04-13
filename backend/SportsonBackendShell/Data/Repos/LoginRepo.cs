@@ -13,7 +13,7 @@ namespace SportsonBackendShell.Data.Repos
             _httpClient = httpClient;
         }
 
-        public async Task<LoginResponse> LogIn(LoginParameters parameters)
+        public async Task<LoginResponse?> LogIn(LoginParameters parameters)
         {
             var url = "https://stage.api.sportson.se/Authorization/login";
             var response = await _httpClient.PostAsJsonAsync(url, parameters);
@@ -25,7 +25,7 @@ namespace SportsonBackendShell.Data.Repos
                 PropertyNameCaseInsensitive = true
             };
 
-            return JsonSerializer.Deserialize<LoginResponse>(json, options);
+            return JsonSerializer.Deserialize<LoginResponse?>(json, options);
         }
     }
 }
