@@ -43,5 +43,19 @@ namespace SportsonBackendShell.Controllers
             }
 
         }
+
+        [HttpGet("get-user-roles")]
+        public async Task<IActionResult> GetUserRolesFromToken([FromHeader(Name = "Authorization")] string userToken)
+        {
+            var idActionResult = await GetUserIdFromToken(userToken);
+            var id = (idActionResult as OkObjectResult)?.Value as string;
+            if (id == null) return StatusCode(400, "Invalid token");
+
+            var roles = await _userRightsService.GetUserRolesFromId(userToken, id);
+            if (roles == null) return StatusCode(400, "We still don't have access in sportsons API to do this");
+
+            return Ok(roles);
+
+        }
     }
 }
