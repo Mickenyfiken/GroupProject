@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 const links = [
   { name: "Nyheter", href: "/nyheter" },
   { name: "Kampanjer", href: "/kampanjer" },
@@ -18,23 +20,35 @@ const Navbar = () => {
 
       <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
         {links.map((link) => (
-          <a
+          <NavLink
             key={link.name}
-            href={link.href}
-            className="px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-400 hover:text-white transition-all duration-200"
+            to={link.href}
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                isActive
+                  ? "bg-orange-400 text-white"
+                  : "hover:bg-orange-400 hover:text-white"
+              }`
+            }
           >
             {link.name}
-          </a>
+          </NavLink>
         ))}
       </nav>
 
       <div className="px-3 py-4 border-t border-slate-600">
-        <a
-          href="/support"
-          className="block px-4 py-2 rounded-lg text-sm font-medium bg-slate-700 hover:bg-orange-400 hover:text-white transition-all duration-200 text-center"
+        <NavLink
+          to="/support"
+          className={({ isActive }) =>
+            `block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-center ${
+              isActive
+                ? "bg-orange-400 text-white"
+                : "bg-slate-700 hover:bg-orange-400 hover:text-white"
+            }`
+          }
         >
           Support
-        </a>
+        </NavLink>
       </div>
     </aside>
   );
