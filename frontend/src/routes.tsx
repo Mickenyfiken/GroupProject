@@ -4,6 +4,7 @@ import App from './App'
 import ErrorPage from './views/ErrorPage'
 import NotFound from './views/NotFound'
 import Manuals from './views/Manuals'
+import Login from './views/Login'
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,11 @@ export const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: '/manuals', element: <Manuals /> },
     ],
+  },
+  {
+    path: '/login',
+    element: <Login />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '*',
