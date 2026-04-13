@@ -28,5 +28,12 @@ namespace SportsonBackendShell.Controllers
                 return Ok(response);
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserRolesFromId([FromHeader(Name = "Authorization")] string userToken, string id)
+        {
+            var response = await _userRightsService.GetUserRolesFromId(userToken, id);
+            return Ok(response);
+            
+        }
     }
 }

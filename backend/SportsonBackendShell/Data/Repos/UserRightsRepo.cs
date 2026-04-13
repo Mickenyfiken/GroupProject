@@ -39,5 +39,10 @@ namespace SportsonBackendShell.Data.Repos
                 return result.Id;
             }
         }
+
+        public async Task<string> GetUserRolesFromId(string token, string userId)
+        {
+            return "notadminlol";
+        }
     }
 }
