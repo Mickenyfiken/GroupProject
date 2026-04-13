@@ -1,0 +1,17 @@
+parameters:
+  projects: ''
+  buildConfiguration: 'Release'
+
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Run backend tests'
+    condition: succeeded()
+    inputs:
+      command: 'test'
+      projects: 'backend/**/*Tests.csproj'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build --logger trx'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFiles: '**/*.trx'
+      testRunTitle: 'Backend Tests'
