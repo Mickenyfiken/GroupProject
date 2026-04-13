@@ -15,6 +15,8 @@ builder.Services.AddScoped<INewsRepo, NewsRepo>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IUserRightsRepo, UserRightsRepo>();
+builder.Services.AddScoped<IUserRightsService, UserRightsService>();
 builder.Services.AddHttpClient();
 
 
