@@ -23,28 +23,21 @@ namespace SportsonBackendShell.Data.Repos
 
             var response = await _httpClient.GetAsync(url);
             var json = await response.Content.ReadAsStringAsync();
-
-            var options = new JsonSerializerOptions
+            
+            if (json == string.Empty)
             {
-                PropertyNameCaseInsensitive = true
-            };
+                return null;
+            }
+            else
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-            var result = JsonSerializer.Deserialize<UserIdResponse>(json, options);
-            return result.Id;
+                var result = JsonSerializer.Deserialize<UserIdResponse>(json, options);
+                return result.Id;
+            }
         }
-        //public async Task<string> GetUserIdFromToken(string token)
-        //{
-        //    var url = "https://stage.api.sportson.se/users/userid";
-        //    var response = await _httpClient.GetAsync(url, [ToHeader]token);
-
-        //    var json = await response.Content.ReadAsStringAsync();
-
-        //    var options = new JsonSerializerOptions
-        //    {
-        //        PropertyNameCaseInsensitive = true
-        //    };
-
-        //    return JsonSerializer.Deserialize<LoginResponse>(json, options);
-        //}
     }
 }

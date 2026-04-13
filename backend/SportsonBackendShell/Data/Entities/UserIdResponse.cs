@@ -2,6 +2,6 @@
 {
     public class UserIdResponse
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 }

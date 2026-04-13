@@ -19,7 +19,14 @@ namespace SportsonBackendShell.Controllers
         public async Task<IActionResult> GetUserIdFromToken([FromHeader(Name = "Authorization")] string userToken)
         {
             var response = await _userRightsService.GetUserIdFromToken(userToken);
-            return Ok(response);
+            if (response == null)
+            {
+                return StatusCode(400, "Invalid token");
+            }
+            else
+            {
+                return Ok(response);
+            }
         }
     }
 }
