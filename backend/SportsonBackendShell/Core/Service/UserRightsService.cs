@@ -18,7 +18,7 @@ namespace SportsonBackendShell.Core.Service
             return await _userRightsRepo.GetUserIdFromToken(token);
         }
 
-        public async Task<string> GetUserRolesFromId(string token, string userId)
+        public async Task<string[]> GetUserRolesFromId(string token, string userId)
         {
             return await _userRightsRepo.GetUserRolesFromId(token, userId);
         }
