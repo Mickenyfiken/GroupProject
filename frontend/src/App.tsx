@@ -1,14 +1,20 @@
-import Navbar from "./components/Navbar";
+import { Outlet } from 'react-router'
 
 function App() {
   return (
-    <div className="flex min-h-screen">
-      <Navbar />
-      <main className="flex-1 bg-gray-100 p-8">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen">
+      <aside className="bg-surface-dark-gary min-w-[60px] row-span-2 sticky top-0 h-screen text-white">
+        Aside
+      </aside>
+
+      <header className="sticky top-0">Header</header>
+
+      <main className="overflow-auto">
+        Main
+        <Outlet />
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
