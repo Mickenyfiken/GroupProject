@@ -2,10 +2,12 @@ trigger:
   branches:
     include:
       - develop
-  paths: # Only trigger on changes in backend and frontend folders
+  paths:
     include:
-      - backend/*
-      - frontend/*
+      - backend/**
+      - frontend/**
+      - azure-pipelines.yml
+      - .azure-pipelines/**
 
 pr:
   branches:
@@ -25,6 +27,7 @@ stages:
     displayName: 'Build Backend'
     jobs:
       - job: build_backend
+        displayName: 'Build and Deploy Backend'
         steps:
           - template: .azure-pipelines/templates/backend-build.yml
             parameters:
@@ -44,8 +47,16 @@ stages:
             displayName: 'Publish backend artifact'
             condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
             inputs:
-              pathToPublish: '$(Build.ArtifactStagingDirectory)'
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/backend'
               artifactName: 'backend'
+
+          - task: AzureWebApp@1
+            displayName: 'Deploy backend to Azure App Service'
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+            inputs:
+              azureSubscription: 'sportson-connection'
+              appName: 'sportson-backend-dev'
+              package: '$(Build.ArtifactStagingDirectory)/backend/**/*.zip'
 
   # STAGE 2: TEST BACKEND
   - stage: Test_Backend
@@ -62,7 +73,7 @@ stages:
   # STAGE 3: FRONTEND
   - stage: Build_Frontend
     displayName: 'Build Frontend'
-    dependsOn: [] #Runs parallel to backend stages
+    dependsOn: []
     jobs:
       - job: build_frontend
         steps:
