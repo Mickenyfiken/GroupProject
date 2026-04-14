@@ -4,6 +4,7 @@ using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Core.Service;
 using SportsonBackendShell.Data.Interfaces;
 using SportsonBackendShell.Data.Repos;
+using SportsonBackendShell.Extensions;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,20 +27,7 @@ builder.Services.AddHttpClient();
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
 builder.Services.AddSingleton(signingKey);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = signingKey
-        };
-    });
+builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
 
