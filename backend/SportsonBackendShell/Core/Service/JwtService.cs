@@ -10,16 +10,17 @@ namespace SportsonBackendShell.Core.Service
     public class JwtService : IJwtService
     {
         private readonly IConfiguration _config;
+        private readonly SymmetricSecurityKey _signingKey;
 
-        public JwtService(IConfiguration config)
+        public JwtService(IConfiguration config, SymmetricSecurityKey signingKey)
         {
             _config = config;
+            _signingKey = signingKey;
         }
 
         public string GenerateToken(string externalToken)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Secret"]!));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
