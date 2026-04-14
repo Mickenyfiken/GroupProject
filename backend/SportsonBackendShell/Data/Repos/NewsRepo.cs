@@ -5,14 +5,27 @@ namespace SportsonBackendShell.Data.Repos
 {
     public class NewsRepo : INewsRepo
     {
-        public ArticleFull GetFullNewsArticleById(int id)
+        public List<Article> newsList { get; set; }
+        public NewsRepo()
+        {
+            newsList = new List<Article>()
+            {   new Article {Id = 1, Title = "Artikel 1", Body = "Detta är artikel 1 på sportson", Date_published = new DateTime(2005, 01, 01)},
+                new Article {Id = 2, Title = "Artikel 2", Body = "Detta är artikel 2 på sportson", Date_published = new DateTime(2025, 03, 22)}
+            };
+        }
+
+        public Article GetNewsArticleById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<ArticleSummary> GetLatestNewsSummaryList()
+        public List<Article> GetNewsSummaryList()
         {
-            throw new NotImplementedException();
+
+
+            return newsList;
+
+            
         }
     }
 }
