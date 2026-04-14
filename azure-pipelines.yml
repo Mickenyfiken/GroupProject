@@ -51,24 +51,28 @@ stages:
               buildConfiguration: $(BUILD_CONFIGURATION)
 
   # STAGE 3: DEPLOY BACKEND
-  - stage: Backend_Deploy
-    displayName: 'Deploy Backend'
-    dependsOn: Test_Backend
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-    jobs:
-      - job: deploy_backend
-        displayName: 'Deploy Backend'
-        steps:
-          - download: current
-            artifact: backend
+    - stage: Backend_Deploy
+       displayName: 'Deploy Backend'
+       dependsOn: Test_Backend
+       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+       jobs:
+         - deployment: deploy_backend
+          displayName: 'Deploy Backend'
+            environment: 'development'
+             strategy:
+               runOnce:
+                 deploy:
+                 steps:
+                  - download: current
+                   artifact: backend
 
-          - task: AzureWebApp@1
-            displayName: 'Deploy backend to Azure App Service'
-            inputs:
-              azureSubscription: 'sportson-connection'
-              appType: 'webApp'
-              appName: 'sportson-backend-dev'
-              package: '$(Pipeline.Workspace)/backend/**/*.zip'
+                  - task: AzureWebApp@1
+                  displayName: 'Deploy backend to Azure App Service'
+                  inputs:
+                    azureSubscription: 'sportson-connection'
+                    appType: 'webAppLinux'
+                    appName: 'sportson-backend-dev'
+                    package: '$(Pipeline.Workspace)/backend/**/*.zip'
 
   # STAGE 4: BUILD FRONTEND
   - stage: Build_Frontend
