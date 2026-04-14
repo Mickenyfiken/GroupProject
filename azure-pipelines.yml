@@ -51,22 +51,22 @@ stages:
               buildConfiguration: $(BUILD_CONFIGURATION)
 
   # STAGE 3: DEPLOY BACKEND
-    - stage: Backend_Deploy
-       displayName: 'Deploy Backend'
-       dependsOn: Test_Backend
-       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-       jobs:
-         - deployment: deploy_backend
-          displayName: 'Deploy Backend'
-            environment: 'development'
-             strategy:
-               runOnce:
-                 deploy:
-                 steps:
-                  - download: current
-                   artifact: backend
+  - stage: Backend_Deploy
+    displayName: 'Deploy Backend'
+    dependsOn: Test_Backend
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    jobs:
+      - deployment: deploy_backend
+        displayName: 'Deploy Backend'
+        environment: 'development'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: backend
 
-                  - task: AzureWebApp@1
+                - task: AzureWebApp@1
                   displayName: 'Deploy backend to Azure App Service'
                   inputs:
                     azureSubscription: 'sportson-connection'
