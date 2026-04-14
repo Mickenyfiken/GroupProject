@@ -1,4 +1,5 @@
-﻿using SportsonBackendShell.Core.Interface;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
 
@@ -13,9 +14,11 @@ namespace SportsonBackendShell.Core.Service
             _newsRepo = newsRepo;
         }
 
-        public Article GetNewsArticleById(int id)
+        public Article GetArticleById(int id)
         {
-            throw new NotImplementedException();
+            var article = _newsRepo.GetArticleById(id);
+
+            return article;
         }
 
         public List<ArticleSummary> GetNewsSummaryList(int amount)

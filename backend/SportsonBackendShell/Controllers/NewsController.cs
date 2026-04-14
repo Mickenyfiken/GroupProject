@@ -16,9 +16,16 @@ namespace SportsonBackendShell.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetFullNewsArticleById(int id)
+        public IActionResult GetArticleById(int id)
         {
-            return Ok();
+            var article = _newsService.GetArticleById(id);
+
+            if(article == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(article);
         }
 
 

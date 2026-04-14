@@ -4,7 +4,7 @@ namespace SportsonBackendShell.Core.Interface
 {
     public interface INewsService
     {
-        Article GetNewsArticleById(int id);
+        Article GetArticleById(int id);
         List<ArticleSummary> GetNewsSummaryList(int amount);
 
     }
