@@ -5,10 +5,11 @@ using System.Net.Http.Json;
 
 namespace SportsonBackendShell.Data.Repos
 {
-    public class AuthorizationRepo : IAuthorizationRepo
+    public class AuthenticationRepo : IAuthenticationRepo
     {
         private readonly HttpClient _httpClient;
-        public AuthorizationRepo(HttpClient httpClient)
+
+        public AuthenticationRepo(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -26,7 +27,7 @@ namespace SportsonBackendShell.Data.Repos
             if (!userIdResponse.IsSuccessStatusCode) return null;
             var userIdResult = await userIdResponse.Content.ReadFromJsonAsync<UserIdResponse>();
 
-            return new CurrentUser { Id = userIdResult?.Id ?? "", Name = name.Name ?? "" };
+            return new CurrentUser { Id = userIdResult?.Id ?? "", Name = name?.Name ?? "" };
         }
     }
 }

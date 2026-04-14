@@ -8,13 +8,13 @@ namespace SportsonBackendShell.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorizationController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
-        private readonly iAuthorizationService _authorizationService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public AuthorizationController(iAuthorizationService authorizationService)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
-            _authorizationService = authorizationService;
+            _authenticationService = authenticationService;
         }
 
         [Authorize]
@@ -24,7 +24,7 @@ namespace SportsonBackendShell.Controllers
             var externalToken = User.FindFirstValue("external_token");
             if (externalToken == null) return Unauthorized("Could not find token");
 
-            var currentUser = await _authorizationService.GetMe(externalToken);
+            var currentUser = await _authenticationService.GetMe(externalToken);
             if (currentUser == null) return StatusCode(502, "Could not retrieve user from upstream API");
 
             return Ok(currentUser);

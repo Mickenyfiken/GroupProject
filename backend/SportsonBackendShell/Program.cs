@@ -22,8 +22,8 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IUserRightsRepo, UserRightsRepo>();
 builder.Services.AddScoped<IUserRightsService, UserRightsService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IAuthorizationRepo, AuthorizationRepo>();
-builder.Services.AddScoped<iAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<IAuthenticationRepo, AuthenticationRepo>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddHttpClient();
 
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;

@@ -2,7 +2,7 @@
 
 namespace SportsonBackendShell.Core.Interface
 {
-    public interface iAuthorizationService
+    public interface IAuthenticationService
     {
         Task<CurrentUser?> GetMe(string externalToken);
     }
