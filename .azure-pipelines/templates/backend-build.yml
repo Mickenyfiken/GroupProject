@@ -34,3 +34,18 @@ steps:
       command: 'build'
       projects: ${{ parameters.projects }}
       arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish backend'
+    inputs:
+       command: 'publish'
+       publishWebProjects: false
+       projects: '${{ parameters.projects }}'
+       arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build --output $(Build.ArtifactStagingDirectory)/backend'
+       zipAfterPublish: true
+
+   - task: PublishBuildArtifacts@1
+       displayName: 'Publish backend artifact'
+       inputs:
+       pathToPublish: '$(Build.ArtifactStagingDirectory)/backend'
+       artifactName: 'backend'
