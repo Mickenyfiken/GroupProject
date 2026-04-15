@@ -24,6 +24,15 @@ namespace SportsonBackendShell.Extensions
                         ValidAudience = config["Jwt:Audience"],
                         IssuerSigningKey = signingKey
                     };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = ctx =>
+                        {
+                            if (ctx.Request.Cookies.ContainsKey("jwt"))
+                                ctx.Token = ctx.Request.Cookies["jwt"];
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
             return services;
         }
