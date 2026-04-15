@@ -5,7 +5,9 @@ using SportsonBackendShell.Core.Service;
 using SportsonBackendShell.Data.Interfaces;
 using SportsonBackendShell.Data.Repos;
 using SportsonBackendShell.Extensions;
+using System.Collections.Concurrent;
 using System.Text;
+using SportsonBackendShell.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<INewsRepo, NewsRepo>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddSingleton(new ConcurrentDictionary<string, RefreshToken>());
 builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IUserRightsRepo, UserRightsRepo>();
