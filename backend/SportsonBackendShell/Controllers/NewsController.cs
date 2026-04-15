@@ -16,9 +16,9 @@ namespace SportsonBackendShell.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetArticleById(int id)
+        public async Task<IActionResult> GetArticleById(int id)
         {
-            var article = _newsService.GetArticleById(id);
+            var article = await _newsService.GetArticleById(id);
 
             if(article == null)
             {
@@ -30,9 +30,9 @@ namespace SportsonBackendShell.Controllers
 
 
         [HttpGet("{amount}")]
-        public IActionResult GetNewsSummaryList(int amount = 10)
+        public async Task<IActionResult> GetNewsSummaryList(int amount = 10)
         {
-            var newsList = _newsService.GetNewsSummaryList(amount);
+            var newsList = await _newsService.GetNewsSummaryList(amount);
             return Ok(newsList);
         }
     }

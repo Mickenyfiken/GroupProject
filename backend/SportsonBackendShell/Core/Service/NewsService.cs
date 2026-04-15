@@ -14,16 +14,16 @@ namespace SportsonBackendShell.Core.Service
             _newsRepo = newsRepo;
         }
 
-        public Article GetArticleById(int id)
+        public async Task<Article> GetArticleById(int id)
         {
-            var article = _newsRepo.GetArticleById(id);
+            var article = await _newsRepo.GetArticleById(id);
 
             return article;
         }
 
-        public List<ArticleSummary> GetNewsSummaryList(int amount)
+        public async Task<List<ArticleSummary>> GetNewsSummaryList(int amount)
         {
-            var newsList = _newsRepo.GetNewsSummaryList();
+            var newsList = await _newsRepo.GetNewsSummaryList();
 
             return newsList.Select(GetSummary).OrderByDescending(s => s.Date_published).Take(amount).ToList();
         }
