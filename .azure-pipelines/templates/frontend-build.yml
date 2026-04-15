@@ -1,22 +1,22 @@
 parameters:
-  frontendPath: 'frontend'
-  nodeVersion: '20.x'
+  frontendPath: frontend
+  nodeVersion: 20.x
 
 steps:
   - task: NodeTool@0
-    displayName: 'Use Node.js'
+    displayName: Use Node.js
     inputs:
-      versionSpec: '${{ parameters.nodeVersion }}'
+      versionSpec: ${{ parameters.nodeVersion }}
 
   - task: Npm@1
-    displayName: 'Install frontend dependencies'
+    displayName: Install frontend dependencies
     inputs:
-      command: 'ci'
-      workingDir: '${{ parameters.frontendPath }}'
+      command: ci
+      workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
-    displayName: 'Build frontend'
+    displayName: Build frontend
     inputs:
-      command: 'custom'
-      workingDir: '${{ parameters.frontendPath }}'
-      customCommand: 'run build'
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run build
