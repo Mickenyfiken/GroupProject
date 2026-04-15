@@ -28,5 +28,20 @@ namespace SportsonBackendShell.Controllers
                 return Ok(response);
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserRolesFromId([FromHeader(Name = "Authorization")] string userToken, string id)
+        {
+            var response = await _userRightsService.GetUserRolesFromId(userToken, id);
+
+            if (response == null)
+            {
+                return StatusCode(400, "We still don't have access in sportsons API to do this");
+            }
+            else
+            {
+                return Ok(response);
+            }
+
+        }
     }
 }
