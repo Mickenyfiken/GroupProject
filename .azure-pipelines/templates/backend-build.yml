@@ -1,36 +1,51 @@
 parameters:
   projects: ''
-  buildConfiguration: 'Release'
-  nugetCache: '$(Pipeline.Workspace)/.nuget/packages'
+  buildConfiguration: Release
+  nugetCache: $(Pipeline.Workspace)/.nuget/packages
 
 steps:
   - task: UseDotNet@2
-    displayName: 'Use .NET SDK'
+    displayName: Use .NET SDK
     inputs:
-      packageType: 'sdk'
-      version: '10.0.x'
+      packageType: sdk
+      version: 10.0.x
 
   - script: mkdir -p ${{ parameters.nugetCache }}
-    displayName: 'Ensure NuGet cache dir'
+    displayName: Ensure NuGet cache dir
 
   - task: Cache@2
-    displayName: 'Cache NuGet'
+    displayName: Cache NuGet
     inputs:
-      key: 'nuget | "$(Agent.OS)" | **/*.csproj,global.json,**/packages.lock.json'
+      key: nuget | "$(Agent.OS)" | **/*.csproj,global.json,**/packages.lock.json
       restoreKeys: |
         nuget | "$(Agent.OS)"
       path: ${{ parameters.nugetCache }}
 
   - task: DotNetCoreCLI@2
-    displayName: 'Restore backend'
+    displayName: Restore backend
     inputs:
-      command: 'restore'
+      command: restore
       projects: ${{ parameters.projects }}
-      arguments: '--use-lock-file --locked-mode'
+      arguments: --use-lock-file --locked-mode
 
   - task: DotNetCoreCLI@2
-    displayName: 'Build backend'
+    displayName: Build backend
     inputs:
-      command: 'build'
+      command: build
       projects: ${{ parameters.projects }}
-      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore'
+      arguments: --configuration ${{ parameters.buildConfiguration }} --no-restore
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish backend
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: ${{ parameters.projects }}
+      arguments: --configuration ${{ parameters.buildConfiguration }} --no-build --output $(Build.ArtifactStagingDirectory)/backend
+      zipAfterPublish: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish backend artifact
+    inputs:
+      PathtoPublish: $(Build.ArtifactStagingDirectory)/backend
+      ArtifactName: backend
