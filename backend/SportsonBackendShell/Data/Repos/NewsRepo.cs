@@ -14,17 +14,16 @@ namespace SportsonBackendShell.Data.Repos
             };
         }
 
-        public Article GetNewsArticleById(int id)
+        public async Task<Article> GetArticleById(int id)
         {
-            throw new NotImplementedException();
+
+            return newsList.FirstOrDefault(a => a.Id == id);
         }
 
-        public List<Article> GetNewsSummaryList()
+        public async Task<List<Article>> GetNewsSummaryList()
         {
 
-
             return newsList;
-
             
         }
     }

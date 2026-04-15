@@ -16,16 +16,23 @@ namespace SportsonBackendShell.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetFullNewsArticleById(int id)
+        public async Task<IActionResult> GetArticleById(int id)
         {
-            return Ok();
+            var article = await _newsService.GetArticleById(id);
+
+            if(article != null)
+            {
+                return Ok(article);
+            }
+
+            return NotFound();
         }
 
 
         [HttpGet("{amount}")]
-        public IActionResult GetNewsSummaryList(int amount = 10)
+        public async Task<IActionResult> GetNewsSummaryList(int amount = 10)
         {
-            var newsList = _newsService.GetNewsSummaryList(amount);
+            var newsList = await _newsService.GetNewsSummaryList(amount);
             return Ok(newsList);
         }
     }

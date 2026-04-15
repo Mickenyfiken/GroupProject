@@ -4,8 +4,7 @@ namespace SportsonBackendShell.Core.Interface
 {
     public interface INewsService
     {
-        Task<Article> GetArticleById(int id);
-        Task<List<ArticleSummary>> GetNewsSummaryList(int amount);
-
+        ArticleFull GetFullNewsArticleById(int id);
+        List<ArticleSummary> GetLatestNewsSummaryList();
     }
 }
