@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Entities;
 
@@ -9,10 +9,12 @@ namespace SportsonBackendShell.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILoginService _loginService;
+        private readonly IJwtService _jwtService;
 
-        public LoginController(ILoginService loginService)
+        public LoginController(ILoginService loginService, IJwtService jwtService)
         {
             _loginService = loginService;
+            _jwtService = jwtService;
         }
 
         [HttpPost]
@@ -21,13 +23,20 @@ namespace SportsonBackendShell.Controllers
             var response = await _loginService.LogIn(parameters);
             if (response.Token != null)
             {
-                return Ok(response.Token); 
+                var jwt = _jwtService.GenerateToken(response.Token);
+                Response.Cookies.Append("jwt", jwt, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.UtcNow.AddHours(12)
+                });
+                return Ok();
             }
             else
             {
                 return StatusCode(response.Code, response.Message);
             }
-            //var cookie = new CookieOptions()
         }
     }
 }

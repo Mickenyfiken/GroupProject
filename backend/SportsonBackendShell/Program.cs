@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Core.Service;
 using SportsonBackendShell.Data.Interfaces;
 using SportsonBackendShell.Data.Repos;
+using SportsonBackendShell.Extensions;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,20 +21,28 @@ builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IUserRightsRepo, UserRightsRepo>();
 builder.Services.AddScoped<IUserRightsService, UserRightsService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthenticationRepo, AuthenticationRepo>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddHttpClient();
 
-
+var jwtSecret = builder.Configuration["Jwt:Secret"]!;
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
+builder.Services.AddSingleton(signingKey);
+builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
 
 app.UseCors(options =>
-
-    options.WithOrigins("FrontEndUrl")
+    options.WithOrigins("FrontEndUrl", "https://localhost:7257", "http://localhost:5257")
     .AllowAnyHeader()
     .AllowAnyMethod()
+    .AllowCredentials()
     );
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.UseSwagger();
