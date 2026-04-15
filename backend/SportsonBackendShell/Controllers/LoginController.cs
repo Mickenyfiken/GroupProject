@@ -38,7 +38,7 @@ namespace SportsonBackendShell.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTimeOffset.UtcNow.AddMinutes(5)
+                    Expires = DateTimeOffset.UtcNow.AddMinutes(2)
                 });
                 Response.Cookies.Append("refresh_token", refreshToken, new CookieOptions
                 {
