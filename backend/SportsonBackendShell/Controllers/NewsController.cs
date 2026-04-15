@@ -20,12 +20,12 @@ namespace SportsonBackendShell.Controllers
         {
             var article = await _newsService.GetArticleById(id);
 
-            if(article == null)
+            if(article != null)
             {
-                return NotFound();
+                return Ok(article);
             }
 
-            return Ok(article);
+            return NotFound();
         }
 
 
