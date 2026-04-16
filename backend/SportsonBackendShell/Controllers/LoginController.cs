@@ -38,5 +38,21 @@ namespace SportsonBackendShell.Controllers
                 return StatusCode(response.Code, response.Message);
             }
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var jwt = Request.Cookies["jwt"];
+
+            if (string.IsNullOrEmpty(jwt)) return Unauthorized("No Token Provided");
+
+            var token = _jwtService.ExtractToken(jwt);
+            var response = await _loginService.Logout(token);
+
+            Response.Cookies.Delete("jwt");
+
+            if (response.Code == 200) return Ok();
+            else return StatusCode(response.Code, response);
+        }
     }
 }

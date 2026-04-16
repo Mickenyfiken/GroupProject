@@ -18,5 +18,10 @@ namespace SportsonBackendShell.Core.Service
         {
             return await _loginRepo.LogIn(parameters);
         }
+
+        public async Task<LogoutResponse> Logout(string token)
+        {
+            return await _loginRepo.Logout(token);
+        }
     }
 }
