@@ -79,7 +79,7 @@ stages:
                 - template: .azure-pipelines/templates/backend-deploy.yml
                   parameters:
                     azureSubscription: sportson-connection
-                    appType: webAppLinux
+                    appType: webApp
                     appName: sportson-backend-dev
                     artifactName: backend
                     packagePath: $(Pipeline.Workspace)/backend/**/*.zip
