@@ -25,13 +25,11 @@ namespace SportsonBackendShell.Core.Service
         {
             var newsList = await _newsRepo.GetNewsSummaryList();
 
-
             var resList = newsList
             .Select(GetSummary)
             .OrderByDescending(s => s?.Date_published)
             .Take(amount)
             .ToList();
-
 
             return resList;
         }
@@ -45,8 +43,8 @@ namespace SportsonBackendShell.Core.Service
                 Title = article.Title,
                 Body = article.Body.Length > 100 ? article.Body.Substring(0, 200) : article.Body,
                 Date_published = article.Date_published,
-                //Slider = article.Slider
-
+                Url = article.Url,
+                Publisher = article.Publisher
             };
         }
 
