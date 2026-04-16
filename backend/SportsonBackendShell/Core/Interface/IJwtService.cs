@@ -4,6 +4,6 @@ namespace SportsonBackendShell.Core.Interface
     {
         string GenerateToken(string externalToken);
 
-        string ExtractToken(string jwt);
+        string? ExtractToken(string jwt);
     }
 }

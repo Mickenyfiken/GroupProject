@@ -39,7 +39,7 @@ namespace SportsonBackendShell.Core.Service
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string ExtractToken(string jwt)
+        public string? ExtractToken(string jwt)
         {
             var handler = new JwtSecurityTokenHandler();
             var decoded = handler.ReadJwtToken(jwt);

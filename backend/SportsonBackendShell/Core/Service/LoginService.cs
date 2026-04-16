@@ -31,9 +31,6 @@ namespace SportsonBackendShell.Core.Service
         public async Task SaveRefreshTokenAsync(string tokenHash, string userId, DateTime expiresAt)
         {
             await _loginRepo.SaveRefreshTokenAsync(tokenHash, userId, expiresAt);
-        public async Task<LoginResponse> LogIn(LoginParameters parameters)
-        {
-            return await _loginRepo.LogIn(parameters);
         }
 
         public async Task<LogoutResponse> Logout(string token)
