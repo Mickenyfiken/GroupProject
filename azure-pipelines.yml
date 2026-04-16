@@ -49,9 +49,24 @@ stages:
               testProjects: $(BACKEND_TEST_PROJECTS)
               buildConfiguration: $(BUILD_CONFIGURATION)
 
+  - stage: Build_Frontend
+    displayName: Build Frontend
+    dependsOn: Test_Backend
+    condition: succeeded()
+    jobs:
+      - job: build_frontend
+        displayName: Build Frontend
+        steps:
+          - template: .azure-pipelines/templates/frontend-build.yml
+            parameters:
+              frontendPath: $(FRONTEND_PATH)
+              nodeVersion: $(NODE_VERSION)
+
   - stage: Backend_Deploy
     displayName: Deploy Backend
-    dependsOn: Test_Backend
+    dependsOn:
+      - Test_Backend
+      - Build_Frontend
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
     jobs:
       - deployment: deploy_backend
@@ -68,16 +83,3 @@ stages:
                     appName: sportson-backend-dev
                     artifactName: backend
                     packagePath: $(Pipeline.Workspace)/backend/**/*.zip
-
-  - stage: Build_Frontend
-    displayName: Build Frontend
-    dependsOn: Backend_Deploy
-    condition: succeeded()
-    jobs:
-      - job: build_frontend
-        displayName: Build Frontend
-        steps:
-          - template: .azure-pipelines/templates/frontend-build.yml
-            parameters:
-              frontendPath: $(FRONTEND_PATH)
-              nodeVersion: $(NODE_VERSION)
