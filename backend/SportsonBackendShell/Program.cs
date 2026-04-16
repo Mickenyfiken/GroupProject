@@ -1,3 +1,4 @@
+using backend.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SportsonBackendShell.Core.Interface;
@@ -10,8 +11,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
-builder.Services.AddCors();
+builder.Services.AddCors(builder.Configuration);
 
 builder.Services.AddSwaggerGen();
 
@@ -33,20 +33,13 @@ builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
 
-app.UseCors(options =>
-    options.WithOrigins("FrontEndUrl", "https://localhost:7257", "http://localhost:5257")
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowCredentials()
-    );
-
 app.UseRouting();
+app.UseCors("ReactPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+app.MapControllers();
 
 app.UseSwagger();
-
 app.UseSwaggerUI();
 
 app.Run();

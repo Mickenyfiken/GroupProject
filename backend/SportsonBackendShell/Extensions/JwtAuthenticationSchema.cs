@@ -7,8 +7,8 @@ namespace SportsonBackendShell.Extensions
     public static class JwtAuthenticationSchema
     {
         public static IServiceCollection AddJwtAuthentication(
-                this IServiceCollection services, 
-                IConfiguration config, 
+                this IServiceCollection services,
+                IConfiguration config,
                 SymmetricSecurityKey signingKey)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
