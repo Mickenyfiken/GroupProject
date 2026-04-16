@@ -3,4 +3,6 @@ export type NewsSummary = {
   title: string;
   body: string;
   date_published: string;
+  url: string;
+  publisher: string:
 };

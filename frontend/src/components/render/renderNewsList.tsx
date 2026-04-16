@@ -16,8 +16,8 @@ const RenderNewsList = () => {
 
   return (
     <div>
-      {newsList.map((newsSummary) => (
-        <NewsCard key={newsSummary.id} {...newsSummary} />
+      {newsList.map((article) => (
+        <NewsCard key={article.id} {...article} />
       ))}
     </div>
   );

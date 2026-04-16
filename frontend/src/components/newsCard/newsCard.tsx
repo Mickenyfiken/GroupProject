@@ -1,23 +1,32 @@
 import type { NewsSummary } from "../../types/newsSummary";
 
-const NewsCard = ({ title, body, date_published }: NewsSummary) => {
+const NewsCard = ({
+  title,
+  body,
+  date_published,
+  url,
+  publisher,
+}: NewsSummary) => {
   return (
-    <article>
-      <div className="flex flex-col gap-2 p-10 border rounded-lg shadow-md li">
-        <div>
-          <h2>{title}</h2>
-          <p>{body}</p>
-          <p>{new Date(date_published).toLocaleDateString("sv-SE")}</p>
-        </div>
-        <div>
-          <img
-            className="w-44 h-40 object-cover rounded-md"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVYyCDS7PhmFQWQwbD1B5lWjWLonuxWE5FFA&s"
-            alt="News Image"
-          />
-        </div>
+    <div className="flex flex-col h-60 p-4 m-4 rounded-lg shadow-md bg-white">
+      <div>
+        <p className=" text-black/50 text-base font-family-FSE-Text">
+          {new Date(date_published).toLocaleDateString("sv-SE", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+          {" | "}
+          {publisher}
+        </p>
       </div>
-    </article>
+      <h2 className="font-bold text-article-title text-base mt-2">{title}</h2>
+      <div className="flex flex-1 flex-row gap-2 mt-2 overflow-hidden text-sm text-gray-700">
+        <p>{body}</p>
+        <img className="w-34 h-30 rounded-md shrink-0" src={url} />
+      </div>
+    </div>
   );
 };
 export default NewsCard;
