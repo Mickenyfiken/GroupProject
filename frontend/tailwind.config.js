@@ -20,8 +20,11 @@ export default {
           'dark-gary': '#3F3F3F',
         },
         border: {
-          default: '#3F3F3F',
+          default: '#898989',
           disabled: '#3F3F3F/50',
+        },
+        label: {
+          warning: '#FF7D61',
         },
       },
       fontFamily: {

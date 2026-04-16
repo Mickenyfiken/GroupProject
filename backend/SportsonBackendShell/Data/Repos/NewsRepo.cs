@@ -14,7 +14,7 @@ namespace SportsonBackendShell.Data.Repos
             };
         }
 
-        public async Task<Article> GetArticleById(int id)
+        public async Task<Article?> GetArticleById(int id)
         {
 
             return newsList.FirstOrDefault(a => a.Id == id);
@@ -24,7 +24,7 @@ namespace SportsonBackendShell.Data.Repos
         {
 
             return newsList;
-            
+
         }
     }
 }

@@ -3,7 +3,7 @@
     public class ArticleSummary
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public required string Title { get; set; }
         public string? Preview { get; set; }
         public bool Slider { get; set; }
         public DateTime Date_published { get; set; }

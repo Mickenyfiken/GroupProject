@@ -2,10 +2,12 @@ trigger:
   branches:
     include:
       - develop
-  paths: # Only trigger on changes in backend and frontend folders
+  paths:
     include:
-      - backend/*
-      - frontend/*
+      - backend/**
+      - frontend/**
+      - azure-pipelines.yml
+      - .azure-pipelines/**
 
 pr:
   branches:
@@ -13,57 +15,71 @@ pr:
       - develop
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 variables:
-  BUILD_CONFIGURATION: 'Release'
-  BACKEND_PROJECTS: 'backend/**/*.csproj'
+  BUILD_CONFIGURATION: Release
+  BACKEND_PROJECTS: backend/**/*.csproj
+  BACKEND_TEST_PROJECTS: backend/**/*.Tests.csproj
+  FRONTEND_PATH: frontend
+  NODE_VERSION: 20.x
 
 stages:
-  # STAGE 1: BUILD BACKEND
   - stage: Build_Backend
-    displayName: 'Build Backend'
+    displayName: Build Backend
     jobs:
       - job: build_backend
+        displayName: Build Backend
         steps:
           - template: .azure-pipelines/templates/backend-build.yml
             parameters:
               projects: $(BACKEND_PROJECTS)
               buildConfiguration: $(BUILD_CONFIGURATION)
 
-          - task: DotNetCoreCLI@2
-            displayName: 'Publish backend'
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-            inputs:
-              command: 'publish'
-              publishWebProjects: false
-              projects: $(BACKEND_PROJECTS)
-              arguments: '--configuration $(BUILD_CONFIGURATION) --output $(Build.ArtifactStagingDirectory)/backend'
-
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish backend artifact'
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-            inputs:
-              pathToPublish: '$(Build.ArtifactStagingDirectory)'
-              artifactName: 'backend'
-
-  # STAGE 2: TEST BACKEND
   - stage: Test_Backend
-    displayName: 'Test Backend'
+    displayName: Test Backend
     dependsOn: Build_Backend
+    condition: succeeded()
     jobs:
       - job: test_backend
+        displayName: Test Backend
         steps:
           - template: .azure-pipelines/templates/backend-test.yml
             parameters:
-              projects: $(BACKEND_PROJECTS)
+              testProjects: $(BACKEND_TEST_PROJECTS)
               buildConfiguration: $(BUILD_CONFIGURATION)
 
-  # STAGE 3: FRONTEND
   - stage: Build_Frontend
-    displayName: 'Build Frontend'
-    dependsOn: [] #Runs parallel to backend stages
+    displayName: Build Frontend
+    dependsOn: Test_Backend
+    condition: succeeded()
     jobs:
       - job: build_frontend
+        displayName: Build Frontend
         steps:
           - template: .azure-pipelines/templates/frontend-build.yml
+            parameters:
+              frontendPath: $(FRONTEND_PATH)
+              nodeVersion: $(NODE_VERSION)
+
+  - stage: Backend_Deploy
+    displayName: Deploy Backend
+    dependsOn:
+      - Test_Backend
+      - Build_Frontend
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    jobs:
+      - deployment: deploy_backend
+        displayName: Deploy Backend
+        environment: development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: .azure-pipelines/templates/backend-deploy.yml
+                  parameters:
+                    azureSubscription: sportson-connection
+                    appType: webAppLinux
+                    appName: sportson-backend-dev
+                    artifactName: backend
+                    packagePath: $(Pipeline.Workspace)/backend/**/*.zip

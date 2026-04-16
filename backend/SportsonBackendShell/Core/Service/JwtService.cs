@@ -38,5 +38,12 @@ namespace SportsonBackendShell.Core.Service
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public string ExtractToken(string jwt)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var decoded = handler.ReadJwtToken(jwt);
+            return decoded.Claims.FirstOrDefault(c => c.Type == "external_token")?.Value;
+        }
     }
 }
