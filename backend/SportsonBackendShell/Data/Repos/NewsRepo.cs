@@ -9,8 +9,14 @@ namespace SportsonBackendShell.Data.Repos
         public NewsRepo()
         {
             newsList = new List<Article>()
-            {   new Article {Id = 1, Title = "Artikel 1", Body = "Detta är artikel 1 på sportson", Date_published = new DateTime(2005, 01, 01)},
-                new Article {Id = 2, Title = "Artikel 2", Body = "Detta är artikel 2 på sportson", Date_published = new DateTime(2025, 03, 22)}
+            {   new Article {Id = 1, Title = "Artikel 1", Body = "Detta är artikel 1 på sportson. " +
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis neque minus maiores, " +
+            "eveniet reiciendis, aliquid, eos ab veniam ratione dolorem placeat! Eos labore doloribus soluta molestiae a quia aspernatur illum!",
+                Date_published = new DateTime(2005, 01, 01)},
+                new Article {Id = 2, Title = "Artikel 2", Body = "Detta är artikel 2 på sportson. " +
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. " +
+                "Officiis neque minus maiores, eveniet reiciendis, aliquid, eos ab veniam ratione dolorem placeat! " +
+                "Eos labore doloribus soluta molestiae a quia aspernatur illum!", Date_published = new DateTime(2025, 03, 22)}
             };
         }
 

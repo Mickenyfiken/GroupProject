@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router'
+import { Outlet } from "react-router";
+import RenderNewsList from "./components/render/renderNewsList";
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <main className="overflow-auto">
         Main
         <Outlet />
+        <RenderNewsList />
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

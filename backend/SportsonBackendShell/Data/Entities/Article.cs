@@ -9,7 +9,7 @@ namespace SportsonBackendShell.Data.Entities
         public string? Body { get; set; }
         public bool Slider { get; set; }
         public bool Updated { get; set; }
-
+        public string Url { get; set; }
         public DateTime Date_published {  get; set; }
         public DateTime Date_updated { get; set; }
         public DateTime? Date_present { get; set; }

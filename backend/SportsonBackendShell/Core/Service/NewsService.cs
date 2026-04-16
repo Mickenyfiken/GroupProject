@@ -35,9 +35,9 @@ namespace SportsonBackendShell.Core.Service
             {
                 Id = article.Id,
                 Title = article.Title,
-                Preview = article.Body.Length > 100 ? article.Body.Substring(0, 100) : article.Body,
+                Body = article.Body.Length > 100 ? article.Body.Substring(0, 200) : article.Body,
                 Date_published = article.Date_published,
-                Slider = article.Slider
+                //Slider = article.Slider
 
             };
         }

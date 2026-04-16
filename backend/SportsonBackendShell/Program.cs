@@ -25,7 +25,7 @@ var app = builder.Build();
 
 app.UseCors(options =>
 
-    options.WithOrigins("FrontEndUrl")
+    options.AllowAnyOrigin()
     .AllowAnyHeader()
     .AllowAnyMethod()
     );
