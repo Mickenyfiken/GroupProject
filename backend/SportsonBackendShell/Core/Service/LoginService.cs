@@ -15,7 +15,7 @@ namespace SportsonBackendShell.Core.Service
 
 
         public async Task<LoginResponse> LogIn(LoginParameters parameters)
-        { 
+        {
             return await _loginRepo.LogIn(parameters);
         }
     }

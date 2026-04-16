@@ -1,24 +1,22 @@
 parameters:
-  workingDir: 'frontend'
-  npmCache: '$(Pipeline.Workspace)/.npm'
+  frontendPath: frontend
+  nodeVersion: 20.x
 
 steps:
   - task: NodeTool@0
-    displayName: 'Use Node.js'
+    displayName: Use Node.js
     inputs:
-      versionSpec: '20.x'
+      versionSpec: ${{ parameters.nodeVersion }}
 
   - task: Npm@1
-    displayName: 'Install frontend dependencies'
-    env:
-      npm_config_cache: ${{ parameters.npmCache }}
+    displayName: Install frontend dependencies
     inputs:
-      command: 'ci'
-      workingDir: ${{ parameters.workingDir }}
+      command: ci
+      workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
-    displayName: 'Build frontend'
+    displayName: Build frontend
     inputs:
-      command: 'custom'
-      workingDir: ${{ parameters.workingDir }}
-      customCommand: 'run build'
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run build

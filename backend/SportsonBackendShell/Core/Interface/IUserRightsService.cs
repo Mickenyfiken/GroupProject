@@ -2,6 +2,8 @@
 {
     public interface IUserRightsService
     {
-        Task<string> GetUserIdFromToken(string token);
+        Task<string?> GetUserIdFromToken(string token);
+        Task<string[]?> GetUserRolesFromId(string token,  string userId);
+        //Task<string[]> GetUserRolesFromToken(string token);
     }
 }

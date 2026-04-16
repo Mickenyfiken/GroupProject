@@ -25,7 +25,7 @@ namespace SportsonBackendShell.Data.Repos
                 PropertyNameCaseInsensitive = true
             };
 
-            return JsonSerializer.Deserialize<LoginResponse>(json, options);
+            return JsonSerializer.Deserialize<LoginResponse>(json, options) ?? throw new InvalidOperationException("Failed to deserialize login response.");
         }
     }
 }
