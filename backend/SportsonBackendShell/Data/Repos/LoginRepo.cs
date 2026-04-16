@@ -44,9 +44,9 @@ namespace SportsonBackendShell.Data.Repos
             return Task.CompletedTask;
         }
 
-        public Task SaveRefreshTokenAsync(string tokenHash, string userId, DateTime expiresAt)
+        public Task SaveRefreshTokenAsync(string tokenHash, string externalToken, DateTime expiresAt)
         {
-            _localStore[tokenHash] = new RefreshToken { TokenHash = tokenHash, UserId = userId, ExpiresAt = expiresAt};
+            _localStore[tokenHash] = new RefreshToken { TokenHash = tokenHash, ExternalToken = externalToken, ExpiresAt = expiresAt};
             return Task.CompletedTask;
         }
     }

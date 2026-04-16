@@ -32,7 +32,7 @@ namespace SportsonBackendShell.Core.Service
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(12),
+                expires: DateTime.UtcNow.AddMinutes(2),
                 signingCredentials: credentials
             );
 
