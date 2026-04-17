@@ -16,7 +16,7 @@ export default {
           green: '#79D977',
           red: '#FF7D61',
           'light-gary': '#F7F7F7',
-          gary: '#898989',
+          gray: '#898989',
           'dark-gary': '#3F3F3F',
         },
         border: {
@@ -24,6 +24,8 @@ export default {
           disabled: '#3F3F3F/50',
         },
         label: {
+          default: '#3F3F3F',
+          light: '#747474',
           warning: '#FF7D61',
         },
       },
