@@ -7,6 +7,7 @@ import ErrorPage from './views/ErrorPage'
 import Login from './views/Login'
 import Manuals from './views/Manuals'
 import NotFound from './views/NotFound'
+import ArticleModal from './components/news/ArticleModal'
 
 const queryClient = new QueryClient()
 
@@ -32,7 +33,11 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Dashboard /> },
-      { path: '/manuals', element: <Manuals /> },
+      {
+        path: 'nyheter/:id/:slug',
+        element: <ArticleModal />,
+      },
+      { path: '/manualer', element: <Manuals /> },
     ],
   },
   {

@@ -11,7 +11,6 @@ function App() {
       <header className="sticky top-0">Header</header>
 
       <main className="overflow-auto">
-        Main
         <Outlet />
         <RenderNewsList />
       </main>

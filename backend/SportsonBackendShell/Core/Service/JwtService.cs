@@ -32,11 +32,18 @@ namespace SportsonBackendShell.Core.Service
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(12),
+                expires: DateTime.UtcNow.AddMinutes(2),
                 signingCredentials: credentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string? ExtractToken(string jwt)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var decoded = handler.ReadJwtToken(jwt);
+            return decoded.Claims.FirstOrDefault(c => c.Type == "external_token")?.Value;
         }
     }
 }
