@@ -30,5 +30,21 @@ export const fetchMe = async () => {
     throw new Error('Not authenticated')
   }
 
-  return res.json()
-}
+  return res.json();
+};
+
+export const logOut = async () => {
+  try {
+    const result = await fetch("/api/login/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    if (!result.ok) {
+      const errorText = await result.text();
+      throw new Error(errorText);
+    }
+  } catch (error) {
+    console.error("Error login user:", error);
+    throw error;
+  }
+};
