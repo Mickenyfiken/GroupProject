@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router'
-import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 
 function App() {
   return (
     <div className="flex h-screen">
-      <Navbar />
+      <Sidebar />
 
       <main className="flex-1 overflow-auto">
         <Outlet />

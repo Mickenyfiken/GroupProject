@@ -4,17 +4,31 @@ parameters:
 
 steps:
   - task: NodeTool@0
-    displayName: 'Use Node.js'
+    displayName: 'Use Node.js 20'
     inputs:
       versionSpec: '20.x'
 
   - task: Npm@1
-    displayName: 'Install frontend dependencies'
+    displayName: 'Install dependencies'
     env:
       npm_config_cache: ${{ parameters.npmCache }}
     inputs:
       command: 'ci'
       workingDir: ${{ parameters.workingDir }}
+
+  - task: Npm@1
+    displayName: 'ESLint'
+    inputs:
+      command: 'custom'
+      workingDir: ${{ parameters.workingDir }}
+      customCommand: 'run lint'
+
+  - task: Npm@1
+    displayName: 'Prettier format check'
+    inputs:
+      command: 'custom'
+      workingDir: ${{ parameters.workingDir }}
+      customCommand: 'run format:check'
 
   - task: Npm@1
     displayName: 'Build frontend'
