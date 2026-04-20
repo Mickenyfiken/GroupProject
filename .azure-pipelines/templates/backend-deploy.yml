@@ -1,0 +1,18 @@
+parameters:
+  azureSubscription: sportson-connection
+  appType: webApp
+  appName: sportson-backend-dev
+  artifactName: backend
+  packagePath: $(Pipeline.Workspace)/backend/**/*.zip
+
+steps:
+  - download: current
+    artifact: ${{ parameters.artifactName }}
+
+  - task: AzureWebApp@1
+    displayName: Deploy backend to Azure App Service
+    inputs:
+      azureSubscription: ${{ parameters.azureSubscription }}
+      appType: ${{ parameters.appType }}
+      appName: ${{ parameters.appName }}
+      package: ${{ parameters.packagePath }}

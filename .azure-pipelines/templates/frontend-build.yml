@@ -1,38 +1,36 @@
 parameters:
-  workingDir: 'frontend'
-  npmCache: '$(Pipeline.Workspace)/.npm'
+  frontendPath: frontend
+  nodeVersion: 20.x
 
 steps:
   - task: NodeTool@0
-    displayName: 'Use Node.js 20'
+    displayName: Use Node.js 20
     inputs:
-      versionSpec: '20.x'
+      versionSpec: ${{ parameters.nodeVersion }}
 
   - task: Npm@1
-    displayName: 'Install dependencies'
-    env:
-      npm_config_cache: ${{ parameters.npmCache }}
+    displayName: Install frontend dependencies
     inputs:
-      command: 'ci'
-      workingDir: ${{ parameters.workingDir }}
+      command: ci
+      workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
-    displayName: 'ESLint'
+    displayName: ESLint
     inputs:
-      command: 'custom'
-      workingDir: ${{ parameters.workingDir }}
-      customCommand: 'run lint'
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run lint
 
   - task: Npm@1
-    displayName: 'Prettier format check'
+    displayName: Prettier format check
     inputs:
-      command: 'custom'
-      workingDir: ${{ parameters.workingDir }}
-      customCommand: 'run format:check'
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run format:check
 
   - task: Npm@1
-    displayName: 'Build frontend'
+    displayName: Build frontend
     inputs:
-      command: 'custom'
-      workingDir: ${{ parameters.workingDir }}
-      customCommand: 'run build'
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run build

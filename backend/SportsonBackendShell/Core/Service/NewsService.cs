@@ -1,4 +1,5 @@
-﻿using SportsonBackendShell.Core.Interface;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
 
@@ -13,14 +14,42 @@ namespace SportsonBackendShell.Core.Service
             _newsRepo = newsRepo;
         }
 
-        public ArticleFull GetFullNewsArticleById(int id)
+        public async Task<Article?> GetArticleById(int id)
         {
-            throw new NotImplementedException();
+            var article = await _newsRepo.GetArticleById(id);
+
+            return article;
         }
 
-        public List<ArticleSummary> GetLatestNewsSummaryList()
+        public async Task<List<ArticleSummary?>> GetNewsSummaryList(int amount)
         {
-            throw new NotImplementedException();
+            var newsList = await _newsRepo.GetNewsSummaryList();
+
+
+            var resList = newsList
+            .Select(GetSummary)
+            .OrderByDescending(s => s?.Date_published)
+            .Take(amount)
+            .ToList();
+
+
+            return resList;
         }
+
+
+        private ArticleSummary? GetSummary(Article article)
+        {
+            return new ArticleSummary
+            {
+                Id = article.Id,
+                Title = article.Title ?? "No title",
+                Preview = article.Body?.Length > 100 ? article.Body.Substring(0, 100) : article.Body,
+                Date_published = article.Date_published,
+                Slider = article.Slider
+
+            };
+        }
+
+
     }
 }
