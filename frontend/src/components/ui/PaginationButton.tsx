@@ -31,7 +31,7 @@ const PaginationButton = ({
       <span
         className={clsx(
           'col-span-4 overflow-hidden pb-2 h-[2lh]',
-          isNext ? 'col-start-1 row-start-1' : 'text-right'
+          isNext ? 'col-start-1 row-start-1' : 'text-right',
         )}
       >
         {label}

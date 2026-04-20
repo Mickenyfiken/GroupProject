@@ -30,7 +30,7 @@ const TextInput = ({
         className={clsx(
           'mt-3 block w-full bg-surface-subtle px-4 py-3',
           'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-border-default border border-default',
-          inputClassName
+          inputClassName,
         )}
         {...rest}
       />

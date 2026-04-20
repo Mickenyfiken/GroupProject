@@ -26,11 +26,7 @@ const ArticleModal = () => {
 
   return (
     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={handleClose}
-        title="Close"
-      />
+      <div className="absolute inset-0 bg-black/50" onClick={handleClose} title="Close" />
 
       <div className="flex items-center justify-center min-h-full p-4">
         <div className="w-full max-w-3xl rounded-xl bg-white duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 overflow-hidden relative">

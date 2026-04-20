@@ -14,7 +14,7 @@ export const getArticleById = async (id: string) => {
 
 const getAdjacentArticles = (id: string) => {
   const sorted = [...articles].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )
 
   const index = sorted.findIndex((a) => a.id === id)

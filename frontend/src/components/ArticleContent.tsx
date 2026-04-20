@@ -14,23 +14,14 @@ const ArticleContent = ({
     backgroundLocation: unknown
   }
 }) => {
-  const {
-    coverImage,
-    title,
-    tags,
-    body,
-    author,
-    date,
-    prevArticle,
-    nextArticle,
-  } = data!
+  const { coverImage, title, tags, body, author, date, prevArticle, nextArticle } = data!
 
   return (
     <>
       <div
         className={clsx(
           'w-[calc(100% + 56px)] -mx-6 -mt-6 md:-mx-14 md:-mt-14 relative',
-          coverImage && 'aspect-[2/1] md:aspect-[3/1]'
+          coverImage && 'aspect-[2/1] md:aspect-[3/1]',
         )}
       >
         {coverImage && (
@@ -47,7 +38,7 @@ const ArticleContent = ({
           className={clsx(
             'flex  gap-8 w-full text-white',
             prevArticle ? 'justify-between' : 'justify-end',
-            coverImage ? 'absolute bottom-0' : 'mt-20'
+            coverImage ? 'absolute bottom-0' : 'mt-20',
           )}
         >
           {prevArticle && (

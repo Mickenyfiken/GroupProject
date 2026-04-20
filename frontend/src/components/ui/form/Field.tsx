@@ -9,26 +9,14 @@ type TFieldProps = {
   className?: string
 }
 
-const Field = ({
-  label,
-  description,
-  error,
-  children,
-  className,
-}: TFieldProps) => {
+const Field = ({ label, description, error, children, className }: TFieldProps) => {
   return (
     <HLField className={className}>
       {label && <Label className="text-white">{label}</Label>}
-      {description && (
-        <Description className="text-white">{description}</Description>
-      )}
+      {description && <Description className="text-white">{description}</Description>}
       {children}
 
-      {error ? (
-        <p className="text-sm text-label-warning">{error}</p>
-      ) : (
-        <div className="mt-6"></div>
-      )}
+      {error ? <p className="text-sm text-label-warning">{error}</p> : <div className="mt-6"></div>}
     </HLField>
   )
 }

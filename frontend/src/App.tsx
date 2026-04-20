@@ -1,5 +1,5 @@
-import { Outlet } from "react-router";
-import { useInactivityLogout, useTokenRefresh } from "./hooks/authHooks";
+import { Outlet } from 'react-router'
+import { useInactivityLogout, useTokenRefresh } from './hooks/authHooks'
 
 function App() {
   useInactivityLogout();
@@ -16,7 +16,7 @@ function App() {
         <Outlet />
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
