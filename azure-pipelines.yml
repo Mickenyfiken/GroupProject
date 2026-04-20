@@ -90,3 +90,15 @@ stages:
                     appName: sportson-backend-dev
                     artifactName: backend
                     packagePath: $(Pipeline.Workspace)/backend/**/*.zip
+
+  - stage: Frontend_Deploy
+    displayName: Deploy Frontend
+    dependsOn:
+      - Build_Frontend
+      - Backend_Deploy
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    jobs:
+      - job: deploy_frontend
+        displayName: Deploy Frontend
+        steps:
+          - template: .azure-pipelines/templates/frontend-deploy.yml
