@@ -11,16 +11,10 @@ type TFieldsetProps = {
   }
 }
 
-const Fieldset = ({
-  className,
-  children,
-  legend: { string, srOnly = false },
-}: TFieldsetProps) => {
+const Fieldset = ({ className, children, legend: { string, srOnly = false } }: TFieldsetProps) => {
   return (
     <HlFieldset className={clsx('space-y-6', className)}>
-      <Legend className={clsx('text-lg text-white', srOnly && 'sr-only')}>
-        {string}
-      </Legend>
+      <Legend className={clsx('text-lg text-white', srOnly && 'sr-only')}>{string}</Legend>
       <Field>{children}</Field>
     </HlFieldset>
   )
