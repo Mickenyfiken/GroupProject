@@ -34,7 +34,7 @@ const authLoader = async () => {
 export const router = createBrowserRouter([
   {
     path: '/',
-    loader: authLoader,
+    // loader: authLoader,
     HydrateFallback: () => <p>Loading...</p>,
     element: <App />,
     errorElement: <ErrorPage />,

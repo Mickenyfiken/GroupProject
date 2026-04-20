@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
+import sportsonLogo from "../assets/sportson-logo.svg";
 
 const stores = ["Sportson Göteborg", "Sportson Stockholm", "Sportson Malmö", "Sportson Uppsala"];
 
@@ -97,9 +98,7 @@ const Sidebar = () => {
         </div>
 
         <div className="px-4 py-4 border-b border-gray-700">
-          <span className="text-lg font-extrabold tracking-tight text-surface-yellow whitespace-nowrap">
-            Sportson PORTALEN
-          </span>
+          <img src={sportsonLogo} alt="Sportson" className="h-8 w-auto" />
         </div>
 
         <nav className="flex flex-col gap-1 px-3 py-4 flex-1 overflow-y-auto">
