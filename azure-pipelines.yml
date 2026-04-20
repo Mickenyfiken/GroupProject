@@ -18,11 +18,18 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  BUILD_CONFIGURATION: Release
-  BACKEND_PROJECTS: backend/**/*.csproj
-  BACKEND_TEST_PROJECTS: backend/**/*.Tests.csproj
-  FRONTEND_PATH: frontend
-  NODE_VERSION: 20.x
+  - group: frontend-secrets
+
+  - name: BUILD_CONFIGURATION
+    value: Release
+  - name: BACKEND_PROJECTS
+    value: backend/**/*.csproj
+  - name: BACKEND_TEST_PROJECTS
+    value: backend/**/*.Tests.csproj
+  - name: FRONTEND_PATH
+    value: frontend
+  - name: NODE_VERSION
+    value: 20.x
 
 stages:
   - stage: Build_Backend
