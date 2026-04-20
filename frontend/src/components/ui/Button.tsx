@@ -1,10 +1,6 @@
 import { Button as HlButton } from '@headlessui/react'
 import clsx from 'clsx'
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ReactNode,
-} from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import type { LinkProps } from 'react-router'
 import { Link as RouterLink } from 'react-router'
 
@@ -73,12 +69,7 @@ const Button = ({
 }: ButtonProps) => {
   const variantStyles = icon ? iconOnlyStyles : colorStyles[color][variant]
 
-  const classes = clsx(
-    'cursor-pointer',
-    !icon && baseStyles,
-    variantStyles,
-    className
-  )
+  const classes = clsx('cursor-pointer', !icon && baseStyles, variantStyles, className)
 
   const content = (
     <>
@@ -114,10 +105,7 @@ const Button = ({
   }
 
   return (
-    <HlButton
-      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
-      className={classes}
-    >
+    <HlButton {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)} className={classes}>
       {content}
     </HlButton>
   )

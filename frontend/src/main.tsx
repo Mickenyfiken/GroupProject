@@ -10,5 +10,5 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={new QueryClient()}>
       <RouterProvider router={router} />
     </QueryClientProvider>{' '}
-  </StrictMode>
+  </StrictMode>,
 )

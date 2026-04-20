@@ -48,17 +48,10 @@ const Login = () => {
           <Fieldset legend={{ string: 'Logga in', srOnly: true }}>
             <TextInput label="Email" {...register('email')} />
             <TextInput label="Lösenord" {...register('password')} />
-            {errorMessage && (
-              <p className="-mt-3 text-label-warning text-sm/6">
-                {errorMessage}
-              </p>
-            )}
+            {errorMessage && <p className="-mt-3 text-label-warning text-sm/6">{errorMessage}</p>}
             <Button
               type="submit"
-              className={clsx(
-                'w-full uppercase',
-                errorMessage ? 'mt-3' : 'mt-6'
-              )}
+              className={clsx('w-full uppercase', errorMessage ? 'mt-3' : 'mt-6')}
             >
               Logga in
             </Button>
@@ -66,9 +59,7 @@ const Login = () => {
         </form>
         <span className="inline-flex gap-2 mt-6">
           <img src={timeIcon} className="" alt="Vite logo" />
-          <p className="text-white">
-            Du loggas ut automatiskt efter 2 minuter inaktivitet.
-          </p>
+          <p className="text-white">Du loggas ut automatiskt efter 2 minuter inaktivitet.</p>
         </span>
       </div>
     </div>
