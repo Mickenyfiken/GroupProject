@@ -1,6 +1,7 @@
-import { QueryClient } from '@tanstack/react-query'
-import { createBrowserRouter, redirect } from 'react-router'
-import { fetchMe } from './api/authApi'
+// import { QueryClient } from '@tanstack/react-query'
+import { createBrowserRouter } from 'react-router'
+// import { redirect } from 'react-router'
+// import { fetchMe } from './api/authApi'
 import App from './App'
 import Dashboard from './views/Dashboard'
 import ErrorPage from './views/ErrorPage'
@@ -16,20 +17,19 @@ import Kontakter from './views/Kontakter'
 import Support from './views/Support'
 import ArticleModal from './components/news/ArticleModal'
 
-const queryClient = new QueryClient()
+// const queryClient = new QueryClient()
 
-const authLoader = async () => {
-  try {
-    await queryClient.ensureQueryData({
-      queryKey: ['me'],
-      queryFn: fetchMe,
-    })
-
-    return null
-  } catch {
-    return redirect('/login')
-  }
-}
+// const authLoader = async () => {
+//   try {
+//     await queryClient.ensureQueryData({
+//       queryKey: ['me'],
+//       queryFn: fetchMe,
+//     })
+//     return null
+//   } catch {
+//     return redirect('/login')
+//   }
+// }
 
 export const router = createBrowserRouter([
   {

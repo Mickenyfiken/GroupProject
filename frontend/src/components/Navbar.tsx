@@ -1,13 +1,13 @@
-import { NavLink } from "react-router";
+import { NavLink } from 'react-router'
 
 const links = [
-  { name: "Nyheter", href: "/nyheter" },
-  { name: "Kampanjer", href: "/kampanjer" },
-  { name: "Butiksservice", href: "/butiksservice" },
-  { name: "Ordercentral", href: "/ordercentral" },
-  { name: "Leverantörer", href: "/leverantorer" },
-  { name: "Kontakter", href: "/kontakter" },
-];
+  { name: 'Nyheter', href: '/nyheter' },
+  { name: 'Kampanjer', href: '/kampanjer' },
+  { name: 'Butiksservice', href: '/butiksservice' },
+  { name: 'Ordercentral', href: '/ordercentral' },
+  { name: 'Leverantörer', href: '/leverantorer' },
+  { name: 'Kontakter', href: '/kontakter' },
+]
 
 const Navbar = () => {
   return (
@@ -25,9 +25,7 @@ const Navbar = () => {
             to={link.href}
             className={({ isActive }) =>
               `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? "bg-orange-400 text-white"
-                  : "hover:bg-orange-400 hover:text-white"
+                isActive ? 'bg-orange-400 text-white' : 'hover:bg-orange-400 hover:text-white'
               }`
             }
           >
@@ -42,8 +40,8 @@ const Navbar = () => {
           className={({ isActive }) =>
             `block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-center ${
               isActive
-                ? "bg-orange-400 text-white"
-                : "bg-slate-700 hover:bg-orange-400 hover:text-white"
+                ? 'bg-orange-400 text-white'
+                : 'bg-slate-700 hover:bg-orange-400 hover:text-white'
             }`
           }
         >
@@ -51,7 +49,7 @@ const Navbar = () => {
         </NavLink>
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
