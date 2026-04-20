@@ -50,7 +50,7 @@ export const useTokenRefresh = () => {
     const handleUserActivity = async () => {
       if (refreshing) return;
       const now = Date.now();
-      if (now - lastRefresh.current < 5_000) return;
+      if (now - lastRefresh.current < 70_000) return;
       refreshing = true;
       try {
         await refreshAccessToken();
