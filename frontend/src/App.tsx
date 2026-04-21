@@ -1,11 +1,7 @@
 import { Outlet } from 'react-router'
 import { useInactivityLogout } from './hooks/authHooks'
-import { useLocation } from 'react-router'
-import ArticleModal from './components/news/ArticleModal'
 function App() {
   useInactivityLogout()
-  const location = useLocation()
-  const isModalRoute = location.pathname.startsWith('/nyheter/')
 
   return (
     <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen">
@@ -18,7 +14,6 @@ function App() {
       <main className="overflow-auto">
         <Outlet />
       </main>
-      {isModalRoute && <ArticleModal />}
     </div>
   )
 }
