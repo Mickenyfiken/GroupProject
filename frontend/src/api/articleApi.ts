@@ -1,5 +1,7 @@
 import articles from '../mock-data/mock-articles.json'
+import type { Article } from '../types/articleType'
 
+const BASE_URL = import.meta.env.VITE_API_TARGET
 export const getArticleById = async (id: string) => {
   const article = articles.find((a) => a.id === id)
   if (!article) {
@@ -27,4 +29,17 @@ const getAdjacentArticles = (id: string) => {
     prevArticle: sorted[index - 1] ?? null,
     nextArticle: sorted[index + 1] ?? null,
   }
+}
+
+export const getArticles = async ({ limit = 10 }: { limit?: number }): Promise<Article> => {
+  const response = await fetch(`${BASE_URL}/api/news?limit=${limit}`, {
+    credentials: 'include',
+  })
+
+  if (!(await response).ok) {
+    const errorText = await response.text()
+    throw new Error(errorText)
+  }
+
+  return await response.json()
 }

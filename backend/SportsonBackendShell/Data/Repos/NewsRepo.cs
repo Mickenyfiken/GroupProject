@@ -1,30 +1,31 @@
-﻿using SportsonBackendShell.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
 
 namespace SportsonBackendShell.Data.Repos
 {
     public class NewsRepo : INewsRepo
     {
-        public List<Article> newsList { get; set; }
-        public NewsRepo()
+        protected readonly SportsonContext _db;
+        protected readonly DbSet<Article> _dbSet;
+
+        public NewsRepo(SportsonContext db)
         {
-            newsList = new List<Article>()
-            {   new Article {Id = 1, Title = "Artikel 1", Body = "Detta är artikel 1 på sportson", Date_published = new DateTime(2005, 01, 01)},
-                new Article {Id = 2, Title = "Artikel 2", Body = "Detta är artikel 2 på sportson", Date_published = new DateTime(2025, 03, 22)}
-            };
+            _db = db;
+            _dbSet = db.Set<Article>();
         }
 
-        public async Task<Article?> GetArticleById(int id)
+
+        public async Task<Article?> GetByIdAsync(int id, bool? asTracking = false)
         {
 
-            return newsList.FirstOrDefault(a => a.Id == id);
+            var query = _db.Set<Article>().AsQueryable();
+            if (asTracking == true)
+                query = query.AsTracking();
+
+            return await query.FirstOrDefaultAsync(x => EF.Property<int>(x, "Id") == id);
         }
 
-        public async Task<List<Article>> GetNewsSummaryList()
-        {
-
-            return newsList;
-
-        }
+        public virtual IQueryable<Article> QueryAll() => _dbSet.AsNoTracking();
     }
 }

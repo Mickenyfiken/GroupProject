@@ -1,5 +1,4 @@
 using backend.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Core.Service;
@@ -9,10 +8,18 @@ using SportsonBackendShell.Extensions;
 using System.Collections.Concurrent;
 using System.Text;
 using SportsonBackendShell.Data.Entities;
+using SportsonBackendShell.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<SportsonContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Development")));
+
 builder.Services.AddCors(builder.Configuration);
 
 builder.Services.AddSwaggerGen();
@@ -28,6 +35,8 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthenticationRepo, AuthenticationRepo>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddHttpClient();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));

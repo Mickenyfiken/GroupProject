@@ -1,55 +1,33 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using SportsonBackendShell.Core.Interface;
-using SportsonBackendShell.Data.Entities;
+using SportsonBackendShell.Data.DTO;
 using SportsonBackendShell.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsonBackendShell.Core.Service
 {
     public class NewsService : INewsService
     {
         private readonly INewsRepo _newsRepo;
+        private readonly IMapper _mapper;
 
-        public NewsService(INewsRepo newsRepo)
+        public NewsService(INewsRepo newsRepo, IMapper mapper)
         {
             _newsRepo = newsRepo;
+            _mapper = mapper;
         }
 
-        public async Task<Article?> GetArticleById(int id)
-        {
-            var article = await _newsRepo.GetArticleById(id);
-
-            return article;
-        }
-
-        public async Task<List<ArticleSummary?>> GetNewsSummaryList(int amount)
-        {
-            var newsList = await _newsRepo.GetNewsSummaryList();
+        public async Task<ArticleDto?> GetArticleById(int id) => await _newsRepo.QueryAll()
+                .Where(a => a.Id == id)
+                .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
 
 
-            var resList = newsList
-            .Select(GetSummary)
-            .OrderByDescending(s => s?.Date_published)
-            .Take(amount)
-            .ToList();
-
-
-            return resList;
-        }
-
-
-        private ArticleSummary? GetSummary(Article article)
-        {
-            return new ArticleSummary
-            {
-                Id = article.Id,
-                Title = article.Title ?? "No title",
-                Preview = article.Body?.Length > 100 ? article.Body.Substring(0, 100) : article.Body,
-                Date_published = article.Date_published,
-                Slider = article.Slider
-
-            };
-        }
-
-
+        public async Task<List<ArticleDto>> GetArticles(int limit = 10) => await _newsRepo.QueryAll()
+            .OrderByDescending(s => s.CreatedAt)
+            .Take(limit)
+            .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }
