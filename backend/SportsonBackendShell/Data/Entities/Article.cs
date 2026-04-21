@@ -21,6 +21,11 @@ namespace SportsonBackendShell.Data.Entities
 
         public DateTime CreatedAt { get; set; }
 
+        public string? ImageUrl { get; set; }
+
+        [MaxLength(500)]
+        public string? ImageAltText { get; set; }
+
         public List<Tag> Tags { get; set; } = new();
     }
 }

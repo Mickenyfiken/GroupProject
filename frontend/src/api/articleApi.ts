@@ -1,17 +1,20 @@
-import articles from '../mock-data/mock-articles.json'
 import type { Article } from '../types/articleType'
 
 const BASE_URL = import.meta.env.VITE_API_TARGET
+
 export const getArticleById = async (id: string) => {
-  const article = articles.find((a) => a.id === id)
-  if (!article) {
-    throw new Error('Article not found')
+  const response = await fetch(`${BASE_URL}/api/news/${id}`, {
+    credentials: 'include',
+  })
+
+  if (!(await response).ok) {
+    const errorText = await response.text()
+    throw new Error(errorText)
   }
 
-  const prevAndNextArticle = getAdjacentArticles(id)
+  const data = await response.json()
 
-  console.log({ ...prevAndNextArticle, ...article })
-  return { ...prevAndNextArticle, ...article }
+  return data
 }
 
 const getAdjacentArticles = (id: string) => {

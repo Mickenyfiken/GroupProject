@@ -12,8 +12,6 @@ const ArticleModal = () => {
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error loading article</div>
-  if (isLoading || error || !data) console.log(isLoading, error, data)
-
   if (!data) return <div>Article not found</div>
 
   const handleClose = () => {

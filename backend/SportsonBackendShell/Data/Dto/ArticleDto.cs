@@ -11,5 +11,7 @@ public class ArticleDto
     public string? Body { get; set; }
     public string? Author { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string? ImageUrl { get; set; }
+    public string? ImageAltText { get; set; }
     public List<Tag> Tags { get; set; } = new();
 }

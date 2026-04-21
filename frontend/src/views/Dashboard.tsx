@@ -8,11 +8,7 @@ const Dashboard = () => {
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error loading articles</div>
-  if (isLoading || error || !data) console.log(isLoading, error, data)
-
   if (!data) return <div>Articles not found</div>
-
-  console.log(data)
 
   return (
     <>
@@ -20,11 +16,17 @@ const Dashboard = () => {
         <h1>Dashboard</h1>
 
         <Link
-          to="nyheter/1/nya-trender-inom-cykelmarknaden-2026"
+          to="nyheter/2/sa-paverkar-leverantorer-prisbilden"
           state={{ backgroundLocation: location }}
         >
           Länk till nyhet exempel
         </Link>
+        {/* <Link
+          to="nyheter/1/nya-trender-inom-cykelmarknaden-2026"
+          state={{ backgroundLocation: location }}
+        >
+          Länk till nyhet exempel
+        </Link> */}
       </div>
     </>
   )

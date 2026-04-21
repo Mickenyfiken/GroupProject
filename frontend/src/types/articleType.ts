@@ -1,12 +1,10 @@
 type BaseArticle = {
   id: string
   slug: string
-  date: string
+  createdAt: Date
   author: string
-  coverImage: {
-    src: string
-    alt: string
-  }
+  imageUrl: string
+  imageAltText: string
   title: string
   tags: string[]
   body: string
