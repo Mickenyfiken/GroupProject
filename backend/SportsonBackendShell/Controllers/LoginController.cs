@@ -108,10 +108,18 @@ namespace SportsonBackendShell.Controllers
 
             if (string.IsNullOrEmpty(jwt)) return Unauthorized("No Token Provided");
 
+            if (!Request.Cookies.TryGetValue("refresh_token", out var refreshToken))
+                return Unauthorized();
+
+            var refreshTokenHash = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken)));
+
             var token = _jwtService.ExtractToken(jwt);
             var response = await _loginService.Logout(token);
 
+            await _loginService.RevokeRefreshTokenAsync(refreshTokenHash);
+
             Response.Cookies.Delete("jwt");
+            Response.Cookies.Delete("refresh_token");
 
             if (response.Code == 200) return Ok();
             else return StatusCode(response.Code, response);

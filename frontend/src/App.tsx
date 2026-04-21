@@ -1,7 +1,9 @@
 import { Outlet, useLocation } from 'react-router'
+import { useInactivityLogout } from './hooks/authHooks'
 import ArticleModal from './components/news/ArticleModal'
 import Dashboard from './views/Dashboard'
 function App() {
+  useInactivityLogout()
   const location = useLocation()
   const backgroundLocation = location.state?.backgroundLocation
 

@@ -6,7 +6,5 @@ export const formatDate = (date: Date) => {
     year: 'numeric',
   }).format(new Date(date))
 
-  return formatted
-    .replace(/^\w/, (c) => c.toUpperCase())
-    .replace(/\s(\d{4})$/, ', $1')
+  return formatted.replace(/^\w/, (c) => c.toUpperCase()).replace(/\s(\d{4})$/, ', $1')
 }
