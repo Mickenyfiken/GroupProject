@@ -27,6 +27,8 @@ builder.Services.AddScoped<IUserRightsService, UserRightsService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthenticationRepo, AuthenticationRepo>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IManualsRepo, ManualsRepo>();
+builder.Services.AddScoped<IManualsService, ManualsService>();
 builder.Services.AddHttpClient();
 
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
