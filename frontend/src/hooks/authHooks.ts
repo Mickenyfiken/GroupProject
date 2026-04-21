@@ -28,15 +28,15 @@ export const useInactivityLogout = () => {
       }, TIMEOUT_MS)
     }
 
-    const bubbleEvents = ['mousemove', 'keydown', 'click']
+    const bubbleEvents = ['keydown', 'click', 'mousedown', 'touchstart', 'wheel']
     const captureEvents = ['scroll']
-    bubbleEvents.forEach((e) => document.addEventListener(e, resetTimer))
+    bubbleEvents.forEach((e) => window.addEventListener(e, resetTimer))
     captureEvents.forEach((e) => document.addEventListener(e, resetTimer, true))
     resetTimer()
 
     return () => {
       clearTimeout(timer.current)
-      bubbleEvents.forEach((e) => document.removeEventListener(e, resetTimer))
+      bubbleEvents.forEach((e) => window.removeEventListener(e, resetTimer))
       captureEvents.forEach((e) => document.removeEventListener(e, resetTimer, true))
     }
   }, [navigate])
@@ -64,13 +64,13 @@ export const useTokenRefresh = () => {
       }
     }
 
-    const bubbleEvents = ['mousemove', 'keydown', 'click']
+    const bubbleEvents = ['keydown', 'click', 'mousedown', 'touchstart', 'wheel']
     const captureEvents = ['scroll']
-    bubbleEvents.forEach((e) => document.addEventListener(e, handleUserActivity))
+    bubbleEvents.forEach((e) => window.addEventListener(e, handleUserActivity))
     captureEvents.forEach((e) => document.addEventListener(e, handleUserActivity, true))
 
     return () => {
-      bubbleEvents.forEach((e) => document.removeEventListener(e, handleUserActivity))
+      bubbleEvents.forEach((e) => window.removeEventListener(e, handleUserActivity))
       captureEvents.forEach((e) => document.removeEventListener(e, handleUserActivity, true))
     }
   }, [navigate])
