@@ -11,14 +11,14 @@ function App() {
 
   const routes = useRoutes(
     [
-            { index: true, element: <Dashboard /> },
-            {
-              path: 'nyheter/:id/:slug',
-              element: null,
-            },
-            { path: '/manualer', element: <Manuals /> },
-          ],
-          backgroundLocation || location
+      { index: true, element: <Dashboard /> },
+      {
+        path: 'nyheter/:id/:slug',
+        element: null,
+      },
+      { path: '/manualer', element: <Manuals /> },
+    ],
+    backgroundLocation || location,
   )
 
   console.log('background', backgroundLocation)
@@ -31,9 +31,7 @@ function App() {
 
       <header className="sticky top-0">Header</header>
 
-      <main className="overflow-auto">
-        {routes}
-      </main>
+      <main className="overflow-auto">{routes}</main>
       {backgroundLocation && <ArticleModal />}
     </div>
   )

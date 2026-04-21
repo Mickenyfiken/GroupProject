@@ -1,13 +1,11 @@
-import type { NewsSummary } from "../types/newsSummary";
+import type { NewsSummary } from '../types/newsSummary'
 
 const NewsListService = async () => {
-  const response = await fetch(
-    `https://localhost:7257/api/GetNewsSummaryList/10`,
-  );
+  const response = await fetch(`https://localhost:7257/api/GetNewsSummaryList/10`)
 
-  const newsList: NewsSummary[] = await response.json();
+  const newsList: NewsSummary[] = await response.json()
 
-  return newsList;
-};
+  return newsList
+}
 
-export default NewsListService;
+export default NewsListService

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       borderRadius: {
@@ -20,8 +20,8 @@ export default {
           'dark-gary': '#3F3F3F',
         },
         border: {
-          default: "#898989",
-          disabled: "#3F3F3F/50",
+          default: '#898989',
+          disabled: '#3F3F3F/50',
         },
         label: {
           default: '#3F3F3F',
@@ -30,9 +30,9 @@ export default {
         },
       },
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
+        roboto: ['Roboto', 'sans-serif'],
       },
     },
   },
   plugins: [],
-};
+}
