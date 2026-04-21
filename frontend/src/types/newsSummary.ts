@@ -1,8 +1,14 @@
 export type NewsSummary = {
-  id: number;
-  title: string;
-  body: string;
-  date_published: string;
-  url: string;
-  publisher: string:
-};
+  id: number
+  slug: string
+  title: string
+  body: string
+  tags: string[]
+  author: string
+  date: string
+  coverImage: {
+    src: string
+    alt: string
+  }
+}
+
