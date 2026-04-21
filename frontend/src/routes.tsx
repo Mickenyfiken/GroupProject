@@ -36,7 +36,6 @@ export const router = createBrowserRouter([
       {
         path: 'nyheter/:id/:slug',
         element: <ArticleModal />,
-        loader: () => null, // No data loading needed here since ArticleModal fetches its own data
       },
       { path: '/manualer', element: <Manuals /> },
     ],
