@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import type { NewsSummary } from '../types/newsSummary'
 import NewsCard from './newsCard/newsCard'
 import NewsListService from '../api/newsListService'
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
 
 const RenderNewsList = () => {
   const [newsList, setNewsList] = useState<NewsSummary[]>([])
+  const location = useLocation()
 
   useEffect(() => {
     const fetchNewsList = async () => {
@@ -21,7 +22,7 @@ const RenderNewsList = () => {
         <Link
           key={article.id}
           to={`nyheter/${article.id}/${article.slug}`}
-          state={{ backgroundLocation: { pathname: '/' } }}
+          state={{ backgroundLocation: location }}
         >
           <NewsCard {...article} />
         </Link>
