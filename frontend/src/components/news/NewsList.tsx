@@ -1,7 +1,7 @@
 import { Link, type Location } from 'react-router'
 import { useArticles } from '../../hooks/articleHooks'
 import type { NewsArticle } from '../../types/NewsType'
-import NewsCard from './newsCard'
+import NewsCard from './NewsCard'
 
 const NewsList = ({ location }: { location: Location<unknown> }) => {
   const { data: articles, isLoading, error } = useArticles({})
