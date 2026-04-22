@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "slug": "nya-trender-inom-cykelmarknaden-2026",
+    "date": "2026-01-15",
+    "author": "Anna Svensson",
+    "coverImage": {
+      "src": "article-image.png",
+      "alt": "Article image"
+    },
+    "title": "Nya trender inom cykelmarknaden 2026",
+    "tags": ["Alla", "Marknad"],
+    "body": "<p><a href=\"#\">Lorem ipsum dolor sit amet</a> consectetur adipisicing elit...</p><ul><li><p>Lorem ipsum dolor sit amet.</p></li><li><p>Repudiandae <i>incidunt<i/> repellat cumque.</p></li></ul><ol><li><p>Lorem ipsum dolor sit amet.</p></li><li><p>Repudiandae incidunt repellat cumque.</p></li></ol><p>Lorem ipsum <strong>dolor</strong> sit amet consectetur adipisicing elit.</p>"
+  },
+  {
+    "id": 2,
+    "slug": "sa-paverkar-leverantorer-prisbilden",
+    "date": "2026-02-03",
+    "author": "Erik Johansson",
+    "coverImage": {
+      "src": "article-image.png",
+      "alt": "Article image"
+    },
+    "title": "Så påverkar leverantörer prisbilden",
+    "tags": ["Leverantörer"],
+    "body": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p><ul><li><p>Illum similique?</p></li><li><p>Nam aspernatur ipsum?</p></li></ul><p>Perferendis dicta perspiciatis esse corporis.</p>"
+  },
+  {
+    "id": 3,
+    "slug": "formanscykel-vad-galler-egentligen",
+    "date": "2026-02-20",
+    "author": "Maria Nilsson",
+    "coverImage": {
+      "src": "article-image.png",
+      "alt": "Article image"
+    },
+    "title": "Förmånscykel – vad gäller egentligen?",
+    "tags": ["Förmånscykel"],
+    "body": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p><ul><li><p>Provident facilis illo dolorem.</p></li><li><p>Repudiandae incidunt repellat.</p></li></ul><p>Lorem ipsum dolor sit amet consectetur.</p>"
+  },
+  {
+    "id": 4,
+    "slug": "5-tips-for-att-valja-ratt-cykel",
+    "date": "2026-03-05",
+    "author": "Johan Karlsson",
+    "coverImage": {
+      "src": "article-image.png",
+      "alt": "Article image"
+    },
+    "title": "5 tips för att välja rätt cykel",
+    "tags": ["Alla"],
+    "body": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p><ul><li><p>Illum similique?</p></li><li><p>Nam aspernatur ipsum?</p></li><li><p>Provident facilis illo dolorem.</p></li></ul><p>Aut ratione rem tenetur?</p>"
+  },
+  {
+    "id": 5,
+    "slug": "marknaden-vaxer-vad-betyder-det-for-dig",
+    "date": "2026-03-18",
+    "author": "Sara Lindberg",
+    "coverImage": {
+      "src": "article-image.png",
+      "alt": "Article image"
+    },
+    "title": "Marknaden växer – vad betyder det för dig?",
+    "tags": ["Marknad"],
+    "body": "<p>Lorem5 ipsum dolor sit amet consectetur adipisicing elit...</p><ul><li><p>Lorem ipsum dolor sit amet.</p></li><li><p>Repudiandae incidunt repellat cumque.</p></li></ul><p>Tempora debitis repudiandae minus inventore.</p>"
+  },
+  {
+    "id": 6,
+    "slug": "leverantorskedjor-i-forandring",
+    "date": "2026-04-02",
+    "author": "David Andersson",
+    "coverImage": {
+      "src": "article-image.png",
+      "alt": "Article image"
+    },
+    "title": "Leverantörskedjor i förändring",
+    "tags": ["Leverantörer", "Marknad"],
+    "body": "<p>Lorem6 ipsum dolor sit amet consectetur adipisicing elit...Lorem6 ipsum dolor sit amet consectetur adipisicing elitLorem6 ipsum dolor sit amet consectetur adipisicing elitLorem6 ipsum dolor sit amet consectetur adipisicing elitLorem6 ipsum dolor sit amet consectetur adipisicing elit</p><ul><li><p>Illum similique?</p></li><li><p>Nam aspernatur ipsum?</p></li></ul><p>Dicta incidunt quidem eos reprehenderit.</p>"
+  }
+]

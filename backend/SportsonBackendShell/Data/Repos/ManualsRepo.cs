@@ -75,7 +75,19 @@ namespace SportsonBackendShell.Data.Repos
             {
                 return Handbooks[id];
             }
-            catch (Exception ex)
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<ManualsResponse>?> GetAllManuals()
+        {
+            try
+            {
+                return Handbooks;
+            }
+            catch
             {
                 return null;
             }

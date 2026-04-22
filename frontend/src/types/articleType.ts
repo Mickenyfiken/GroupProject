@@ -1,5 +1,5 @@
 type BaseArticle = {
-  id: string
+  id: number
   slug: string
   date: string
   author: string
