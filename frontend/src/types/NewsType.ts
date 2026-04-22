@@ -1,4 +1,4 @@
-type BaseArticle = {
+type BaseNewsArticle = {
   id: string
   slug: string
   createdAt: Date
@@ -10,7 +10,7 @@ type BaseArticle = {
   body: string
 }
 
-export type PaginatedArticle = {
+export type adjacentNewsArticle = {
   id: string
   slug: string
   title: string
@@ -22,7 +22,9 @@ export type Tag = {
   name: string
 }
 
-export type Article = BaseArticle & {
-  prevArticle: PaginatedArticle
-  nextArticle: PaginatedArticle
+export type NewsArticle = BaseNewsArticle & {
+  adjacentArticles: {
+    prevArticle: adjacentNewsArticle
+    nextArticle: adjacentNewsArticle
+  }
 }

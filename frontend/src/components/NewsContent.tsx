@@ -1,21 +1,29 @@
 import clsx from 'clsx'
-import type { Article, Tag } from '../types/articleType'
+import type { NewsArticle, Tag } from '../types/NewsType'
 import Image from './ui/Image'
 import PaginationButton from './ui/PaginationButton'
 import Pill from './ui/Pill'
 import { formatDate } from '../helpers/formatDate'
 
-const ArticleContent = ({
+const NewsContent = ({
   data,
   modalState,
 }: {
-  data: Article
+  data: NewsArticle
   modalState: {
     backgroundLocation: unknown
   }
 }) => {
-  const { imageUrl, imageAltText, title, tags, body, author, createdAt, prevArticle, nextArticle } =
-    data!
+  const {
+    imageUrl,
+    imageAltText,
+    title,
+    tags,
+    body,
+    author,
+    createdAt,
+    adjacentArticles: { prevArticle, nextArticle },
+  } = data!
 
   console.log(data)
 
@@ -98,4 +106,4 @@ const ArticleContent = ({
   )
 }
 
-export default ArticleContent
+export default NewsContent

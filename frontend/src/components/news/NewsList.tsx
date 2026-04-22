@@ -1,6 +1,6 @@
 import { Link, type Location } from 'react-router'
 import { useArticles } from '../../hooks/articleHooks'
-import type { Article } from '../../types/articleType'
+import type { NewsArticle } from '../../types/NewsType'
 import NewsCard from './newsCard'
 
 const NewsList = ({ location }: { location: Location<unknown> }) => {
@@ -12,7 +12,7 @@ const NewsList = ({ location }: { location: Location<unknown> }) => {
 
   return (
     <div className="flex flex-col gap-6 p-4">
-      {articles.map((article: Article) => (
+      {articles.map((article: NewsArticle) => (
         <Link
           className="w-fit"
           key={article.id}

@@ -1,8 +1,16 @@
 import { formatDate } from '../../helpers/formatDate'
-import type { Article } from '../../types/articleType'
+import type { NewsArticle, Tag } from '../../types/NewsType'
 import Pill from '../ui/Pill'
 
-const NewsCard = ({ imageUrl, imageAltText, title, tags, body, author, createdAt }: Article) => {
+const NewsCard = ({
+  imageUrl,
+  imageAltText,
+  title,
+  tags,
+  body,
+  author,
+  createdAt,
+}: NewsArticle) => {
   return (
     <div className="flex flex-col max-w-3xl p-4 bg-white rounded-lg shadow-md h-60 just">
       <div className="flex flex-row flex-wrap items-center text-base text-black/50 font-family-FSE-Text">
@@ -10,8 +18,8 @@ const NewsCard = ({ imageUrl, imageAltText, title, tags, body, author, createdAt
           {formatDate(new Date(createdAt))} | {author}
         </span>
         <div className="flex flex-row items-center ml-4 gap-x-2">
-          {tags.map((text: string) => (
-            <Pill key={text} text={text} size="small" />
+          {tags.map(({ id, name }: Tag) => (
+            <Pill key={id} text={name} size="small" />
           ))}
         </div>
       </div>
