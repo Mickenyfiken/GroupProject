@@ -6,11 +6,23 @@ type BaseArticle = {
   imageUrl: string
   imageAltText: string
   title: string
-  tags: string[]
+  tags: Tag[]
   body: string
 }
 
+export type PaginatedArticle = {
+  id: string
+  slug: string
+  title: string
+  createdAt: Date
+}
+
+export type Tag = {
+  id: string
+  name: string
+}
+
 export type Article = BaseArticle & {
-  prevArticle: BaseArticle
-  nextArticle: BaseArticle
+  prevArticle: PaginatedArticle
+  nextArticle: PaginatedArticle
 }

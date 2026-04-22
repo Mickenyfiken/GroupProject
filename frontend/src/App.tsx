@@ -11,7 +11,7 @@ function App() {
         Aside
       </aside>
 
-      <Header/>
+      <Header />
 
       <main className="overflow-auto">
         <Outlet />
@@ -19,5 +19,4 @@ function App() {
     </div>
   )
 }
-
 export default App

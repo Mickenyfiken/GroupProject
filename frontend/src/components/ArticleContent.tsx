@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { Article } from '../types/articleType'
+import type { Article, Tag } from '../types/articleType'
 import Image from './ui/Image'
 import PaginationButton from './ui/PaginationButton'
 import Pill from './ui/Pill'
@@ -71,7 +71,7 @@ const ArticleContent = ({
         <h1 className="mt-6 text-2xl font-medium ">{title}</h1>
 
         <span className="flex flex-wrap items-center mt-4 gap-x-2.5 gap-y-1.5">
-          {tags.map(({ id, name }: any) => (
+          {tags.map(({ id, name }: Tag) => (
             <Pill key={id} text={name} />
           ))}
         </span>

@@ -1,7 +1,7 @@
 using System;
 using SportsonBackendShell.Data.Entities.News;
 
-namespace SportsonBackendShell.Data.DTO;
+namespace SportsonBackendShell.Data.DTO.Article;
 
 public class ArticleDto
 {
@@ -14,4 +14,5 @@ public class ArticleDto
     public string? ImageUrl { get; set; }
     public string? ImageAltText { get; set; }
     public List<Tag> Tags { get; set; } = new();
+    public AdjacentArticlesDto AdjacentArticles { get; set; } = new();
 }

@@ -1,5 +1,4 @@
-﻿using SportsonBackendShell.Data.DTO;
-using SportsonBackendShell.Data.Entities;
+﻿using SportsonBackendShell.Data.DTO.Article;
 
 namespace SportsonBackendShell.Core.Interface
 {

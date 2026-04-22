@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { refreshAccessToken } from '../api/tokenApi'
 
-
 export const useAuth = () => {
   return useQuery({
     queryKey: ['me'],

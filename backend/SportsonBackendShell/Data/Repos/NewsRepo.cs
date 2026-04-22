@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportsonBackendShell.Data.Entities.News;
 using SportsonBackendShell.Data.Interfaces;
+using System.Text.Json;
 
 namespace SportsonBackendShell.Data.Repos
 {
