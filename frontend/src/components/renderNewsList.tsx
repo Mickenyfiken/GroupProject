@@ -16,9 +16,10 @@ const RenderNewsList = ({ location }: { location: any }) => {
   }, [])
 
   return (
-    <div>
+    <div className="flex flex-col gap-6 p-4">
       {newsList.map((article) => (
         <Link
+          className="w-fit"
           key={article.id}
           to={`nyheter/${article.id}/${article.slug}`}
           state={{ backgroundLocation: location }}

@@ -1,5 +1,5 @@
 import RenderNewsList from '../components/renderNewsList'
-import { useLocation } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 const Dashboard = () => {
 const location = useLocation()
 
@@ -7,8 +7,8 @@ const location = useLocation()
     <>
       <div className="dashboard">
         <h1>Dashboard</h1>
-
         <RenderNewsList location={location} />
+        <Outlet />
       </div>
     </>
   )
