@@ -1,7 +1,7 @@
 using System;
 using AutoMapper;
 using SportsonBackendShell.Data.DTO;
-using SportsonBackendShell.Data.Entities;
+using SportsonBackendShell.Data.Entities.News;
 
 namespace SportsonBackendShell.Mapper;
 

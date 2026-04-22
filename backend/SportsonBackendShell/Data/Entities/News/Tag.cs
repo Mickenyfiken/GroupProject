@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SportsonBackendShell.Data.Entities;
+namespace SportsonBackendShell.Data.Entities.News;
 
 public class Tag
 {

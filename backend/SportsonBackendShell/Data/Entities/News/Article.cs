@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SportsonBackendShell.Data.Entities
+namespace SportsonBackendShell.Data.Entities.News
 {
     public class Article
     {

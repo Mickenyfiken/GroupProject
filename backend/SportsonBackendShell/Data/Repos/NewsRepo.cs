@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SportsonBackendShell.Data.Entities;
+using SportsonBackendShell.Data.Entities.News;
 using SportsonBackendShell.Data.Interfaces;
 
 namespace SportsonBackendShell.Data.Repos

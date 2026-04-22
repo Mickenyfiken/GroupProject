@@ -1,5 +1,5 @@
 using System;
-using SportsonBackendShell.Data.Entities;
+using SportsonBackendShell.Data.Entities.News;
 
 namespace SportsonBackendShell.Data.DTO;
 
