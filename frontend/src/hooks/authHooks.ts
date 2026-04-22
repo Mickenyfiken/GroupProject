@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { fetchMe, logOut } from '../api/authApi'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { refreshAccessToken } from '../api/tokenApi'
+
 
 export const useAuth = () => {
   return useQuery({
@@ -74,4 +75,19 @@ export const useTokenRefresh = () => {
       captureEvents.forEach((e) => document.removeEventListener(e, handleUserActivity, true))
     }
   }, [navigate])
+}
+
+export const useLogout = () => {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+
+  const { mutate: logoutMutation } = useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      queryClient.clear()
+      navigate('/login')
+    },
+  })
+
+  return { logoutMutation }
 }

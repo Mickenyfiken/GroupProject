@@ -28,5 +28,19 @@ namespace SportsonBackendShell.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllManuals()
+        {
+            var response = await _manualsService.GetAllManuals();
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

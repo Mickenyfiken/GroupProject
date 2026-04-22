@@ -13,9 +13,14 @@ namespace SportsonBackendShell.Core.Service
             _manualRepo = manualRepo;
         }
 
+
         public async Task<ManualsResponse?> GetManualsForOneHandbook(int id)
         {
             return await _manualRepo.GetManualsForOneHandbook(id);
+        }
+        public async Task<List<ManualsResponse>?> GetAllManuals()
+        {
+            return await _manualRepo.GetAllManuals();
         }
     }
 }
