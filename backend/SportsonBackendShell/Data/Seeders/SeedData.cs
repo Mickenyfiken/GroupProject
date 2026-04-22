@@ -11,8 +11,8 @@ public static class SeedData
     {
         await context.Database.MigrateAsync();
 
-        ManualSeeder.CreateManuals(context);
-        ArticleSeeder.CreateTags(context);
-        ArticleSeeder.CreateArticles(context);
+        await ManualSeeder.CreateManuals(context);
+        await ArticleSeeder.CreateTags(context);
+        await ArticleSeeder.CreateArticles(context);
     }
 }

@@ -1,16 +1,17 @@
 using backend.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Core.Service;
+using SportsonBackendShell.Data;
+using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
 using SportsonBackendShell.Data.Repos;
+using SportsonBackendShell.Data.Seeders;
 using SportsonBackendShell.Extensions;
 using System.Collections.Concurrent;
-using System.Text;
-using SportsonBackendShell.Data.Entities;
-using SportsonBackendShell.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,6 +47,13 @@ builder.Services.AddSingleton(signingKey);
 builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context =
+    scope.ServiceProvider.GetRequiredService<SportsonContext>();
+    await SeedData.SeedAsync(context);
+}
 
 app.UseRouting();
 app.UseCors("ReactPolicy");
