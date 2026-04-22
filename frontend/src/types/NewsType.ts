@@ -28,3 +28,5 @@ export type NewsArticle = BaseNewsArticle & {
     nextArticle: adjacentNewsArticle
   }
 }
+
+export type NewsSummary = BaseNewsArticle

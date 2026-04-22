@@ -1,4 +1,4 @@
-import type { NewsSummary } from '../types/newsSummary'
+import type { NewsSummary } from '../types/NewsType'
 
 const NewsListService = async () => {
   const response = await fetch(`api/GetNewsSummaryList/10`)
