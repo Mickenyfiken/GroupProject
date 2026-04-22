@@ -13,7 +13,9 @@ public class SportsonContext : DbContext
     }
 
     public virtual DbSet<Article> Articles { get; set; }
+    public virtual DbSet<Tag> Tags { get; set; }
     public virtual DbSet<Manual> Manuals { get; set; }
+    public virtual DbSet<ManualResource> ManualResources { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

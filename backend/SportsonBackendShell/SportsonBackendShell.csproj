@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Data/Dto/" />
+    <Folder Include="Data/Seeders/" />
     <Folder Include="Data\DTO\" />
     <Folder Include="Mapper/" />
   </ItemGroup>
