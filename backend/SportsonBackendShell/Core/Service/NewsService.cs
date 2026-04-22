@@ -25,7 +25,7 @@ namespace SportsonBackendShell.Core.Service
 
 
         public async Task<List<ArticleDto>> GetArticles(int limit = 10) => await _newsRepo.QueryAll()
-            .OrderByDescending(s => s.CreatedAt)
+            .OrderByDescending(a => a.CreatedAt)
             .Take(limit)
             .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
             .ToListAsync();

@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportsonBackendShell.Data.Entities.News
 {
-    public class Article
+    public class Article : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public string? Slug { get; set; }
 
         [MaxLength(300)]
@@ -18,8 +15,6 @@ namespace SportsonBackendShell.Data.Entities.News
 
         [MaxLength(100)]
         public string? Author { get; set; }
-
-        public DateTime CreatedAt { get; set; }
 
         public string? ImageUrl { get; set; }
 
