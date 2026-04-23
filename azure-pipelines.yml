@@ -19,17 +19,7 @@ pool:
 
 variables:
   - group: frontend-secrets
-
-  - name: BUILD_CONFIGURATION
-    value: Release
-  - name: BACKEND_PROJECTS
-    value: backend/**/*.csproj
-  - name: BACKEND_TEST_PROJECTS
-    value: backend/**/*.Tests.csproj
-  - name: FRONTEND_PATH
-    value: frontend
-  - name: NODE_VERSION
-    value: 20.x
+  - group: development-variables
 
 stages:
   - stage: Build_Backend
@@ -91,7 +81,7 @@ stages:
     jobs:
       - deployment: deploy_backend
         displayName: Deploy Backend
-        environment: development
+        environment: $(AZDO_ENVIRONMENT_NAME)
         strategy:
           runOnce:
             deploy:
@@ -99,10 +89,10 @@ stages:
                 - template: .azure-pipelines/templates/backend-deploy.yml
                   parameters:
                     azureSubscription: sportson-connection
-                    appType: webApp
-                    appName: sportson-backend-dev
+                    appType: $(BACKEND_APP_TYPE)
+                    appName: $(BACKEND_APP_NAME)
                     artifactName: backend
-                    packagePath: $(Pipeline.Workspace)/backend/**/*.zip
+                    packagePath: $(BACKEND_PACKAGE_PATH)
 
   - stage: Frontend_Deploy
     displayName: Deploy Frontend
@@ -115,3 +105,6 @@ stages:
         displayName: Deploy Frontend
         steps:
           - template: .azure-pipelines/templates/frontend-deploy.yml
+            parameters:
+              appLocation: $(FRONTEND_APP_LOCATION)
+              outputLocation: $(FRONTEND_OUTPUT_LOCATION)
