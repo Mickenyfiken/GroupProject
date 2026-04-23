@@ -22,171 +22,39 @@ variables:
   - group: frontend-secrets
   - group: development-variables
   - group: production-variables
-  - group: production-variables
 
 stages:
-  - stage: Build_Backend
-    displayName: Build Backend
+  - stage: CI
+    displayName: Build & Test
     jobs:
-      - job: build_backend
-        displayName: Build Backend
+      - job: backend
         steps:
-          - template: .azure-pipelines/templates/backend-build.yml
+          - template: .azure-pipelines/templates/backend-ci.yml
             parameters:
+              buildConfiguration: $(BUILD_CONFIGURATION)
+              nugetCache: $(Pipeline.Workspace)/.nuget/packages
               projects: $(BACKEND_PROJECTS)
-              buildConfiguration: $(BUILD_CONFIGURATION)
-
-  - stage: Test_Backend
-    displayName: Test Backend
-    dependsOn: Build_Backend
-    condition: succeeded()
-    jobs:
-      - job: test_backend
-        displayName: Test Backend
-        steps:
-          - template: .azure-pipelines/templates/backend-test.yml
-            parameters:
               testProjects: $(BACKEND_TEST_PROJECTS)
-              buildConfiguration: $(BUILD_CONFIGURATION)
 
-  - stage: Test_Frontend
-    displayName: Test Frontend
-    dependsOn: Test_Backend
-    condition: succeeded()
-    jobs:
-      - job: test_frontend
-        displayName: Test Frontend
+      - job: frontend
         steps:
-          - template: .azure-pipelines/templates/frontend-test.yml
+          - template: .azure-pipelines/templates/frontend-ci.yml
             parameters:
               frontendPath: $(FRONTEND_PATH)
               nodeVersion: $(NODE_VERSION)
 
-  - stage: Build_Frontend
-    displayName: Build Frontend
-    dependsOn: Test_Frontend
-    condition: succeeded()
-    jobs:
-      - job: build_frontend
-        displayName: Build Frontend
-        steps:
-          - template: .azure-pipelines/templates/frontend-build.yml
-            parameters:
-              frontendPath: $(FRONTEND_PATH)
-              nodeVersion: $(NODE_VERSION)
+  - template: .azure-pipelines/templates/deploy-stage.yml
+    parameters:
+      stageName: Deploy_Dev
+      branch: develop
+      environment: $(AZDO_ENVIRONMENT_NAME)
+      backendAppName: $(BACKEND_APP_NAME)
+      frontendToken: $(SWA_DEPLOYMENT_TOKEN)
 
-  - stage: Backend_Deploy
-    displayName: Deploy Backend
-    dependsOn:
-      - Test_Backend
-      - Build_Frontend
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-    jobs:
-      - deployment: deploy_backend
-        displayName: Deploy Backend
-        environment: $(AZDO_ENVIRONMENT_NAME)
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - template: .azure-pipelines/templates/backend-deploy.yml
-                  parameters:
-                    azureSubscription: sportson-connection
-                    appType: $(BACKEND_APP_TYPE)
-                    appName: $(BACKEND_APP_NAME)
-                    artifactName: backend
-                    packagePath: $(BACKEND_PACKAGE_PATH)
-
-  - stage: Frontend_Deploy
-    displayName: Deploy Frontend
-    dependsOn:
-      - Build_Frontend
-      - Backend_Deploy
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-    jobs:
-      - job: deploy_frontend
-        displayName: Deploy Frontend
-        steps:
-          - template: .azure-pipelines/templates/frontend-deploy.yml
-            parameters:
-              appLocation: $(FRONTEND_APP_LOCATION)
-              outputLocation: $(FRONTEND_OUTPUT_LOCATION)
-
-  - stage: Backend_Deploy_Prod
-    displayName: Deploy Backend (Production)
-    dependsOn:
-      - Build_Frontend
-      - Backend_Deploy
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    jobs:
-      - deployment: deploy_backend_prod
-        displayName: Deploy Backend (Production)
-        environment: $(AZDO_ENVIRONMENT_NAME_PROD)
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - template: .azure-pipelines/templates/backend-deploy.yml
-                  parameters:
-                    azureSubscription: sportson-connection
-                    appType: $(BACKEND_APP_TYPE)
-                    appName: $(BACKEND_APP_NAME_PROD)
-                    artifactName: backend
-                    packagePath: $(BACKEND_PACKAGE_PATH)
-            on:
-              failure:
-                steps:
-                  - task: DownloadPipelineArtifact@2
-                    displayName: Hämta senaste lyckade backend-artifact för rollback
-                    inputs:
-                      buildType: specific
-                      project: $(System.TeamProjectId)
-                      pipeline: $(System.DefinitionId)
-                      runVersion: latestFromBranch
-                      branchName: refs/heads/main
-                      artifactName: backend
-                      targetPath: $(Pipeline.Workspace)/rollback/backend
-                  - task: AzureWebApp@1
-                    displayName: Rollback backend till föregående version
-                    inputs:
-                      azureSubscription: sportson-connection
-                      appType: webApp
-                      appName: $(BACKEND_APP_NAME_PROD)
-                      package: $(Pipeline.Workspace)/rollback/backend/**/*.zip
-
-  - stage: Frontend_Deploy_Prod
-    displayName: Deploy Frontend (Production)
-    dependsOn:
-      - Build_Frontend
-      - Backend_Deploy_Prod
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    variables:
-      SWA_DEPLOYMENT_TOKEN: $(SWA_DEPLOYMENT_TOKEN_PROD)
-    jobs:
-      - deployment: deploy_frontend_prod
-        displayName: Deploy Frontend (Production)
-        environment: $(AZDO_ENVIRONMENT_NAME_PROD)
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - template: .azure-pipelines/templates/frontend-deploy.yml
-                  parameters:
-                    appLocation: $(FRONTEND_APP_LOCATION)
-                    outputLocation: $(FRONTEND_OUTPUT_LOCATION)
-            on:
-              failure:
-                steps:
-                  - task: AzureCLI@2
-                    displayName: Rollback frontend till föregående SWA-deployment
-                    inputs:
-                      azureSubscription: sportson-connection
-                      scriptType: bash
-                      scriptLocation: inlineScript
-                      inlineScript: |
-                        echo "##vso[task.logissue type=warning]Frontend prod-deploy misslyckades. Listar tillgängliga deployments..."
-                        az staticwebapp environment list \
-                          --name sportson-frontend-prod \
-                          --query "[].{name:name,status:status,skapad:createdTimeUtc}" \
-                          --output table || true
-                        echo "##vso[task.logissue type=error]Manuell rollback: Azure Portal > sportson-frontend-prod > Environments > aktivera föregående deployment."
+  - template: .azure-pipelines/templates/deploy-stage.yml
+    parameters:
+      stageName: Deploy_Prod
+      branch: main
+      environment: $(AZDO_ENVIRONMENT_NAME_PROD)
+      backendAppName: $(BACKEND_APP_NAME_PROD)
+      frontendToken: $(SWA_DEPLOYMENT_TOKEN_PROD)
