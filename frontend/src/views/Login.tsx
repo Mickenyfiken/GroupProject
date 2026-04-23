@@ -10,6 +10,7 @@ import TextInput from '../components/ui/form/TextInput'
 import { useAppLoaderData } from '../hooks/useLoaderData'
 import { login } from '../api/authApi'
 import type { TLoginUser } from '../types/userTypes'
+import { YouTubeEmbed } from '../helpers/embededVideo'
 
 const Login = () => {
   const loaderData = useAppLoaderData()
@@ -66,6 +67,7 @@ const Login = () => {
           <p className="text-white">Du loggas ut automatiskt efter 2 minuter inaktivitet.</p>
         </span>
       </div>
+      <YouTubeEmbed youtubeURL="https://www.youtube.com/watch?v=u-1oMaaNJCY" />
     </div>
   )
 }
