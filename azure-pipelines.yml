@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
       - develop
+      - main
   paths:
     include:
       - backend/**
@@ -115,3 +116,41 @@ stages:
         displayName: Deploy Frontend
         steps:
           - template: .azure-pipelines/templates/frontend-deploy.yml
+
+  - stage: Backend_Deploy_Prod
+    displayName: Deploy Backend (Production)
+    dependsOn:
+      - Build_Frontend
+      - Backend_Deploy
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: deploy_backend_prod
+        displayName: Deploy Backend (Production)
+        environment: production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: .azure-pipelines/templates/backend-deploy.yml
+                  parameters:
+                    azureSubscription: sportson-connection
+                    appType: webApp
+                    appName: PROD_APP_SERVICE_NAME
+                    artifactName: backend
+                    packagePath: $(Pipeline.Workspace)/backend/**/*.zip
+
+  - stage: Frontend_Deploy_Prod
+    displayName: Deploy Frontend (Production)
+    dependsOn:
+      - Build_Frontend
+      - Backend_Deploy_Prod
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: deploy_frontend_prod
+        displayName: Deploy Frontend (Production)
+        environment: production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: .azure-pipelines/templates/frontend-deploy.yml
