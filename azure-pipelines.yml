@@ -135,7 +135,7 @@ stages:
                   parameters:
                     azureSubscription: sportson-connection
                     appType: webApp
-                    appName: PROD_APP_SERVICE_NAME
+                    appName: sportson-backend-prod
                     artifactName: backend
                     packagePath: $(Pipeline.Workspace)/backend/**/*.zip
 
@@ -145,6 +145,8 @@ stages:
       - Build_Frontend
       - Backend_Deploy_Prod
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    variables:
+      SWA_DEPLOYMENT_TOKEN: $(SWA_DEPLOYMENT_TOKEN_PROD)
     jobs:
       - deployment: deploy_frontend_prod
         displayName: Deploy Frontend (Production)
