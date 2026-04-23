@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router'
 import sportsonLogo from '../assets/sportson-logo.svg'
+import clsx from 'clsx'
 
 const stores = ['Sportson Göteborg', 'Sportson Stockholm', 'Sportson Malmö', 'Sportson Uppsala']
 
@@ -97,46 +98,22 @@ const Sidebar = () => {
   const [storeOpen, setStoreOpen] = useState(false)
 
   return (
-    <>
-      {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed top-4 left-0 z-50 bg-surface-dark-gary text-white p-2 rounded-r-md shadow-lg"
-          aria-label="Öppna meny"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+    <aside
+      className={clsx(
+        'bg-gray-900 min-w-[60px]  row-span-2 sticky top-0 h-screen text-white transition-all duration-300',
+        isOpen && 'w-56',
       )}
-
-      <aside
-        className={`${
-          isOpen ? 'w-56' : 'w-0 overflow-hidden'
-        } h-screen bg-gray-900 text-white flex flex-col shrink-0 transition-all duration-300 shadow-xl`}
-      >
-        <div className="flex items-center justify-between px-4 pt-4 pb-2">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Stäng meny
-          </button>
+      onMouseOver={() => setIsOpen(true)}
+      onMouseOut={() => setIsOpen(false)}
+    >
+      <div className={clsx(!isOpen && 'w-0', 'flex-col shrink-0  shadow-xl', !isOpen && 'hidden')}>
+        <div
+          className={clsx('px-4 py-4', isOpen && 'border-b border-gray-700', !isOpen && 'hidden')}
+        >
+          <img src={sportsonLogo} alt="Sportson" className="w-auto h-8" />
         </div>
 
-        <div className="px-4 py-4 border-b border-gray-700">
-          <img src={sportsonLogo} alt="Sportson" className="h-8 w-auto" />
-        </div>
-
-        <nav className="flex flex-col gap-1 px-3 py-4 flex-1 overflow-y-auto">
+        <nav className="flex flex-col flex-1 gap-1 px-3 py-4 overflow-y-auto">
           {links.map((link) => (
             <NavLink
               key={link.name}
@@ -153,10 +130,16 @@ const Sidebar = () => {
           ))}
         </nav>
 
-        <div className="px-3 pb-3 border-t border-gray-700 pt-3">
+        <div
+          className={clsx(
+            'px-3 pt-3 pb-3',
+            isOpen && 'border-t border-gray-700',
+            !isOpen && 'hidden',
+          )}
+        >
           <button
             onClick={() => setStoreOpen((prev) => !prev)}
-            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-bold text-gray-300 hover:bg-gray-700 transition-colors"
+            className="flex items-center justify-between w-full px-3 py-2 text-sm font-bold text-gray-300 transition-colors rounded-lg hover:bg-gray-700"
           >
             <span className="whitespace-nowrap">MIN BUTIK</span>
             <svg
@@ -187,16 +170,16 @@ const Sidebar = () => {
           )}
         </div>
 
-        <div className="px-3 pb-4">
+        <div className={clsx('px-3 pb-4', !isOpen && 'hidden')}>
           <NavLink
             to="/support"
-            className="block text-center px-4 py-2 rounded-lg text-sm font-bold bg-surface-yellow text-gray-900 hover:brightness-110 transition-all whitespace-nowrap"
+            className="block px-4 py-2 text-sm font-bold text-center text-gray-900 transition-all rounded-lg bg-surface-yellow hover:brightness-110 whitespace-nowrap"
           >
             HK-HJÄLP
           </NavLink>
         </div>
-      </aside>
-    </>
+      </div>
+    </aside>
   )
 }
 

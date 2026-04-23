@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 const Pill = ({ text, size = 'default' }: { text: string; size?: 'default' | 'small' }) => {
   const sizeClasses = {
     default: 'h-8 px-4 py-2 text-sm',
@@ -6,7 +8,10 @@ const Pill = ({ text, size = 'default' }: { text: string; size?: 'default' | 'sm
 
   return (
     <span
-      className={`inline-flex items-center ${sizeClasses[size]} text-sm uppercase border border-black rounded-full min-w-12 text-label-default font-extralight`}
+      className={clsx(
+        'inline-flex items-center text-sm uppercase border border-black rounded-full min-w-12 text-label-default font-extralight',
+        sizeClasses[size],
+      )}
     >
       {text}
     </span>

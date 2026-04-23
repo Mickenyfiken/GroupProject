@@ -5,7 +5,7 @@ using SportsonBackendShell.Core.Interface;
 
 namespace SportsonBackendShell.Controllers
 {
-    [Route("api/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class NewsController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace SportsonBackendShell.Controllers
         {
             var article = await _newsService.GetArticleById(id);
 
-            if(article != null)
+            if (article != null)
             {
                 return Ok(article);
             }
@@ -29,11 +29,11 @@ namespace SportsonBackendShell.Controllers
             return NotFound();
         }
 
-        
-        [HttpGet("{amount}")]
-        public async Task<IActionResult> GetNewsSummaryList(int amount = 10)
+
+        [HttpGet]
+        public async Task<IActionResult> GetArticles([FromQuery] int limit)
         {
-            var newsList = await _newsService.GetNewsSummaryList(amount);
+            var newsList = await _newsService.GetArticles(limit);
             return Ok(newsList);
         }
     }
