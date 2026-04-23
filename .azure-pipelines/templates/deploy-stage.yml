@@ -5,7 +5,6 @@ parameters:
   backendAppName: ''
   backendAppType: ''
   frontendToken: ''
-  frontendAppLocation: ''
 
 stages:
   - stage: ${{ parameters.stageName }}
@@ -13,7 +12,6 @@ stages:
     dependsOn: CI
 
     jobs:
-      # 🔹 Backend
       - deployment: deploy_backend
         displayName: Deploy Backend
         environment: ${{ parameters.environment }}
@@ -28,7 +26,6 @@ stages:
                     artifactName: backend
                     azureSubscription: sportson-connection
 
-      # 🔹 Frontend
       - deployment: deploy_frontend
         displayName: Deploy Frontend
         environment: ${{ parameters.environment }}
@@ -39,5 +36,4 @@ stages:
                 - template: deploy-frontend.yml
                   parameters:
                     artifactName: frontend
-                    appLocation: ${{ parameters.frontendAppLocation }}
                     deploymentToken: ${{ parameters.frontendToken }}

@@ -51,7 +51,6 @@ stages:
       backendAppName: $(BACKEND_APP_NAME)
       backendAppType: $(BACKEND_APP_TYPE)
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
-      frontendAppLocation: $(FRONTEND_APP_LOCATION)
 
   - template: .azure-pipelines/templates/deploy-stage.yml
     parameters:
@@ -61,4 +60,3 @@ stages:
       backendAppName: $(BACKEND_APP_NAME_PROD)
       backendAppType: $(BACKEND_APP_TYPE)
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
-      frontendAppLocation: $(FRONTEND_APP_LOCATION)
