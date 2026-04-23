@@ -13,10 +13,12 @@ export function ManualExample() {
     <ul>
       {data.map((manual: BaseManual) => (
         <li key={manual.id}>
-          {manual.title}, {manual.description ?? ""}
-          {manual.resources.filter((r) => r.type === ManualResourceType.Video).map((r) => (
-            <YouTubeEmbed key={r.id} youtubeURL={r.url!} />
-          ))}
+          {manual.title}, {manual.description ?? ''}
+          {manual.resources
+            .filter((r) => r.type === ManualResourceType.Video)
+            .map((r) => (
+              <YouTubeEmbed key={r.id} youtubeURL={r.url!} />
+            ))}
         </li>
       ))}
     </ul>

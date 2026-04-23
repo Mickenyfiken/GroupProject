@@ -12,7 +12,8 @@ export function ManualList() {
     <ul>
       {data.map((manual: BaseManual) => (
         <li key={manual.id}>
-          {manual.title}, {manual.resources.filter((r) => r.type === ManualResourceType.Video).length} videos,{' '}
+          {manual.title},{' '}
+          {manual.resources.filter((r) => r.type === ManualResourceType.Video).length} videos,{' '}
           {manual.resources.filter((r) => r.type === ManualResourceType.File).length} files
         </li>
       ))}
