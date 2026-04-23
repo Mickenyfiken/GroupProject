@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportsonBackendShell.Core.Interface;
 
@@ -28,7 +29,7 @@ namespace SportsonBackendShell.Controllers
             return NotFound();
         }
 
-
+        
         [HttpGet("{amount}")]
         public async Task<IActionResult> GetNewsSummaryList(int amount = 10)
         {

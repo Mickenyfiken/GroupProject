@@ -39,10 +39,18 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Dashboard /> },
+      {
+        path: "/",
+        element: <Dashboard />,
+        children: [
+          {
+            path: 'nyheter/:id/:slug',
+            element: <ArticleModal />,
+          },
+        ],
+      },
       { path: '/manualer', element: <Manuals /> },
       { path: '/nyheter', element: <Nyheter /> },
-      { path: 'nyheter/:id/:slug', element: <ArticleModal /> },
       { path: '/kampanjer', element: <Kampanjer /> },
       { path: '/butiksservice', element: <Butiksservice /> },
       { path: '/ordercentral', element: <Ordercentral /> },

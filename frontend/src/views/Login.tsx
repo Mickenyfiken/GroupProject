@@ -47,7 +47,7 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="">
           <Fieldset legend={{ string: 'Logga in', srOnly: true }}>
             <TextInput label="Email" {...register('email')} />
-            <TextInput label="Lösenord" {...register('password')} />
+            <TextInput label="Lösenord" type="password" {...register('password')} />
             {errorMessage && <p className="-mt-3 text-label-warning text-sm/6">{errorMessage}</p>}
             <Button
               type="submit"
