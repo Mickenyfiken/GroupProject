@@ -1,3 +1,4 @@
+import { ManualExample } from '../components/manuals/ManualExample'
 import { ManualList } from '../components/manuals/ManualsList'
 
 const Manuals = () => {
@@ -5,6 +6,7 @@ const Manuals = () => {
     <div>
       <h1>Manuals</h1>
       <ManualList />
+      <ManualExample />
     </div>
   )
 }
