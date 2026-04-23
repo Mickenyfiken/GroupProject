@@ -15,22 +15,22 @@ steps:
       workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
-    displayName: ESLint
+    displayName: Lint frontend
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run lint
 
   - task: Npm@1
-    displayName: Prettier format check
+    displayName: Check frontend
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
-      customCommand: run format:check
+      customCommand: run check
 
   - task: Npm@1
-    displayName: Build frontend
+    displayName: Run frontend tests
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
-      customCommand: run build
+      customCommand: run test

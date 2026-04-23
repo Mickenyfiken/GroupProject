@@ -6,6 +6,13 @@ import ErrorPage from './views/ErrorPage'
 import Login from './views/Login'
 import Manuals from './views/Manuals'
 import NotFound from './views/NotFound'
+import Nyheter from './views/Nyheter'
+import Kampanjer from './views/Kampanjer'
+import Butiksservice from './views/Butiksservice'
+import Ordercentral from './views/Ordercentral'
+import Leverantorer from './views/Leverantorer'
+import Kontakter from './views/Kontakter'
+import Support from './views/Support'
 
 // const queryClient = new QueryClient()
 
@@ -41,6 +48,13 @@ export const router = createBrowserRouter([
         ],
       },
       { path: '/manualer', element: <Manuals /> },
+      { path: '/nyheter', element: <Nyheter /> },
+      { path: '/kampanjer', element: <Kampanjer /> },
+      { path: '/butiksservice', element: <Butiksservice /> },
+      { path: '/ordercentral', element: <Ordercentral /> },
+      { path: '/leverantorer', element: <Leverantorer /> },
+      { path: '/kontakter', element: <Kontakter /> },
+      { path: '/support', element: <Support /> },
     ],
   },
   {

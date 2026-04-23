@@ -56,9 +56,22 @@ stages:
               testProjects: $(BACKEND_TEST_PROJECTS)
               buildConfiguration: $(BUILD_CONFIGURATION)
 
+  - stage: Test_Frontend
+    displayName: Test Frontend
+    dependsOn: Test_Backend
+    condition: succeeded()
+    jobs:
+      - job: test_frontend
+        displayName: Test Frontend
+        steps:
+          - template: .azure-pipelines/templates/frontend-test.yml
+            parameters:
+              frontendPath: $(FRONTEND_PATH)
+              nodeVersion: $(NODE_VERSION)
+
   - stage: Build_Frontend
     displayName: Build Frontend
-    dependsOn: Test_Backend
+    dependsOn: Test_Frontend
     condition: succeeded()
     jobs:
       - job: build_frontend

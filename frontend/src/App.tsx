@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router'
+import Sidebar from './components/Sidebar'
 import { useInactivityLogout, useTokenRefresh } from './hooks/authHooks'
 import Header from './components/layouts/Header'
 
@@ -7,13 +8,12 @@ function App() {
   useTokenRefresh()
   return (
     <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen">
-      <aside className="bg-surface-dark-gary min-w-[60px] row-span-2 sticky top-0 h-screen text-white">
-        Aside
-      </aside>
+      <Sidebar />
 
       <Header />
 
       <main className="overflow-auto">
+        {/* <main className="flex-1 overflow-auto"> */}
         <Outlet />
       </main>
     </div>
