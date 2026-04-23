@@ -11,7 +11,6 @@ import { useAppLoaderData } from '../hooks/useLoaderData'
 import { login } from '../api/authApi'
 import type { TLoginUser } from '../types/userTypes'
 import { PDFViewer } from '../helpers/displayPdf'
-
 const Login = () => {
   const loaderData = useAppLoaderData()
   const navigate = useNavigate()
