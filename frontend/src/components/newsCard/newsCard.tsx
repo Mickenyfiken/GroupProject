@@ -6,7 +6,9 @@ const NewsCard = ({ title, body, date, author, coverImage, tags }: NewsSummary) 
   return (
     <div className="flex flex-col h-60 max-w-3xl p-4 rounded-lg shadow-md bg-white just">
       <div className="flex flex-row items-center flex-wrap text-black/50 text-base font-family-FSE-Text">
-        <span>{formatDate(new Date(date))} | {author}</span>
+        <span>
+          {formatDate(new Date(date))} | {author}
+        </span>
         <div className="flex flex-row items-center ml-4 gap-x-2">
           {tags.map((text: string) => (
             <Pill key={text} text={text} size="small" />

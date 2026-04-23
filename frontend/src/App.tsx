@@ -10,7 +10,7 @@ function App() {
     <div className="flex h-screen">
       <Sidebar />
 
-      <Header/>
+      <Header />
 
       <main className="flex-1 overflow-auto">
         <Outlet />
