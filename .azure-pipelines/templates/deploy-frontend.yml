@@ -1,16 +1,11 @@
 parameters:
-  artifactName: ''
   appLocation: ''
   deploymentToken: ''
-  outputLocation: ''
 
 steps:
-  - download: current
-    artifact: ${{ parameters.artifactName }}
-
   - task: AzureStaticWebApp@0
     displayName: Deploy frontend
     inputs:
       app_location: ${{ parameters.appLocation }}
-      output_location: ${{ parameters.outputLocation }}
+      output_location: ''
       azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}

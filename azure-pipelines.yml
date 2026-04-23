@@ -49,7 +49,9 @@ stages:
       branch: develop
       environment: $(AZDO_ENVIRONMENT_NAME)
       backendAppName: $(BACKEND_APP_NAME)
+      backendAppType: $(BACKEND_APP_TYPE)
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
+      frontendAppLocation: $(FRONTEND_APP_LOCATION)
 
   - template: .azure-pipelines/templates/deploy-stage.yml
     parameters:
@@ -57,4 +59,6 @@ stages:
       branch: main
       environment: $(AZDO_ENVIRONMENT_NAME_PROD)
       backendAppName: $(BACKEND_APP_NAME_PROD)
-      frontendToken: $(SWA_DEPLOYMENT_TOKEN_PROD)
+      backendAppType: $(BACKEND_APP_TYPE)
+      frontendToken: $(SWA_DEPLOYMENT_TOKEN)
+      frontendAppLocation: $(FRONTEND_APP_LOCATION)
