@@ -4,6 +4,7 @@ parameters:
   appName: sportson-backend-dev
   artifactName: backend
   packagePath: $(Pipeline.Workspace)/backend/**/*.zip
+  appSettings: ''
 
 steps:
   - download: current
@@ -16,3 +17,4 @@ steps:
       appType: ${{ parameters.appType }}
       appName: ${{ parameters.appName }}
       package: ${{ parameters.packagePath }}
+      appSettings: ${{ parameters.appSettings }}

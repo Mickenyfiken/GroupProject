@@ -132,6 +132,7 @@ stages:
                     appName: $(BACKEND_APP_NAME_PROD)
                     artifactName: backend
                     packagePath: $(BACKEND_PACKAGE_PATH)
+                    appSettings: '-CONNECTION_STRING_PROD "$(CONNECTION_STRING_PROD)"'
 
   - stage: Frontend_Deploy_Prod
     displayName: Deploy Frontend (Production)
