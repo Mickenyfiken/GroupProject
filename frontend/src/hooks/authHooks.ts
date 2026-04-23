@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { fetchMe, logOut } from '../api/authApi'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { refreshAccessToken } from '../api/tokenApi'
 
@@ -14,14 +14,26 @@ export const useAuth = () => {
 }
 
 const TIMEOUT_MS = 120 * 1000
+const WARNING_TIMEOUT_MS = 90 * 1000
 
 export const useInactivityLogout = () => {
   const timer = useRef<number>(undefined)
   const navigate = useNavigate()
 
+  const [warningShown, setWarningShown] = useState(false)
+  const warningTimer = useRef<number>(undefined)
+
   useEffect(() => {
     const resetTimer = () => {
       clearTimeout(timer.current)
+
+      clearTimeout(warningTimer.current)
+      setWarningShown(false)
+
+      warningTimer.current = setTimeout(() => {
+        setWarningShown(true)
+      }, WARNING_TIMEOUT_MS)
+
       timer.current = setTimeout(async () => {
         await logOut()
         navigate('/login')
@@ -40,6 +52,7 @@ export const useInactivityLogout = () => {
       captureEvents.forEach((e) => document.removeEventListener(e, resetTimer, true))
     }
   }, [navigate])
+  return { warningShown }
 }
 
 export const useTokenRefresh = () => {

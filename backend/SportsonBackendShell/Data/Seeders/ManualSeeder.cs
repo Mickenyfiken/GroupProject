@@ -24,7 +24,7 @@ public static class ManualSeeder
                     [
                         new ManualResource
                         {
-                            Url = "https://sportsonstorageaccound.blob.core.windows.net/manuals/rolo-geometry.pdf",
+                            Url = "https://sportsonstorageaccound.blob.core.windows.net/manuals/SportsonManual{i}.pdf",
                             Type = ManualResourceType.File,
                             Title = $"Manual {i} - PDF",
                             CreatedAt = baseDate.AddMinutes(1)

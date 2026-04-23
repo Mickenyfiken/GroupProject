@@ -22,6 +22,7 @@ variables:
   - group: frontend-secrets
   - group: development-variables
   - group: production-variables
+  - group: production-variables
 
 stages:
   - stage: Build_Backend
@@ -110,6 +111,9 @@ stages:
             parameters:
               appLocation: $(FRONTEND_APP_LOCATION)
               outputLocation: $(FRONTEND_OUTPUT_LOCATION)
+            parameters:
+              appLocation: $(FRONTEND_APP_LOCATION)
+              outputLocation: $(FRONTEND_OUTPUT_LOCATION)
 
   - stage: Backend_Deploy_Prod
     displayName: Deploy Backend (Production)
@@ -121,6 +125,7 @@ stages:
       - deployment: deploy_backend_prod
         displayName: Deploy Backend (Production)
         environment: $(AZDO_ENVIRONMENT_NAME_PROD)
+        environment: $(AZDO_ENVIRONMENT_NAME_PROD)
         strategy:
           runOnce:
             deploy:
@@ -128,6 +133,8 @@ stages:
                 - template: .azure-pipelines/templates/backend-deploy.yml
                   parameters:
                     azureSubscription: sportson-connection
+                    appType: $(BACKEND_APP_TYPE)
+                    appName: $(BACKEND_APP_NAME_PROD)
                     appType: $(BACKEND_APP_TYPE)
                     appName: $(BACKEND_APP_NAME_PROD)
                     artifactName: backend
@@ -164,6 +171,7 @@ stages:
     jobs:
       - deployment: deploy_frontend_prod
         displayName: Deploy Frontend (Production)
+        environment: $(AZDO_ENVIRONMENT_NAME_PROD)
         environment: $(AZDO_ENVIRONMENT_NAME_PROD)
         strategy:
           runOnce:
