@@ -16,29 +16,31 @@ namespace SportsonBackendShell.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetManualsForOneHandbook(int id)
+        public async Task<IActionResult> GetManualById(int id)
         {
-            var response = await _manualsService.GetManualsForOneHandbook(id);
-            if(response != null)
+            try
             {
+                var response = await _manualsService.GetManualById(id);
                 return Ok(response);
             }
-            else
+            catch (System.Exception)
             {
+
                 return NotFound();
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllManuals()
+        public async Task<IActionResult> GetManuals([FromQuery] int limit)
         {
-            var response = await _manualsService.GetAllManuals();
-            if (response != null)
+            try
             {
+                var response = await _manualsService.GetManuals(limit);
                 return Ok(response);
             }
-            else
+            catch (System.Exception)
             {
+
                 return NotFound();
             }
         }

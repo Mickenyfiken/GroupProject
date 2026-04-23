@@ -1,75 +1,64 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using AutoMapper;
 using SportsonBackendShell.Core.Interface;
-using SportsonBackendShell.Data.Entities;
 using SportsonBackendShell.Data.Interfaces;
-using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions;
+using SportsonBackendShell.Data.DTO.Article;
 
 namespace SportsonBackendShell.Core.Service
 {
     public class NewsService : INewsService
     {
         private readonly INewsRepo _newsRepo;
+        private readonly IMapper _mapper;
 
-        public NewsService(INewsRepo newsRepo)
+        public NewsService(INewsRepo newsRepo, IMapper mapper)
         {
             _newsRepo = newsRepo;
+            _mapper = mapper;
         }
 
-        public async Task<Article?> GetArticleById(int id)
+        public async Task<ArticleDto?> GetArticleById(int id)
         {
 
-            var allArticles = await _newsRepo.GetNewsSummaryList();
-            var sorted = allArticles.OrderByDescending(a => a.Date).ToList();
+            var article = await _newsRepo.QueryAll()
+                .Where(a => a.Id == id)
+                .OrderByDescending(a => a.CreatedAt)
+                .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
 
-            var index = sorted.FindIndex(a => a.Id == id);
-            if (index == -1) return null;
+            if (article == null) return null;
 
-            var article = sorted[index];
-
-            article.PrevArticle = index + 1 <
-                sorted.Count
-                ? new PrevNextArticle { Id = sorted[index + 1].Id, Slug = sorted[index + 1].Slug, Title = sorted[index + 1].Title }
-                : null;
-            article.NextArticle = index - 1 >= 0
-                ? new PrevNextArticle { Id = sorted[index - 1].Id, Slug = sorted[index - 1].Slug, Title = sorted[index - 1].Title }
-                : null;
+            article.AdjacentArticles = await GetAdjacentArticles(article.CreatedAt);
 
             return article;
-
         }
 
-        public async Task<List<ArticleSummary?>> GetNewsSummaryList(int amount)
+        private async Task<AdjacentArticlesDto> GetAdjacentArticles(DateTime createdAt)
         {
-            var newsList = await _newsRepo.GetNewsSummaryList();
+            var PrevArticle = await _newsRepo.QueryAll()
+                .Where(a => a.CreatedAt < createdAt)
+                .OrderByDescending(a => a.CreatedAt)
+                .ProjectTo<AdjacentArticleDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
 
-            var resList = newsList
-            .Select(GetSummary)
-            .OrderByDescending(s => s?.Date)
-            .Take(amount)
-            .ToList();
+            var NextArticle = await _newsRepo.QueryAll()
+                .Where(a => a.CreatedAt > createdAt)
+                .OrderBy(a => a.CreatedAt)
+                .ProjectTo<AdjacentArticleDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
 
-            return resList;
-        }
-
-
-        private ArticleSummary? GetSummary(Article article)
-        {
-
-            var text = Regex.Replace(article.Body ?? "", "<.*?>", "");
-
-            return new ArticleSummary
+            return new AdjacentArticlesDto
             {
-                Id = article.Id,
-                Slug = article.Slug,
-                Title = article.Title,
-                Body = text?.Length > 200 ? text.Substring(0, 200) : text,
-                Date = article.Date,
-                Author = article.Author,
-                Tags = article.Tags,
-                CoverImage = article.CoverImage,
+                PrevArticle = PrevArticle,
+                NextArticle = NextArticle
             };
         }
 
-
+        public async Task<List<ArticleDto>> GetArticles(int limit) => await _newsRepo.QueryAll()
+                .OrderByDescending(a => a.CreatedAt)
+                .Take(limit)
+                .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
     }
 }

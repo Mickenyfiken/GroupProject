@@ -1,6 +1,4 @@
-﻿using SportsonBackendShell.Data.Entities;
-
-namespace SportsonBackendShell.Data.Entities
+namespace SportsonBackendShell.Data.Entities.News
 {
     public class ArticleSummary
     {
