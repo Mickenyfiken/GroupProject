@@ -4,7 +4,7 @@ import NewsCard from './newsCard/newsCard'
 import NewsListService from '../api/newsListService'
 import { Link } from 'react-router'
 
-const RenderNewsList = ({ location }: { location: any }) => {
+const RenderNewsList = ({ location }: { location: unknown }) => {
   const [newsList, setNewsList] = useState<NewsSummary[]>([])
 
   useEffect(() => {

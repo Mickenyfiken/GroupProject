@@ -52,7 +52,7 @@ const colorStyles: Record<
   primary: {
     default: 'bg-surface-yellow hover:bg-surface-lighter-primary text-black',
     ghost:
-    'border-2 border-transparent text-primary-500 bg-transparent hover:bg-surface-subtle-primary',
+      'border-2 border-transparent text-primary-500 bg-transparent hover:bg-surface-subtle-primary',
   },
 }
 

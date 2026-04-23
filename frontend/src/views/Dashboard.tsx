@@ -1,7 +1,7 @@
 import RenderNewsList from '../components/renderNewsList'
 import { Outlet, useLocation } from 'react-router'
 const Dashboard = () => {
-const location = useLocation()
+  const location = useLocation()
 
   return (
     <>
