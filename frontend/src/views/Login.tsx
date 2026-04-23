@@ -10,7 +10,6 @@ import TextInput from '../components/ui/form/TextInput'
 import { useAppLoaderData } from '../hooks/useLoaderData'
 import { login } from '../api/authApi'
 import type { TLoginUser } from '../types/userTypes'
-import { YouTubeEmbed } from '../helpers/embededVideo'
 
 const Login = () => {
   const loaderData = useAppLoaderData()
