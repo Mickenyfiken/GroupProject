@@ -1,0 +1,36 @@
+parameters:
+  frontendPath: frontend
+  nodeVersion: 20.x
+
+steps:
+  - task: NodeTool@0
+    displayName: Use Node.js 20
+    inputs:
+      versionSpec: ${{ parameters.nodeVersion }}
+
+  - task: Npm@1
+    displayName: Install frontend dependencies
+    inputs:
+      command: ci
+      workingDir: ${{ parameters.frontendPath }}
+
+  - task: Npm@1
+    displayName: Lint frontend
+    inputs:
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run lint
+
+  - task: Npm@1
+    displayName: Check frontend
+    inputs:
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run check
+
+  - task: Npm@1
+    displayName: Run frontend tests
+    inputs:
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run test

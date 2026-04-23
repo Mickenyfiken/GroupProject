@@ -32,17 +32,15 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { 
-        path: "/", 
+      {
+        path: '/',
         element: <Dashboard />,
         children: [
           {
             path: 'nyheter/:id/:slug',
             element: <ArticleModal />,
           },
-
         ],
-
       },
       { path: '/manualer', element: <Manuals /> },
     ],

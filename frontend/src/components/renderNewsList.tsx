@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
+import type { Location } from 'react-router'
 import type { NewsSummary } from '../types/newsSummary'
 import NewsCard from './newsCard/newsCard'
 import NewsListService from '../api/newsListService'
 import { Link } from 'react-router'
 
-const RenderNewsList = ({ location }: { location: any }) => {
+const RenderNewsList = ({ location }: { location: Location }) => {
   const [newsList, setNewsList] = useState<NewsSummary[]>([])
 
   useEffect(() => {
