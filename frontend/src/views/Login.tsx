@@ -10,7 +10,7 @@ import TextInput from '../components/ui/form/TextInput'
 import { useAppLoaderData } from '../hooks/useLoaderData'
 import { login } from '../api/authApi'
 import type { TLoginUser } from '../types/userTypes'
-import { PDFViewer } from '../helpers/displayPdf'
+
 const Login = () => {
   const loaderData = useAppLoaderData()
   const navigate = useNavigate()
@@ -66,7 +66,6 @@ const Login = () => {
           <p className="text-white">Du loggas ut automatiskt efter 2 minuter inaktivitet.</p>
         </span>
       </div>
-      <PDFViewer pdfURL="https://rolobikes.com/pdf/rolo-geometry.pdf" />
     </div>
   )
 }
