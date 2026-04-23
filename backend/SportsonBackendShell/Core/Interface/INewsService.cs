@@ -1,11 +1,10 @@
-﻿using SportsonBackendShell.Data.Entities;
+﻿using SportsonBackendShell.Data.DTO.Article;
 
 namespace SportsonBackendShell.Core.Interface
 {
     public interface INewsService
     {
-        Task<Article?> GetArticleById(int id);
-        Task<List<ArticleSummary?>> GetNewsSummaryList(int amount);
-
+        Task<ArticleDto?> GetArticleById(int id);
+        Task<List<ArticleDto>> GetArticles(int limit);
     }
 }

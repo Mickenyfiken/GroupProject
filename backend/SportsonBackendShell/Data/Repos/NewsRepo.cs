@@ -1,4 +1,5 @@
-﻿using SportsonBackendShell.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsonBackendShell.Data.Entities.News;
 using SportsonBackendShell.Data.Interfaces;
 using System.Text.Json;
 
@@ -6,42 +7,26 @@ namespace SportsonBackendShell.Data.Repos
 {
     public class NewsRepo : INewsRepo
     {
-        public List<Article> newsList { get; set; }
+        protected readonly SportsonContext _db;
+        protected readonly DbSet<Article> _dbSet;
 
-
-        public async Task<Article?> GetArticleById(int id)
+        public NewsRepo(SportsonContext db)
         {
-
-            var allArticles = await GetAllArticles();
-
-            return newsList.FirstOrDefault(a => a.Id == id);
+            _db = db;
+            _dbSet = db.Set<Article>();
         }
 
-        public async Task<List<Article>> GetAllArticles()
-        {
-            var filePath = "Data\\mock-data\\mock-articles.json";
-            var jsonString = await File.ReadAllTextAsync(filePath);
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-            return JsonSerializer.Deserialize<List<Article>>(jsonString, options)
-                ?? throw new Exception("Could not deserialize articles from JSON");
-        }
-
-        public async Task<List<Article>> GetNewsSummaryList()
+        public async Task<Article?> GetByIdAsync(int id, bool? asTracking = false)
         {
 
+            var query = _db.Set<Article>().AsQueryable();
+            if (asTracking == true)
+                query = query.AsTracking();
 
-            var filePath = "Data\\mock-data\\mock-articles.json";
-
-            var jsonString = File.ReadAllText(filePath);
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            };
-
-            return JsonSerializer.Deserialize<List<Article>>(jsonString, options);
-
+            return await query.FirstOrDefaultAsync(x => EF.Property<int>(x, "Id") == id);
         }
+
+        public virtual IQueryable<Article> QueryAll() => _dbSet.AsNoTracking();
     }
 }

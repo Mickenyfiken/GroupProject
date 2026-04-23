@@ -1,8 +1,6 @@
-// import { QueryClient } from '@tanstack/react-query'
 import { createBrowserRouter } from 'react-router'
-// import { redirect } from 'react-router'
-// import { fetchMe } from './api/authApi'
 import App from './App'
+import NewsModal from './components/news/NewsModal'
 import Dashboard from './views/Dashboard'
 import ErrorPage from './views/ErrorPage'
 import Login from './views/Login'
@@ -15,7 +13,6 @@ import Ordercentral from './views/Ordercentral'
 import Leverantorer from './views/Leverantorer'
 import Kontakter from './views/Kontakter'
 import Support from './views/Support'
-import ArticleModal from './components/news/ArticleModal'
 
 // const queryClient = new QueryClient()
 
@@ -25,6 +22,7 @@ import ArticleModal from './components/news/ArticleModal'
 //       queryKey: ['me'],
 //       queryFn: fetchMe,
 //     })
+
 //     return null
 //   } catch {
 //     return redirect('/login')
@@ -34,7 +32,7 @@ import ArticleModal from './components/news/ArticleModal'
 export const router = createBrowserRouter([
   {
     path: '/',
-    // loader: authLoader,
+    // loader: authLoader, // Protects all child routes by checking for authentication
     HydrateFallback: () => <p>Loading...</p>,
     element: <App />,
     errorElement: <ErrorPage />,
@@ -45,7 +43,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'nyheter/:id/:slug',
-            element: <ArticleModal />,
+            element: <NewsModal />,
           },
         ],
       },
