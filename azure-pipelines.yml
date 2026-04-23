@@ -138,6 +138,26 @@ stages:
                     appName: sportson-backend-prod
                     artifactName: backend
                     packagePath: $(Pipeline.Workspace)/backend/**/*.zip
+            on:
+              failure:
+                steps:
+                  - task: DownloadPipelineArtifact@2
+                    displayName: Hämta senaste lyckade backend-artifact för rollback
+                    inputs:
+                      buildType: specific
+                      project: $(System.TeamProjectId)
+                      pipeline: $(System.DefinitionId)
+                      runVersion: latestFromBranch
+                      branchName: refs/heads/main
+                      artifactName: backend
+                      targetPath: $(Pipeline.Workspace)/rollback/backend
+                  - task: AzureWebApp@1
+                    displayName: Rollback backend till föregående version
+                    inputs:
+                      azureSubscription: sportson-connection
+                      appType: webApp
+                      appName: sportson-backend-prod
+                      package: $(Pipeline.Workspace)/rollback/backend/**/*.zip
 
   - stage: Frontend_Deploy_Prod
     displayName: Deploy Frontend (Production)
@@ -156,3 +176,19 @@ stages:
             deploy:
               steps:
                 - template: .azure-pipelines/templates/frontend-deploy.yml
+            on:
+              failure:
+                steps:
+                  - task: AzureCLI@2
+                    displayName: Rollback frontend till föregående SWA-deployment
+                    inputs:
+                      azureSubscription: sportson-connection
+                      scriptType: bash
+                      scriptLocation: inlineScript
+                      inlineScript: |
+                        echo "##vso[task.logissue type=warning]Frontend prod-deploy misslyckades. Listar tillgängliga deployments..."
+                        az staticwebapp environment list \
+                          --name sportson-frontend-prod \
+                          --query "[].{name:name,status:status,skapad:createdTimeUtc}" \
+                          --output table || true
+                        echo "##vso[task.logissue type=error]Manuell rollback: Azure Portal > sportson-frontend-prod > Environments > aktivera föregående deployment."
