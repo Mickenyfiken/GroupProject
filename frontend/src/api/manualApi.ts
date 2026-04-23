@@ -10,8 +10,8 @@ export const getManualsById = async (id: number) => {
   return res.json()
 }
 
-export const getAllManuals = async () => {
-  const res = await fetch(`/api/manuals`, {
+export const getAllManuals = async (limit: number) => {
+  const res = await fetch(`/api/manuals?limit=${limit}`, {
     method: 'GET',
   })
 

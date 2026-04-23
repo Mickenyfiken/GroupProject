@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { getArticleById } from '../api/articleApi'
+import { getAllManuals } from '../api/manualApi'
 
-export const useArticle = (id: string) => {
+export const useAllManuals = (limit: number) => {
   return useQuery({
-    queryKey: ['article', id],
-    queryFn: () => getArticleById(id),
-    enabled: !!id,
+    queryKey: ['manuals', limit],
+    queryFn: () => getAllManuals(limit),
   })
 }

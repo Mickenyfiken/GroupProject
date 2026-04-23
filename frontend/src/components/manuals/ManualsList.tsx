@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react'
 import type { BaseManual } from '../../types/manualType'
-import { getAllManuals } from '../../api/manualApi'
+import { ManualResourceType } from '../../types/manualType'
+import { useAllManuals } from '../../hooks/manualHooks'
 
 export function ManualList() {
-  const [manuals, setManuals] = useState<BaseManual[]>([])
+  const { data, isLoading, isError } = useAllManuals(10)
 
-  useEffect(() => {
-    const fetchManuals = async () => {
-      const data = await getAllManuals()
-      setManuals(data)
-    }
-    fetchManuals()
-  }, [])
+  if (isLoading) return <p>Loading...</p>
+  if (isError) return <p>Something went wrong</p>
 
   return (
     <ul>
-      {manuals.map((manual) => (
-        <li key={manual.Id}>
-          {manual.Title}, {manual.YoutubeVideoURLs?.length ?? 0} videos,{' '}
-          {manual.PdfURLs?.length ?? 0} pdfs, {manual.OtherResourceURLs?.length ?? 0} other
-          resources
+      {data.map((manual: BaseManual) => (
+        <li key={manual.id}>
+          {manual.title}, {manual.resources.filter((r) => r.type === ManualResourceType.Video).length} videos,{' '}
+          {manual.resources.filter((r) => r.type === ManualResourceType.File).length} files
         </li>
       ))}
     </ul>
