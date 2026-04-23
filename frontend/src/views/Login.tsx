@@ -67,7 +67,6 @@ const Login = () => {
           <p className="text-white">Du loggas ut automatiskt efter 2 minuter inaktivitet.</p>
         </span>
       </div>
-      <YouTubeEmbed youtubeURL="https://www.youtube.com/watch?v=u-1oMaaNJCY" />
     </div>
   )
 }
