@@ -17,13 +17,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-if (!string.IsNullOrWhiteSpace(keyVaultUri))
-{
-    builder.Configuration.AddAzureKeyVault(
-        new Uri(keyVaultUri),
-        new DefaultAzureCredential());
-}
+//var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+//if (!string.IsNullOrWhiteSpace(keyVaultUri))
+//{
+//    builder.Configuration.AddAzureKeyVault(
+//        new Uri(keyVaultUri),
+//        new DefaultAzureCredential());
+//}
 
 builder.Services.AddControllers();
 
