@@ -11,7 +11,7 @@ steps:
   - task: Npm@1
     displayName: Install frontend dependencies
     inputs:
-      command: ci
+      command: install
       workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
