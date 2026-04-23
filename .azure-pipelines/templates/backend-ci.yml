@@ -1,7 +1,8 @@
 parameters:
+  buildConfiguration: ''
+  nugetCache: ''
   projects: ''
-  buildConfiguration: Release
-  nugetCache: $(Pipeline.Workspace)/.nuget/packages
+  testProjects: ''
 
 steps:
   - task: UseDotNet@2
@@ -34,6 +35,19 @@ steps:
       command: build
       projects: ${{ parameters.projects }}
       arguments: --configuration ${{ parameters.buildConfiguration }} --no-restore
+
+  - task: DotNetCoreCLI@2
+    displayName: Run backend tests
+    inputs:
+      command: test
+      projects: ${{ parameters.testProjects }}
+      arguments: --configuration ${{ parameters.buildConfiguration }} --logger trx
+
+  - task: PublishTestResults@2
+    displayName: Publish test results
+    inputs:
+      testResultsFiles: '**/*.trx'
+      testRunTitle: Backend Tests
 
   - task: DotNetCoreCLI@2
     displayName: Publish backend

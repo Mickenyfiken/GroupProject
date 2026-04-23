@@ -1,0 +1,21 @@
+parameters:
+  artifactName: ''
+  deploymentToken: ''
+
+steps:
+  - download: current
+    artifact: ${{ parameters.artifactName }}
+
+  - task: AzureCLI@2
+    displayName: Deploy frontend (SWA artifact)
+    inputs:
+      azureSubscription: sportson-connection
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        echo "Deploying frontend artifact to Static Web App..."
+
+        az staticwebapp deploy \
+          --name sportson-frontend \
+          --source "$(Pipeline.Workspace)/frontend" \
+          --token ${{ parameters.deploymentToken }}
