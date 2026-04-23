@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
       - develop
+      - main
   paths:
     include:
       - backend/**
@@ -20,6 +21,7 @@ pool:
 variables:
   - group: frontend-secrets
   - group: development-variables
+  - group: production-variables
 
 stages:
   - stage: Build_Backend
@@ -108,3 +110,46 @@ stages:
             parameters:
               appLocation: $(FRONTEND_APP_LOCATION)
               outputLocation: $(FRONTEND_OUTPUT_LOCATION)
+
+  - stage: Backend_Deploy_Prod
+    displayName: Deploy Backend (Production)
+    dependsOn:
+      - Build_Frontend
+      - Backend_Deploy
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: deploy_backend_prod
+        displayName: Deploy Backend (Production)
+        environment: $(AZDO_ENVIRONMENT_NAME_PROD)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: .azure-pipelines/templates/backend-deploy.yml
+                  parameters:
+                    azureSubscription: sportson-connection
+                    appType: $(BACKEND_APP_TYPE)
+                    appName: $(BACKEND_APP_NAME_PROD)
+                    artifactName: backend
+                    packagePath: $(BACKEND_PACKAGE_PATH)
+
+  - stage: Frontend_Deploy_Prod
+    displayName: Deploy Frontend (Production)
+    dependsOn:
+      - Build_Frontend
+      - Backend_Deploy_Prod
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    variables:
+      SWA_DEPLOYMENT_TOKEN: $(SWA_DEPLOYMENT_TOKEN_PROD)
+    jobs:
+      - deployment: deploy_frontend_prod
+        displayName: Deploy Frontend (Production)
+        environment: $(AZDO_ENVIRONMENT_NAME_PROD)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: .azure-pipelines/templates/frontend-deploy.yml
+                  parameters:
+                    appLocation: $(FRONTEND_APP_LOCATION)
+                    outputLocation: $(FRONTEND_OUTPUT_LOCATION)
