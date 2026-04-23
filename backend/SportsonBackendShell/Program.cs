@@ -1,3 +1,4 @@
+using Azure.Identity;
 using backend.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -12,9 +13,16 @@ using SportsonBackendShell.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+if (!string.IsNullOrWhiteSpace(keyVaultUri))
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(keyVaultUri),
+        new DefaultAzureCredential());
+}
+
 builder.Services.AddControllers();
 builder.Services.AddCors(builder.Configuration);
-
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<INewsRepo, NewsRepo>();
@@ -31,7 +39,12 @@ builder.Services.AddScoped<IManualsRepo, ManualsRepo>();
 builder.Services.AddScoped<IManualsService, ManualsService>();
 builder.Services.AddHttpClient();
 
-var jwtSecret = builder.Configuration["Jwt:Secret"]!;
+var jwtSecret = builder.Configuration["Jwt:Secret"];
+if (string.IsNullOrWhiteSpace(jwtSecret))
+{
+    throw new InvalidOperationException("Jwt:Secret is missing.");
+}
+
 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
 builder.Services.AddSingleton(signingKey);
 builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
