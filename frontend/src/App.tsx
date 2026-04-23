@@ -7,12 +7,13 @@ function App() {
   useInactivityLogout()
   useTokenRefresh()
   return (
-    <div className="flex h-screen">
+    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen">
       <Sidebar />
 
       <Header />
 
-      <main className="flex-1 overflow-auto">
+      <main className="overflow-auto">
+        {/* <main className="flex-1 overflow-auto"> */}
         <Outlet />
       </main>
     </div>

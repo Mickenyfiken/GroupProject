@@ -1,14 +1,13 @@
-import RenderNewsList from '../components/renderNewsList'
-import { Outlet, useLocation } from 'react-router'
+import NewsList from '../components/news/NewsList'
+import { useLocation } from 'react-router'
 const Dashboard = () => {
   const location = useLocation()
 
   return (
     <>
       <div className="dashboard">
-        <h1>Dashboard</h1>
-        <RenderNewsList location={location} />
-        <Outlet />
+        <h1 className="sr-only">Dashboard</h1>
+        <NewsList location={location} />
       </div>
     </>
   )

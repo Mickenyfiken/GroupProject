@@ -1,10 +1,11 @@
-﻿using SportsonBackendShell.Data.Entities;
+﻿using SportsonBackendShell.Data.Entities.News;
 
 namespace SportsonBackendShell.Data.Interfaces
 {
     public interface INewsRepo
     {
-        Task<Article?> GetArticleById(int id);
-        Task<List<Article>> GetNewsSummaryList();
+        Task<Article?> GetByIdAsync(int id, bool? asTracking = false);
+        IQueryable<Article> QueryAll();
+
     }
 }

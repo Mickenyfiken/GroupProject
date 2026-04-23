@@ -1,35 +1,46 @@
 import clsx from 'clsx'
-import PaginationButton from './ui/PaginationButton'
-import { formatDate } from '../helpers/formatDate'
-import Pill from './ui/Pill'
+import type { NewsArticle, Tag } from '../types/NewsType'
 import Image from './ui/Image'
-import type { Article } from '../types/articleType'
+import PaginationButton from './ui/PaginationButton'
+import Pill from './ui/Pill'
+import { formatDate } from '../helpers/formatDate'
 
-const ArticleContent = ({
+const NewsContent = ({
   data,
   modalState,
 }: {
-  data: Article
+  data: NewsArticle
   modalState: {
     backgroundLocation: unknown
   }
 }) => {
-  const { coverImage, title, tags, body, author, date, prevArticle, nextArticle } = data!
+  const {
+    imageUrl,
+    imageAltText,
+    title,
+    tags,
+    body,
+    author,
+    createdAt,
+    adjacentArticles: { prevArticle, nextArticle },
+  } = data!
+
+  console.log(data)
 
   return (
     <>
       <div
         className={clsx(
           'w-[calc(100% + 56px)] -mx-6 -mt-6 md:-mx-14 md:-mt-14 relative',
-          coverImage && 'aspect-[2/1] md:aspect-[3/1]',
+          imageUrl && 'aspect-[2/1] md:aspect-[3/1]',
         )}
       >
-        {coverImage && (
+        {imageUrl && (
           <Image
             className=""
             imageProps={{
-              src: `/images/${coverImage.src}`,
-              alt: coverImage.alt,
+              src: imageUrl,
+              alt: imageAltText,
             }}
           />
         )}
@@ -38,7 +49,7 @@ const ArticleContent = ({
           className={clsx(
             'flex  gap-8 w-full text-white',
             prevArticle ? 'justify-between' : 'justify-end',
-            coverImage ? 'absolute bottom-0' : 'mt-20',
+            imageUrl ? 'absolute bottom-0' : 'mt-20',
           )}
         >
           {prevArticle && (
@@ -62,14 +73,14 @@ const ArticleContent = ({
 
       <div>
         <div className="flex gap-4 mt-12 font-extralight text-label-light">
-          <span>{formatDate(new Date(date))}</span>|<span>{author}</span>
+          <span>{formatDate(new Date(createdAt))}</span>|<span>{author}</span>
         </div>
 
         <h1 className="mt-6 text-2xl font-medium ">{title}</h1>
 
         <span className="flex flex-wrap items-center mt-4 gap-x-2.5 gap-y-1.5">
-          {tags.map((text: string) => (
-            <Pill key={text} text={text} />
+          {tags.map(({ id, name }: Tag) => (
+            <Pill key={id} text={name} />
           ))}
         </span>
 
@@ -95,4 +106,4 @@ const ArticleContent = ({
   )
 }
 
-export default ArticleContent
+export default NewsContent
