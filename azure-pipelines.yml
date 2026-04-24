@@ -69,3 +69,5 @@ stages:
       frontendAppName: $(FRONTEND_APP_NAME_PROD)
       frontendToken: $(SWA_DEPLOYMENT_TOKEN_PROD)
       stageName: Deploy_Prod
+      appLocation: $(FRONTEND_APP_LOCATION)
+      outputLocation: $(FRONTEND_OUTPUT_LOCATION)

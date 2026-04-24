@@ -9,6 +9,8 @@ parameters:
   frontendArtifactName: ''
   frontendToken: ''
   stageName: ''
+  appLocation: ''
+  outputLocation: ''
 
 stages:
   - stage: ${{ parameters.stageName }}
@@ -39,5 +41,6 @@ stages:
               steps:
                 - template: deploy-frontend.yml
                   parameters:
-                    appName: ${{ parameters.frontendAppName }}
+                    appLocation: ${{ parameters.appLocation }}
+                    outputLocation: ${{ parameters.outputLocation }}
                     deploymentToken: ${{ parameters.frontendToken }}
