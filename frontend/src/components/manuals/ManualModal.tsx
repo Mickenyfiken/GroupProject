@@ -6,16 +6,15 @@ import ManualContent from './ManualContent'
 const ManualModal = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
+  const { data, isLoading, error } = useOneManual(Number(id))
 
   if (!id) return <div>Manual not found</div>
 
-  const { data, isLoading, error } = useOneManual(Number(id))
-
   if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error loading article</div>
+  if (error) return <div>Error loading manual</div>
   if (isLoading || error || !data) console.log(isLoading, error, data)
 
-  if (!data) return <div>Article not found</div>
+  if (!data) return <div>Manual not found</div>
 
   return (
     <ContentModal onClose={() => navigate('/')}>

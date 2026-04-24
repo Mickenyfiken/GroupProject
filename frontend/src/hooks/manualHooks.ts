@@ -12,7 +12,7 @@ export const useOneManual = (id: number) => {
   return useQuery({
     queryKey: ['manual', id],
     queryFn: () => getManualsById(id),
-    enabled: id !== null,
+    enabled: !isNaN(id) && id > 0,
     retry: 1,
   })
 }

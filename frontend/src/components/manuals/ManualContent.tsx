@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import type { BaseManual } from '../../types/manualType'
 import { ManualResourceType } from '../../types/manualType'
 import { YouTubeEmbed } from '../../helpers/embededVideo'
@@ -9,7 +10,8 @@ const ManualContent = ({ data }: { data: BaseManual }) => {
   const videos = resources.filter((r) => r.type === ManualResourceType.Video)
   const files = resources.filter((r) => r.type === ManualResourceType.File)
 
-  const random = Math.floor(Math.random() * 5) + 1 //Change this when cors is implemented in blob
+  // Remove when CORS is implemented in blob
+  const random = useMemo(() => Math.floor(Math.random() * 5) + 1, [])
 
   return (
     <>
