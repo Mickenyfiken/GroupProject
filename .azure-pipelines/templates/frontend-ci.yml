@@ -1,6 +1,6 @@
 parameters:
-  frontendPath: frontend
-  nodeVersion: 20.x
+  frontendPath: ''
+  nodeVersion: ''
 
 steps:
   - task: NodeTool@0
@@ -11,22 +11,22 @@ steps:
   - task: Npm@1
     displayName: Install frontend dependencies
     inputs:
-      command: ci
+      command: install
       workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
-    displayName: Lint frontend
+    displayName: ESLint
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run lint
 
   - task: Npm@1
-    displayName: Check frontend
+    displayName: Prettier format check
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
-      customCommand: run check
+      customCommand: run format:check
 
   - task: Npm@1
     displayName: Run frontend tests
@@ -34,3 +34,16 @@ steps:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run test
+
+  - task: Npm@1
+    displayName: Build frontend
+    inputs:
+      command: custom
+      workingDir: ${{ parameters.frontendPath }}
+      customCommand: run build
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish frontend artifact
+    inputs:
+      PathtoPublish: ${{ parameters.frontendPath }}/dist
+      ArtifactName: frontend

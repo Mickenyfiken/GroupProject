@@ -1,0 +1,39 @@
+parameters:
+  stageName: ''
+  branch: ''
+  environment: ''
+  backendAppName: ''
+  backendAppType: ''
+  frontendToken: ''
+
+stages:
+  - stage: ${{ parameters.stageName }}
+    condition: eq(variables['Build.SourceBranchName'], '${{ parameters.branch }}')
+    dependsOn: CI
+
+    jobs:
+      - deployment: deploy_backend
+        displayName: Deploy Backend
+        environment: ${{ parameters.environment }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-backend.yml
+                  parameters:
+                    appName: ${{ parameters.backendAppName }}
+                    appType: ${{ parameters.backendAppType }}
+                    artifactName: backend
+                    azureSubscription: sportson-connection
+
+      - deployment: deploy_frontend
+        displayName: Deploy Frontend
+        environment: ${{ parameters.environment }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-frontend.yml
+                  parameters:
+                    artifactName: frontend
+                    deploymentToken: ${{ parameters.frontendToken }}

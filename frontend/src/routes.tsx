@@ -37,15 +37,10 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <Dashboard /> },
       {
-        path: '/',
-        element: <Dashboard />,
-        children: [
-          {
-            path: 'nyheter/:id/:slug',
-            element: <NewsModal />,
-          },
-        ],
+        path: 'nyheter/:id/:slug',
+        element: <NewsModal />,
       },
       { path: '/manualer', element: <Manuals /> },
       { path: '/nyheter', element: <Nyheter /> },
