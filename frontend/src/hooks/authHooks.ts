@@ -21,7 +21,23 @@ export const useInactivityLogout = () => {
   const navigate = useNavigate()
 
   const [warningShown, setWarningShown] = useState(false)
+  const [countdown, setCountdown] = useState(TIMEOUT_MS - WARNING_TIMEOUT_MS / 1000)
   const warningTimer = useRef<number>(undefined)
+
+  useEffect(() => {
+    if (!warningShown) return
+
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [warningShown])
 
   useEffect(() => {
     const resetTimer = () => {
@@ -29,9 +45,11 @@ export const useInactivityLogout = () => {
 
       clearTimeout(warningTimer.current)
       setWarningShown(false)
+      setCountdown((TIMEOUT_MS - WARNING_TIMEOUT_MS) / 1000)
 
       warningTimer.current = setTimeout(() => {
         setWarningShown(true)
+        setCountdown((TIMEOUT_MS - WARNING_TIMEOUT_MS) / 1000)
       }, WARNING_TIMEOUT_MS)
 
       timer.current = setTimeout(async () => {
@@ -52,7 +70,7 @@ export const useInactivityLogout = () => {
       captureEvents.forEach((e) => document.removeEventListener(e, resetTimer, true))
     }
   }, [navigate])
-  return { warningShown }
+  return { warningShown, countdown }
 }
 
 export const useTokenRefresh = () => {

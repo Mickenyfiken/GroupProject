@@ -8,12 +8,12 @@ function App() {
   return (
     <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen">
       <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header />
-        <main className="flex-1 overflow-auto">
-          <Outlet />
-        </main>
-      </div>
+
+      <Header />
+
+      <main className="overflow-auto">
+        <Outlet />
+      </main>
     </div>
   )
 }
