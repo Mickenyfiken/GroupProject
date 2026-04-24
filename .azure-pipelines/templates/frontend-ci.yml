@@ -35,8 +35,8 @@ steps:
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run build
 
-  - task: PublishBuildArtifacts@1
-    displayName: Publish frontend artifact
-    inputs:
-      PathtoPublish: ${{ parameters.frontendPath }}/dist
-      ArtifactName: frontend
+  # - task: PublishBuildArtifacts@1
+  #   displayName: Publish frontend artifact
+  #   inputs:
+  #     PathtoPublish: ${{ parameters.frontendPath }}/dist
+  #     ArtifactName: frontend
