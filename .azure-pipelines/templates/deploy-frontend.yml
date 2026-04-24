@@ -7,21 +7,10 @@ steps:
   - download: current
     artifact: ${{ parameters.artifactName }}
 
-  - script: |
-      echo "Listing files for debug:"
-      ls -R $(Pipeline.Workspace)
-    displayName: Debug files
-
-  - task: AzureCLI@2
-    displayName: Deploy frontend (SWA artifact)
+  - task: AzureStaticWebApp@0
+    displayName: Deploy frontend
     inputs:
-      azureSubscription: sportson-connection
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        echo "Deploying frontend..."
-
-        az staticwebapp deploy \
-          --name ${{ parameters.appName }} \
-          --source "$(Pipeline.Workspace)/frontend/dist" \
-          --token ${{ parameters.deploymentToken }}
+      app_location: '$(Pipeline.Workspace)/frontend'
+      output_location: ''
+      skip_app_build: true
+      azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}
