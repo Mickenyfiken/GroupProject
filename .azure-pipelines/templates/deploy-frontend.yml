@@ -1,16 +1,23 @@
 parameters:
+  appName: ''
   artifactName: ''
   deploymentToken: ''
-  appName: ''
+  azureSubscription: ''
 
 steps:
   - download: current
     artifact: ${{ parameters.artifactName }}
 
-  - task: AzureStaticWebApp@0
-    displayName: Deploy frontend
+  - task: AzureCLI@2
+    displayName: Deploy frontend (SWA artifact)
     inputs:
-      app_location: '$(Pipeline.Workspace)/frontend'
-      output_location: ''
-      skip_app_build: true
-      azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}
+      # azureSubscription: ${{ parameters.azureSubscription }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        echo "Deploying frontend artifact to Static Web App..."
+
+        az staticwebapp deploy \
+          --name ${{ parameters.appName }} \
+          --source "$(Pipeline.Workspace)/${{ parameters.artifactName }}" \
+          --token ${{ parameters.deploymentToken }}
