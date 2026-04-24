@@ -23,7 +23,7 @@ export function ManualExample() {
           {manual.resources
             .filter((r) => r.type === ManualResourceType.File)
             .map((r) => (
-              <PDFViewer key={r.id} pdfURL={r.url ?? ''} />
+              <PDFViewer key={r.id} pdfURL={'/TempPdfs/SportsonManual1.pdf'} />
             ))}
         </li>
       ))}
