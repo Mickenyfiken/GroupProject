@@ -4,13 +4,9 @@ parameters:
   deploymentToken: ''
 
 steps:
-  - download: current
-    artifact: ${{ parameters.artifactName }}
-
   - task: AzureStaticWebApp@0
     displayName: Deploy frontend (SWA artifact)
     inputs:
-      app_location: $(Pipeline.Workspace)/${{ parameters.artifactName }}/dist
-      skip_app_build: true
-    env:
+      app_location: ${{ parameters.artifactName }}
+      output_location: dist
       azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}
