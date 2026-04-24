@@ -48,20 +48,25 @@ stages:
 
   - template: .azure-pipelines/templates/deploy-stage.yml
     parameters:
-      stageName: Deploy_Dev
+      azureSubscription: sportson-connection
+      backendAppName: $(BACKEND_APP_NAME)
+      backendArtifactName: backend
+      backendAppType: $(BACKEND_APP_TYPE)
       branch: develop
       environment: $(AZDO_ENVIRONMENT_NAME)
-      backendAppName: $(BACKEND_APP_NAME)
-      backendAppType: $(BACKEND_APP_TYPE)
       frontendAppName: $(FRONTEND_APP_NAME)
+      frontendArtifactName: frontend
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
+      stageName: Deploy_Dev
 
   - template: .azure-pipelines/templates/deploy-stage.yml
     parameters:
-      stageName: Deploy_Prod
-      branch: main
       environment: $(AZDO_ENVIRONMENT_NAME_PROD)
       backendAppName: $(BACKEND_APP_NAME_PROD)
+      backendArtifactName: backend
       backendAppType: $(BACKEND_APP_TYPE)
+      branch: main
       frontendAppName: $(FRONTEND_APP_NAME_PROD)
+      frontendArtifactName: frontend
       frontendToken: $(SWA_DEPLOYMENT_TOKEN_PROD)
+      stageName: Deploy_Prod
