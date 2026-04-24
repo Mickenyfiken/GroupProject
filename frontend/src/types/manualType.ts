@@ -1,7 +1,9 @@
-export enum ManualResourceType {
-  Video = 0,
-  File = 1,
+export const ManualResourceType = {
+  Video: 0 as const,
+  File: 1 as const,
 }
+
+export type ManualResourceType = (typeof ManualResourceType)[keyof typeof ManualResourceType]
 
 export type ManualResource = {
   id: number
