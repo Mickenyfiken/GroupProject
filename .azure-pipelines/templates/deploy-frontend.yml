@@ -13,7 +13,7 @@ steps:
   - task: AzureStaticWebApp@0
     displayName: Deploy frontend (SWA artifact)
     inputs:
-      app_location: $(Pipeline.Workspace)/${{ parameters.artifactName }}
-      output_location: dist
+      app_location: ${{ parameters.artifactName }}
+      api_location: dist
       skip_app_build: true
       azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}
