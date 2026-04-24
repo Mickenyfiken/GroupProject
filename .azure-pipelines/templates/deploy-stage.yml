@@ -5,6 +5,7 @@ parameters:
   backendAppName: ''
   backendAppType: ''
   frontendToken: ''
+  frontendAppName: ''
 
 stages:
   - stage: ${{ parameters.stageName }}
@@ -29,6 +30,7 @@ stages:
       - deployment: deploy_frontend
         displayName: Deploy Frontend
         environment: ${{ parameters.environment }}
+        dependsOn: deploy_backend
         strategy:
           runOnce:
             deploy:
@@ -37,3 +39,4 @@ stages:
                   parameters:
                     artifactName: frontend
                     deploymentToken: ${{ parameters.frontendToken }}
+                    appName: ${{ parameters.frontendAppName }}
