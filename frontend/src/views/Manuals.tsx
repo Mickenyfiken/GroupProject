@@ -19,7 +19,7 @@ const Manuals = () => {
         <option value={ManualResourceType.File}>Filer</option>
         <option value={ManualResourceType.Video}>Video</option>
       </select>
-      <ManualList search={searchTerm} filteredType={filteredManuals} />
+      <ManualList />
     </div>
   )
 }
