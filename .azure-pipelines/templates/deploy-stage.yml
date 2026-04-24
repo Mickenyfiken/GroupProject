@@ -28,6 +28,7 @@ stages:
                 - template: deploy-backend.yml
                   parameters:
                     appName: ${{ parameters.backendAppName }}
+                    artifactName: ${{ parameters.backendArtifactName }}
                     appType: ${{ parameters.backendAppType }}
                     azureSubscription: ${{ parameters.azureSubscription }}
 
