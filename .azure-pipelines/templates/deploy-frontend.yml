@@ -7,13 +7,16 @@ steps:
   - download: current
     artifact: ${{ parameters.artifactName }}
 
-  - script: ls -R $(Pipeline.Workspace)/${{ parameters.artifactName }}
-    displayName: Inspect artifact structure
+  - script: |
+      ls -R $(Pipeline.Workspace)
+      ls -R $(Pipeline.Workspace)/${{ parameters.artifactName }}
+      ls -R $(Build.SourcesDirectory)
+      displayName: Inspect artifact structure
 
   - task: AzureStaticWebApp@0
     displayName: Deploy frontend (SWA artifact)
     inputs:
-      app_location: ${{ parameters.artifactName }}
+      app_location: $(Pipeline.Workspace)/${{ parameters.artifactName }}
       api_location: dist
       skip_app_build: true
       azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}
