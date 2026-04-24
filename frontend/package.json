@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "write": "npx prettier . --write",
     "check": "npx prettier . --check",
-    "preview": "vite preview",
-    "prepare": "husky"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
