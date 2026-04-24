@@ -1,7 +1,7 @@
 parameters:
-  appName: ''
   artifactName: ''
   deploymentToken: ''
+  appName: ''
 
 steps:
   - download: current
@@ -10,7 +10,7 @@ steps:
   - script: ls -R $(Pipeline.Workspace)/${{ parameters.artifactName }}
     displayName: Inspect artifact structure
 
-  - task: AzureStaticWebApp@0
+  - task: AzureCLI@2
     displayName: Deploy frontend (SWA artifact)
     inputs:
       app_location: $(Pipeline.Workspace)/${{ parameters.artifactName }}/dist
