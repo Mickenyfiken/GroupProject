@@ -11,7 +11,7 @@ steps:
       ls -R $(Pipeline.Workspace)
       ls -R $(Pipeline.Workspace)/${{ parameters.artifactName }}
       ls -R $(Build.SourcesDirectory)
-      displayName: Inspect artifact structure
+    displayName: Inspect artifact structure
 
   - task: AzureStaticWebApp@0
     displayName: Deploy frontend (SWA artifact)
