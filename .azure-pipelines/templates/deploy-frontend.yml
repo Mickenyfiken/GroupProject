@@ -7,6 +7,11 @@ steps:
   - download: current
     artifact: ${{ parameters.artifactName }}
 
+  - script: |
+      echo "Listing files for debug:"
+      ls -R $(Pipeline.Workspace)
+    displayName: Debug files
+
   - task: AzureCLI@2
     displayName: Deploy frontend (SWA artifact)
     inputs:
@@ -14,9 +19,9 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        echo "Deploying frontend artifact to Static Web App..."
+        echo "Deploying frontend..."
 
         az staticwebapp deploy \
           --name ${{ parameters.appName }} \
-          --source "$(Pipeline.Workspace)/frontend" \
+          --source "$(Pipeline.Workspace)/frontend/dist" \
           --token ${{ parameters.deploymentToken }}
