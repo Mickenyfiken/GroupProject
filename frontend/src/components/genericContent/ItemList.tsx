@@ -11,18 +11,16 @@ export function ItemList<T>({
   renderItem,
   emptyMessage = 'No items found.',
 }: ItemProps<T>) {
-
   const [items, setItems] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-
     const fetchItems = async () => {
       try {
         const data = await fetchService()
         setItems(data)
-      } catch (err) {
+      } catch {
         setError('Failed to fetch items.')
       } finally {
         setLoading(false)
@@ -39,5 +37,4 @@ export function ItemList<T>({
   if (items.length === 0) return <div>{emptyMessage}</div>
 
   return <div>{items.map((item) => renderItem(item))}</div>
-  
 }

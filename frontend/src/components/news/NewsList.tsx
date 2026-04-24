@@ -3,8 +3,9 @@ import NewsCard from './NewsCard'
 import NewsListService from '../../api/newsListService'
 import { Link } from 'react-router'
 import { ItemList } from '../genericContent/ItemList'
+import type { Location } from 'react-router'
 
-const NewsList = ({ location }: { location: any }) => {
+const NewsList = ({ location }: { location: Location }) => {
   return (
     <ItemList<NewsSummary>
       fetchService={NewsListService}
@@ -21,5 +22,4 @@ const NewsList = ({ location }: { location: any }) => {
     />
   )
 }
-
 export default NewsList
