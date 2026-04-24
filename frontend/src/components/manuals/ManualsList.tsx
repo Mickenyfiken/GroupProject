@@ -1,6 +1,7 @@
 import type { BaseManual } from '../../types/manualType'
 import { ManualResourceType } from '../../types/manualType'
 import { useAllManuals } from '../../hooks/manualHooks'
+import { Link } from 'react-router'
 
 export function ManualList() {
   const { data, isLoading, isError } = useAllManuals(10)
@@ -11,11 +12,13 @@ export function ManualList() {
   return (
     <ul>
       {data.map((manual: BaseManual) => (
-        <li key={manual.id}>
-          {manual.title},{' '}
-          {manual.resources.filter((r) => r.type === ManualResourceType.Video).length} videos,{' '}
-          {manual.resources.filter((r) => r.type === ManualResourceType.File).length} files
-        </li>
+        <Link key={manual.id} to={`${manual.id}`}>
+          <li key={manual.id}>
+            {manual.title},{' '}
+            {manual.resources.filter((r) => r.type === ManualResourceType.Video).length} videos,{' '}
+            {manual.resources.filter((r) => r.type === ManualResourceType.File).length} files
+          </li>
+        </Link>
       ))}
     </ul>
   )
