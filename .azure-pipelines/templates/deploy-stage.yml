@@ -43,4 +43,3 @@ stages:
                     artifactName: ${{ parameters.frontendArtifactName }}
                     deploymentToken: ${{ parameters.frontendToken }}
                     appName: ${{ parameters.frontendAppName }}
-                    azureSubscription: ${{ parameters.azureSubscription }}
