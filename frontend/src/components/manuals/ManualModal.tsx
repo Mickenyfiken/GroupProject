@@ -1,30 +1,27 @@
-//Uncomment this when endpoint is accepted
+import { useNavigate, useParams } from 'react-router'
+import { ContentModal } from '../genericContent/ContentModal'
+import { useOneManual } from '../../hooks/manualHooks'
+import ManualContent from './ManualContent'
 
-// import { useLocation, useNavigate, useParams } from 'react-router'
-// import ArticleContent from '../ArticleContent'
-// import { ContentModal } from '../genericContent/ContentModal'
+const ManualModal = () => {
+  const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
 
-// const ManualModal = () => {
-//   const navigate = useNavigate()
-//   const location = useLocation()
-//   const { id } = useParams()
-//   const { data, isLoading, error } = getManualsById(id!)
+  if (!id) return <div>Manual not found</div>
 
-//   if (isLoading) return <div>Loading...</div>
-//   if (error) return <div>Error loading article</div>
-//   if (isLoading || error || !data) console.log(isLoading, error, data)
+  const { data, isLoading, error } = useOneManual(Number(id))
 
-//   if (!data) return <div>Article not found</div>
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading article</div>
+  if (isLoading || error || !data) console.log(isLoading, error, data)
 
-//   const modalState = {
-//     backgroundLocation: location.state?.backgroundLocation,
-//   }
+  if (!data) return <div>Article not found</div>
 
-//   return (
-//     <ContentModal onClose={() => navigate('/')}>
-//       <ArticleContent data={data} modalState={modalState} />
-//     </ContentModal>
-//   )
-// }
+  return (
+    <ContentModal onClose={() => navigate('/')}>
+      <ManualContent data={data} />
+    </ContentModal>
+  )
+}
 
-// export default ManualModal
+export default ManualModal
