@@ -1,6 +1,7 @@
 parameters:
   artifactName: ''
   deploymentToken: ''
+  appName: ''
 
 steps:
   - download: current
@@ -16,6 +17,6 @@ steps:
         echo "Deploying frontend artifact to Static Web App..."
 
         az staticwebapp deploy \
-          --name sportson-frontend \
+          --name ${{ parameters.appName }} \
           --source "$(Pipeline.Workspace)/frontend" \
           --token ${{ parameters.deploymentToken }}

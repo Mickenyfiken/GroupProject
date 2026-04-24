@@ -14,6 +14,7 @@ pr:
   branches:
     include:
       - develop
+      - main
 
 pool:
   vmImage: ubuntu-latest
@@ -28,6 +29,7 @@ stages:
     displayName: Build & Test
     jobs:
       - job: backend
+        displayName: Backend CI
         steps:
           - template: .azure-pipelines/templates/backend-ci.yml
             parameters:
@@ -37,6 +39,7 @@ stages:
               testProjects: $(BACKEND_TEST_PROJECTS)
 
       - job: frontend
+        displayName: Frontend CI
         steps:
           - template: .azure-pipelines/templates/frontend-ci.yml
             parameters:
@@ -50,6 +53,7 @@ stages:
       environment: $(AZDO_ENVIRONMENT_NAME)
       backendAppName: $(BACKEND_APP_NAME)
       backendAppType: $(BACKEND_APP_TYPE)
+      frontendAppName: $(FRONTEND_APP_NAME)
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
 
   - template: .azure-pipelines/templates/deploy-stage.yml
@@ -59,4 +63,5 @@ stages:
       environment: $(AZDO_ENVIRONMENT_NAME_PROD)
       backendAppName: $(BACKEND_APP_NAME_PROD)
       backendAppType: $(BACKEND_APP_TYPE)
-      frontendToken: $(SWA_DEPLOYMENT_TOKEN)
+      frontendAppName: $(FRONTEND_APP_NAME_PROD)
+      frontendToken: $(SWA_DEPLOYMENT_TOKEN_PROD)
