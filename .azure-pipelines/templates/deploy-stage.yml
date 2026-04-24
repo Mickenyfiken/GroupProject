@@ -27,7 +27,6 @@ stages:
                   parameters:
                     appName: ${{ parameters.backendAppName }}
                     appType: ${{ parameters.backendAppType }}
-                    artifactName: ${{ parameters.backendArtifactName }}
                     azureSubscription: ${{ parameters.azureSubscription }}
 
       - deployment: deploy_frontend
@@ -41,5 +40,4 @@ stages:
                 - template: deploy-frontend.yml
                   parameters:
                     appName: ${{ parameters.frontendAppName }}
-                    artifactName: ${{ parameters.frontendArtifactName }}
                     deploymentToken: ${{ parameters.frontendToken }}

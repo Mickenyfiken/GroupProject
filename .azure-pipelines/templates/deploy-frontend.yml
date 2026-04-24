@@ -1,12 +1,12 @@
 parameters:
-  appName: ''
-  artifactName: ''
+  appLocation: ''
+  outputLocation: ''
   deploymentToken: ''
 
 steps:
   - task: AzureStaticWebApp@0
     displayName: Deploy frontend (SWA artifact)
     inputs:
-      app_location: ${{ parameters.artifactName }}
-      output_location: dist
+      app_location: ${{ parameters.appLocation }}
+      output_location: ${{ parameters.outputLocation }}
       azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}
