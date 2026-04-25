@@ -55,6 +55,7 @@ stages:
       branch: develop
       environment: $(AZDO_ENVIRONMENT_NAME)
       frontendAppName: $(FRONTEND_APP_NAME)
+      frontendArtifactName: frontend
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
       stageName: Deploy_Dev
 
@@ -67,7 +68,6 @@ stages:
       branch: main
       environment: $(AZDO_ENVIRONMENT_NAME_PROD)
       frontendAppName: $(FRONTEND_APP_NAME_PROD)
+      frontendArtifactName: frontend
       frontendToken: $(SWA_DEPLOYMENT_TOKEN_PROD)
       stageName: Deploy_Prod
-      appLocation: $(FRONTEND_APP_LOCATION)
-      outputLocation: $(FRONTEND_OUTPUT_LOCATION)
