@@ -8,6 +8,14 @@ steps:
     inputs:
       versionSpec: ${{ parameters.nodeVersion }}
 
+  - task: Cache@2
+    displayName: Cache node_modules
+    inputs:
+      key: npm | "$(Agent.OS)" | ${{ parameters.frontendPath }}/package-lock.json
+      restoreKeys: |
+        npm | "$(Agent.OS)"
+      path: ${{ parameters.frontendPath }}/node_modules
+
   - task: Npm@1
     displayName: Install frontend dependencies
     inputs:
