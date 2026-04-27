@@ -64,7 +64,7 @@ namespace SportsonBackendShell.Controllers
             if (!Request.Cookies.TryGetValue("refresh_token", out var refreshToken))
                 return Unauthorized();
             var rfHash = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken)));
-            
+
             var storedRf = await _loginService.GetRefreshTokenByHashAsync(rfHash);
             if (storedRf == null || storedRf.ExpiresAt < DateTime.UtcNow || storedRf.ExternalToken == null)
                 return Unauthorized();
@@ -114,7 +114,7 @@ namespace SportsonBackendShell.Controllers
             var refreshTokenHash = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken)));
 
             var token = _jwtService.ExtractToken(jwt);
-            var response = await _loginService.Logout(token);
+            var response = await _loginService.Logout(token!);
 
             await _loginService.RevokeRefreshTokenAsync(refreshTokenHash);
 

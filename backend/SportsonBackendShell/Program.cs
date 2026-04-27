@@ -20,7 +20,6 @@ var env = builder.Environment;
 builder.Configuration
     .AddJsonFile("appsettings.json")
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-    .AddUserSecrets<Program>(optional: true)
     .AddEnvironmentVariables();
 
 if (!env.IsDevelopment())
@@ -42,6 +41,8 @@ if (string.IsNullOrWhiteSpace(connectionString))
 {
     throw new InvalidOperationException("Connection string 'DefaultConnection' is missing.");
 }
+
+Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddDbContext<SportsonContext>(options =>
     options.UseSqlServer(connectionString));

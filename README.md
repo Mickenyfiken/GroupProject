@@ -4,17 +4,29 @@ TODO: Give a short introduction of your project. Let this section explain the ob
 
 # Getting Started
 
-1. Install:
+## 1. Install:
 
 - Docker
 - .NET 10
 - Node (nvm)
 
-2. Start:
+## 2. Start:
+
+### 1. Set up/ run local database in docker and run backend
 
 ```bash
-   chmod +x start-dev.sh # if ./start-dev.sh does not work immediately
-   ./start-dev.sh
+chmod +x start-dev.sh # if ./start-dev.sh does not work immediately, run this line first
+./start-dev.sh
+```
+
+### 3. Run frontend
+
+In a separate terminal
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 # Build and Test
