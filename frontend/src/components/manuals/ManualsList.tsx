@@ -19,7 +19,7 @@ export const ManualList = ({ search, filteredType }: ManualListProps) => {
       </div>
       <ul className="divide-y divide-gray-200">
         <ItemList<BaseManual>
-          fetchService={() => getAllManuals(25)}
+          fetchService={() => getAllManuals(50)}
           filter={(manual: BaseManual) =>
             filterBySearch(manual, search ?? '') && filterByType(manual, filteredType ?? null)
           }
