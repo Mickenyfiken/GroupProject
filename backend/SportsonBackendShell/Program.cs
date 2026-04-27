@@ -16,14 +16,26 @@ using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
+var env = builder.Environment;
 
-//var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-//if (!string.IsNullOrWhiteSpace(keyVaultUri))
-//{
-//    builder.Configuration.AddAzureKeyVault(
-//        new Uri(keyVaultUri),
-//        new DefaultAzureCredential());
-//}
+builder.Configuration
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+    .AddUserSecrets<Program>(optional: true)
+    .AddEnvironmentVariables();
+
+if (!env.IsDevelopment())
+{
+    var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+
+    if (!string.IsNullOrEmpty(keyVaultUri))
+    {
+        builder.Configuration.AddAzureKeyVault(
+            new Uri(keyVaultUri),
+            new DefaultAzureCredential()
+        );
+    }
+}
 
 builder.Services.AddControllers();
 
@@ -63,9 +75,12 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context =
+    var db =
     scope.ServiceProvider.GetRequiredService<SportsonContext>();
-    await SeedData.SeedAsync(context);
+    await SeedData.SeedAsync(db);
+
+    db.Database.Migrate();
+
 }
 
 app.UseRouting();
