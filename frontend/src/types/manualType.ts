@@ -11,6 +11,7 @@ export type ManualResource = {
   url: string | null
   type: ManualResourceType
   title: string
+  createdAt: string
 }
 
 export type BaseManual = {
