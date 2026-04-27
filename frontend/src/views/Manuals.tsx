@@ -1,7 +1,6 @@
-// import { useState } from 'react'
-// import SearchField from '../components/ui/SearchField'
+import { useState } from 'react'
 import { ManualList } from '../components/manuals/ManualsList'
-import { ManualResourceType } from '../types/manualType'
+import SearchField from '../components/ui/SearchField'
 import { ManualResourceType } from '../types/manualType'
 
 const Manuals = () => {
