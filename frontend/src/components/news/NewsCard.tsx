@@ -26,7 +26,7 @@ const NewsCard = ({
       <h2 className="mt-2 text-base font-bold text-article-title">{title}</h2>
       <div className="flex flex-row flex-1 h-5 gap-2 mt-2 text-sm text-gray-700">
         <p className="text-sm text-gray-700 omt-2 line-clamp-4">
-          <div
+          <span
             className="mt-8
                   [&_p]:mb-4
                   [&_p]:leading-relaxed
