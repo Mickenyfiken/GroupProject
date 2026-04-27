@@ -3,19 +3,34 @@ parameters:
   deploymentToken: ''
 
 steps:
-  - download: current
-    artifact: ${{ parameters.artifactName }}
+  - task: DownloadPipelineArtifact@2
+    displayName: Download frontend artifact
+    inputs:
+      artifact: ${{ parameters.artifactName }}
+      path: $(System.DefaultWorkingDirectory)/${{ parameters.artifactName }}
 
-  - task: AzureCLI@2
+  - script: |
+      echo "System.DefaultWorkingDirectory:"
+      echo "$(System.DefaultWorkingDirectory)"
+
+      echo "Pipeline.Workspace:"
+      echo "$(Pipeline.Workspace)"
+
+      echo "List System.DefaultWorkingDirectory:"
+      ls -la "$(System.DefaultWorkingDirectory)"
+
+      echo "List frontend artifact folder:"
+      ls -la "$(System.DefaultWorkingDirectory)/${{ parameters.artifactName }}"
+
+      echo "Find index.html:"
+      find "$(System.DefaultWorkingDirectory)" -name index.html
+      find "$(Pipeline.Workspace)" -name index.html
+    displayName: Debug frontend artifact path
+
+  - task: AzureStaticWebApp@0
     displayName: Deploy frontend (SWA artifact)
     inputs:
-      azureSubscription: sportson-connection
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        echo "Deploying frontend artifact to Static Web App..."
-
-        az staticwebapp deploy \
-          --name sportson-frontend \
-          --source "$(Pipeline.Workspace)/frontend" \
-          --token ${{ parameters.deploymentToken }}
+      app_location: '${{ parameters.artifactName }}'
+      output_location: ''
+      skip_app_build: true
+      azure_static_web_apps_api_token: ${{ parameters.deploymentToken }}

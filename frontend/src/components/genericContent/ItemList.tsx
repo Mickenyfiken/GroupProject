@@ -36,5 +36,5 @@ export function ItemList<T>({
 
   if (items.length === 0) return <div>{emptyMessage}</div>
 
-  return <div>{items.map((item) => renderItem(item))}</div>
+  return <>{items.map((item) => renderItem(item))}</>
 }

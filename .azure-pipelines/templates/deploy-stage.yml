@@ -1,10 +1,14 @@
 parameters:
-  stageName: ''
+  azureSubscription: ''
+  backendAppName: ''
+  backendArtifactName: ''
+  backendAppType: ''
   branch: ''
   environment: ''
-  backendAppName: ''
-  backendAppType: ''
+  frontendAppName: ''
+  frontendArtifactName: ''
   frontendToken: ''
+  stageName: ''
 
 stages:
   - stage: ${{ parameters.stageName }}
@@ -22,18 +26,19 @@ stages:
                 - template: deploy-backend.yml
                   parameters:
                     appName: ${{ parameters.backendAppName }}
+                    artifactName: ${{ parameters.backendArtifactName }}
                     appType: ${{ parameters.backendAppType }}
-                    artifactName: backend
-                    azureSubscription: sportson-connection
+                    azureSubscription: ${{ parameters.azureSubscription }}
 
       - deployment: deploy_frontend
         displayName: Deploy Frontend
         environment: ${{ parameters.environment }}
+        dependsOn: deploy_backend
         strategy:
           runOnce:
             deploy:
               steps:
                 - template: deploy-frontend.yml
                   parameters:
-                    artifactName: frontend
+                    artifactName: ${{ parameters.frontendArtifactName }}
                     deploymentToken: ${{ parameters.frontendToken }}

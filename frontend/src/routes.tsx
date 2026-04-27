@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import App from './App'
 import NewsModal from './components/news/NewsModal'
+import ManualModal from './components/manuals/ManualModal'
 import Dashboard from './views/Dashboard'
 import ErrorPage from './views/ErrorPage'
 import Login from './views/Login'
@@ -43,6 +44,7 @@ export const router = createBrowserRouter([
         element: <NewsModal />,
       },
       { path: '/manualer', element: <Manuals /> },
+      { path: '/manualer/:id', element: <ManualModal /> },
       { path: '/nyheter', element: <Nyheter /> },
       { path: '/kampanjer', element: <Kampanjer /> },
       { path: '/butiksservice', element: <Butiksservice /> },
