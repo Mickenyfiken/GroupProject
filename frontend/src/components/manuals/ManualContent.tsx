@@ -4,7 +4,6 @@ import { YouTubeEmbed } from '../../helpers/embededVideo'
 import { PDFViewer } from '../../helpers/displayPdf'
 
 // Remove when CORS is implemented in blob
-const randomPdfIndex = Math.floor(Math.random() * 5) + 1
 
 const ManualContent = ({ data }: { data: BaseManual }) => {
   const { title, description, resources } = data
@@ -30,7 +29,7 @@ const ManualContent = ({ data }: { data: BaseManual }) => {
         {files.length > 0 && (
           <div className="mt-8 flex flex-col gap-4">
             {files.map((r) => (
-              <PDFViewer key={r.id} pdfURL={`/TempPdfs/SportsonManual${randomPdfIndex}.pdf`} />
+              <PDFViewer key={r.id} pdfURL={`/TempPdfs/SportsonManual${r.id}.pdf`} />
             ))}
           </div>
         )}
