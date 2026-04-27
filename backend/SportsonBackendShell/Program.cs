@@ -46,7 +46,6 @@ Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection")
 
 builder.Services.AddDbContext<SportsonContext>(options =>
     options.UseSqlServer(connectionString));
-options.UseSqlServer(connectionString));
 
 builder.Services.AddCors(builder.Configuration);
 builder.Services.AddSwaggerGen();
