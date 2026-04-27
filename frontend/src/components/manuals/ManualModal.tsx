@@ -17,7 +17,7 @@ const ManualModal = () => {
   if (!data) return <div>Manual not found</div>
 
   return (
-    <ContentModal onClose={() => navigate('/manualer')}>
+    <ContentModal onClose={() => navigate('/butiksservice')}>
       <ManualContent data={data} />
     </ContentModal>
   )
