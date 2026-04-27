@@ -13,7 +13,7 @@ const NewsList = ({ location }: { location: Location }) => {
         <Link
           className="w-fit"
           key={item.id}
-          to={`nyheter/${item.id}/${item.slug}`}
+          to={`/nyheter/${item.id}/${item.slug}`}
           state={{ backgroundLocation: location }}
         >
           <NewsCard {...item} />
