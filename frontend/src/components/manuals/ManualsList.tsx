@@ -11,7 +11,7 @@ type ManualListProps = {
 
 export const ManualList = ({ search, filteredType }: ManualListProps) => {
   return (
-<div className="w-full">
+    <div className="w-full">
       <div className="flex items-center gap-4 px-4 py-2 border-b border-gray-200 text-xs font-medium text-gray-500">
         <div className="w-9 flex-shrink-0" />
         <span className="w-64">Namn</span>
