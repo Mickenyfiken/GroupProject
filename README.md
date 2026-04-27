@@ -13,7 +13,7 @@ TODO: Give a short introduction of your project. Let this section explain the ob
 2. Start:
 
 ```bash
-   chmod +x start-dev.sh
+   chmod +x start-dev.sh # if ./start-dev.sh does not work immediately
    ./start-dev.sh
 ```
 
