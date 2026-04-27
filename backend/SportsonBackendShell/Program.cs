@@ -46,6 +46,7 @@ Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection")
 
 builder.Services.AddDbContext<SportsonContext>(options =>
     options.UseSqlServer(connectionString));
+options.UseSqlServer(connectionString));
 
 builder.Services.AddCors(builder.Configuration);
 builder.Services.AddSwaggerGen();
@@ -66,6 +67,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+// 🔥 JWT från Key Vault
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 if (string.IsNullOrWhiteSpace(jwtSecret))
 {
@@ -98,4 +100,7 @@ app.UseSwaggerUI();
 
 app.MapControllers();
 
+app.MapControllers();
+
 app.Run();
+

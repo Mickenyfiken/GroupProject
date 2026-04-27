@@ -4,12 +4,14 @@ interface ItemProps<T> {
   fetchService: () => Promise<T[]>
   renderItem: (item: T) => ReactNode
   emptyMessage?: string
+  filter?: (item: T) => boolean
 }
 
 export function ItemList<T>({
   fetchService,
   renderItem,
   emptyMessage = 'No items found.',
+  filter,
 }: ItemProps<T>) {
   const [items, setItems] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
@@ -36,5 +38,9 @@ export function ItemList<T>({
 
   if (items.length === 0) return <div>{emptyMessage}</div>
 
-  return <>{items.map((item) => renderItem(item))}</>
+  const filteredItems = filter ? items.filter(filter) : items
+
+  if (filteredItems.length === 0) return <div>{emptyMessage}</div>
+
+  return <>{filteredItems.map((item) => renderItem(item))}</>
 }

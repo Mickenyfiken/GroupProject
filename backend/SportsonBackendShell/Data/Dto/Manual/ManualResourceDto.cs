@@ -10,4 +10,5 @@ public class ManualResourceDto
     public string? Url { get; set; }
     public ManualResourceType Type { get; set; } = ManualResourceType.File;
     public string Title { get; set; } = null!;
+    public string CreatedAt { get; set; } = null!;
 }

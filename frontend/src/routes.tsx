@@ -42,11 +42,11 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       {
-        path: 'nyheter/:id/:slug',
+        path: '/nyheter/:id/:slug',
         element: <NewsModal />,
       },
-      { path: '/manualer', element: <Manuals /> },
-      { path: '/manualer/:id', element: <ManualModal /> },
+      { path: '/butiksservice', element: <Manuals /> },
+      { path: '/butiksservice/:id', element: <ManualModal /> },
       { path: '/nyheter', element: <Nyheter /> },
       { path: '/kampanjer', element: <Kampanjer /> },
       { path: '/butiksservice', element: <Butiksservice /> },
