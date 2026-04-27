@@ -1,7 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_TARGET
-
 export const getManualsById = async (id: number) => {
-  const res = await fetch(`${BASE_URL}/api/manuals/${id}`, {
+  const res = await fetch(`/api/manuals/${id}`, {
     method: 'GET',
   })
 
@@ -13,7 +11,7 @@ export const getManualsById = async (id: number) => {
 }
 
 export const getAllManuals = async (limit: number) => {
-  const res = await fetch(`${BASE_URL}/api/manuals?limit=${limit}`, {
+  const res = await fetch(`/api/manuals?limit=${limit}`, {
     method: 'GET',
   })
 

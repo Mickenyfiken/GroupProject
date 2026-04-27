@@ -1,9 +1,7 @@
 import type { NewsArticle } from '../types/NewsType'
 
-const BASE_URL = import.meta.env.VITE_API_TARGET
-
 export const getArticleById = async (id: string) => {
-  const response = await fetch(`${BASE_URL}/api/news/${id}`, {
+  const response = await fetch(`/api/news/${id}`, {
     credentials: 'include',
   })
 
@@ -18,7 +16,7 @@ export const getArticleById = async (id: string) => {
 }
 
 export const getArticles = async ({ limit = 10 }: { limit?: number }): Promise<NewsArticle[]> => {
-  const response = await fetch(`${BASE_URL}/api/news?limit=${limit}`, {
+  const response = await fetch(`/api/news?limit=${limit}`, {
     credentials: 'include',
   })
 

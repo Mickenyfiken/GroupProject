@@ -12,10 +12,13 @@ public static class CorseExtensions
         {
             options.AddPolicy("ReactPolicy", policy =>
             {
-                policy.WithOrigins("http://localhost:3000")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+                policy.WithOrigins(
+                    "http://localhost:5173",
+                    "https://mango-dune-067b0e803.7.azurestaticapps.net"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
             });
         });
 

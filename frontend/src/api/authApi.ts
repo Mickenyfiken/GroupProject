@@ -1,10 +1,8 @@
 import type { TLoginUser } from '../types/userTypes'
 
-const BASE_URL = import.meta.env.VITE_API_TARGET
-
 export const login = async (user: TLoginUser) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/login`, {
+    const response = await fetch(`/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +21,7 @@ export const login = async (user: TLoginUser) => {
 }
 
 export const fetchMe = async () => {
-  const res = await fetch(`${BASE_URL}/api/authentication/me`, {
+  const res = await fetch(`/api/authentication/me`, {
     method: 'GET',
     credentials: 'include',
   })
@@ -37,7 +35,7 @@ export const fetchMe = async () => {
 
 export const logOut = async () => {
   try {
-    const result = await fetch(`${BASE_URL}/api/login/logout`, {
+    const result = await fetch(`/api/login/logout`, {
       method: 'POST',
       credentials: 'include',
     })
