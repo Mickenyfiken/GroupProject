@@ -22,18 +22,23 @@ builder.Configuration
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-if (!env.IsDevelopment())
+var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+if (!string.IsNullOrWhiteSpace(keyVaultUri))
 {
-    var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-    if (!string.IsNullOrWhiteSpace(keyVaultUri))
-    {
-        builder.Configuration.AddAzureKeyVault(
-            new Uri(keyVaultUri),
-            new DefaultAzureCredential());
-    }
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(keyVaultUri),
+        new DefaultAzureCredential());
 }
-
-builder.Services.AddControllers();
+// if (!env.IsDevelopment())
+// {
+//     var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+//     if (!string.IsNullOrWhiteSpace(keyVaultUri))
+//     {
+//         builder.Configuration.AddAzureKeyVault(
+//             new Uri(keyVaultUri),
+//             new DefaultAzureCredential());
+//     }
+// }
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -45,6 +50,7 @@ if (string.IsNullOrWhiteSpace(connectionString))
 builder.Services.AddDbContext<SportsonContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddControllers();
 builder.Services.AddCors(builder.Configuration);
 builder.Services.AddSwaggerGen();
 
@@ -76,15 +82,14 @@ builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    using var scope = app.Services.CreateScope();
 
-    var db = scope.ServiceProvider.GetRequiredService<SportsonContext>();
-    await SeedData.SeedAsync(db);
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<SportsonContext>();
 
-    db.Database.Migrate();
-}
+if (app.Environment.IsDevelopment()) await SeedData.SeedAsync(db);
+
+if (!app.Environment.IsDevelopment()) db.Database.Migrate();
+
 
 app.UseRouting();
 app.UseCors("ReactPolicy");
@@ -93,8 +98,6 @@ app.UseAuthorization();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
-app.MapControllers();
 
 app.MapControllers();
 
