@@ -42,8 +42,6 @@ if (string.IsNullOrWhiteSpace(connectionString))
     throw new InvalidOperationException("Connection string 'DefaultConnection' is missing.");
 }
 
-Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection"));
-
 builder.Services.AddDbContext<SportsonContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -66,7 +64,6 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-// 🔥 JWT från Key Vault
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 if (string.IsNullOrWhiteSpace(jwtSecret))
 {
