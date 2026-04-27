@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       {
-        path: 'nyheter/:id/:slug',
+        path: '/nyheter/:id/:slug',
         element: <NewsModal />,
       },
       { path: '/butiksservice', element: <Manuals /> },
