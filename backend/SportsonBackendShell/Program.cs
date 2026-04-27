@@ -15,19 +15,26 @@ using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var env = builder.Environment;
 
-// 🔥 AKTIVERA KEY VAULT
-var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-if (!string.IsNullOrWhiteSpace(keyVaultUri))
+builder.Configuration
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
+
+if (!env.IsDevelopment())
 {
-    builder.Configuration.AddAzureKeyVault(
-        new Uri(keyVaultUri),
-        new DefaultAzureCredential());
+    var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+    if (!string.IsNullOrWhiteSpace(keyVaultUri))
+    {
+        builder.Configuration.AddAzureKeyVault(
+            new Uri(keyVaultUri),
+            new DefaultAzureCredential());
+    }
 }
 
 builder.Services.AddControllers();
 
-// 🔥 RÄTT CONNECTION STRING
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrWhiteSpace(connectionString))
@@ -57,7 +64,6 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-// 🔥 JWT från Key Vault
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 if (string.IsNullOrWhiteSpace(jwtSecret))
 {
@@ -70,12 +76,14 @@ builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
 
-// 🔥 SEED BARA I DEVELOPMENT
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<SportsonContext>();
-    await SeedData.SeedAsync(context);
+
+    var db = scope.ServiceProvider.GetRequiredService<SportsonContext>();
+    await SeedData.SeedAsync(db);
+
+    db.Database.Migrate();
 }
 
 app.UseRouting();
@@ -85,6 +93,8 @@ app.UseAuthorization();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapControllers();
 
 app.MapControllers();
 

@@ -16,10 +16,10 @@ const ManualContent = ({ data }: { data: BaseManual }) => {
       <div>
         <h1 className="mt-6 text-2xl font-medium">{title}</h1>
 
-        {description && <p className="mt-8 text-black/65 leading-relaxed">{description}</p>}
+        {description && <p className="mt-8 leading-relaxed text-black/65">{description}</p>}
 
         {videos.length > 0 && (
-          <div className="mt-8 flex flex-col gap-4">
+          <div className="flex flex-col gap-4 mt-8">
             {videos.map((r) => (
               <YouTubeEmbed key={r.id} youtubeURL={r.url!} />
             ))}
@@ -27,7 +27,7 @@ const ManualContent = ({ data }: { data: BaseManual }) => {
         )}
 
         {files.length > 0 && (
-          <div className="mt-8 flex flex-col gap-4">
+          <div className="flex flex-col gap-4 mt-8">
             {files.map((r) => (
               <PDFViewer key={r.id} pdfURL={`/TempPdfs/SportsonManual${r.id}.pdf`} />
             ))}

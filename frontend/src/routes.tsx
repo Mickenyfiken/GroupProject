@@ -1,7 +1,6 @@
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, redirect } from 'react-router'
 import App from './App'
 import NewsModal from './components/news/NewsModal'
-import ManualModal from './components/manuals/ManualModal'
 import Dashboard from './views/Dashboard'
 import ErrorPage from './views/ErrorPage'
 import Login from './views/Login'
@@ -14,26 +13,29 @@ import Ordercentral from './views/Ordercentral'
 import Leverantorer from './views/Leverantorer'
 import Kontakter from './views/Kontakter'
 import Support from './views/Support'
+import { QueryClient } from '@tanstack/react-query'
+import { fetchMe } from './api/authApi'
+import ManualModal from './components/manuals/ManualModal'
 
-// const queryClient = new QueryClient()
+const queryClient = new QueryClient()
 
-// const authLoader = async () => {
-//   try {
-//     await queryClient.ensureQueryData({
-//       queryKey: ['me'],
-//       queryFn: fetchMe,
-//     })
+const authLoader = async () => {
+  try {
+    await queryClient.ensureQueryData({
+      queryKey: ['me'],
+      queryFn: fetchMe,
+    })
 
-//     return null
-//   } catch {
-//     return redirect('/login')
-//   }
-// }
+    return null
+  } catch {
+    return redirect('/login')
+  }
+}
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    // loader: authLoader, // Protects all child routes by checking for authentication
+    loader: authLoader, // Protects all child routes by checking for authentication
     HydrateFallback: () => <p>Loading...</p>,
     element: <App />,
     errorElement: <ErrorPage />,
