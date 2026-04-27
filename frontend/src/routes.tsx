@@ -1,7 +1,6 @@
 import { createBrowserRouter, redirect } from 'react-router'
 import App from './App'
 import NewsModal from './components/news/NewsModal'
-import ManualModal from './components/manuals/ManualModal'
 import Dashboard from './views/Dashboard'
 import ErrorPage from './views/ErrorPage'
 import Login from './views/Login'
@@ -16,6 +15,7 @@ import Kontakter from './views/Kontakter'
 import Support from './views/Support'
 import { QueryClient } from '@tanstack/react-query'
 import { fetchMe } from './api/authApi'
+import ManualModal from './components/manuals/ManualModal'
 
 const queryClient = new QueryClient()
 
