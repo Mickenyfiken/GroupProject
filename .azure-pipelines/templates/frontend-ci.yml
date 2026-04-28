@@ -42,6 +42,8 @@ steps:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run build
+    env:
+      VITE_API_TARGET: $(VITE_API_TARGET)
 
   - task: PublishPipelineArtifact@1
     displayName: Publish frontend artifact

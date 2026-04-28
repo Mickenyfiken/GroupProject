@@ -1,6 +1,6 @@
-const BASE_URL = 'http://localhost:5277'
-// const BASE_URL =
-//   import.meta.env.VITE_API_URL || 'https://sportson-backend-dev.azurewebsites.net/api'
+// const BASE_URL = 'http://localhost:5277'
+const BASE_URL =
+  import.meta.env.VITE_API_TARGET || 'https://sportson-backend-dev.azurewebsites.net/api'
 
 type Params = Record<string, string | number | undefined>
 type ApiOptions = RequestInit & {
