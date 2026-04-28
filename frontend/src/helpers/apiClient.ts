@@ -21,7 +21,8 @@ export const apiClient = async <T = unknown>(url: string, options: ApiOptions = 
 
   if (res.status === 204) return {} as T
 
-  return res.json()
+  const text = await res.text()
+  return text ? JSON.parse(text) : ({} as T)
 }
 
 const getQuery = (params?: Params) =>

@@ -28,6 +28,7 @@ const Login = () => {
   const onSubmit: SubmitHandler<TLoginUser> = async (user: TLoginUser) => {
     try {
       setErrorMessage(null)
+
       await loginUserMutation(user)
 
       await queryClient.invalidateQueries({ queryKey: ['me'] })
@@ -35,7 +36,8 @@ const Login = () => {
       reset()
       revalidate()
       navigate('/')
-    } catch {
+    } catch (err) {
+      console.log(err)
       setErrorMessage('Wrong email or password')
     }
   }
