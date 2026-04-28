@@ -9,8 +9,6 @@ public static class SeedData
 {
     public static async Task SeedAsync(SportsonContext context)
     {
-        await context.Database.MigrateAsync();
-
         await ManualSeeder.CreateManuals(context);
         await ArticleSeeder.CreateTags(context);
         await ArticleSeeder.CreateArticles(context);
