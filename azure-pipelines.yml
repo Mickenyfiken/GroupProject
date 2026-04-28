@@ -45,6 +45,7 @@ stages:
             parameters:
               frontendPath: $(FRONTEND_PATH)
               nodeVersion: $(NODE_VERSION)
+              viteApiTarget: $(VITE_API_TARGET)
 
   - template: .azure-pipelines/templates/deploy-stage.yml
     parameters:

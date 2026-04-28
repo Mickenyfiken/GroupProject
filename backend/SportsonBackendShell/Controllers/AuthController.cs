@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsonBackendShell.Core.Interface;
 using SportsonBackendShell.Data.Entities;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,18 +10,22 @@ namespace SportsonBackendShell.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly ILoginService _loginService;
         private readonly IJwtService _jwtService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public LoginController(ILoginService loginService, IJwtService jwtService)
+
+        public AuthController(ILoginService loginService, IJwtService jwtService, IAuthenticationService authenticationService)
         {
             _loginService = loginService;
             _jwtService = jwtService;
+            _authenticationService = authenticationService;
+
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> LogIn([FromBody] LoginParameters parameters)
         {
             var response = await _loginService.LogIn(parameters);
@@ -123,6 +129,19 @@ namespace SportsonBackendShell.Controllers
 
             if (response.Code == 200) return Ok();
             else return StatusCode(response.Code, response);
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMe()
+        {
+            var externalToken = User.FindFirstValue("external_token");
+            if (externalToken == null) return Unauthorized("Could not find token");
+
+            var currentUser = await _authenticationService.GetMe(externalToken);
+            if (currentUser == null) return StatusCode(502, "Could not retrieve user from upstream API");
+
+            return Ok(currentUser);
         }
     }
 }

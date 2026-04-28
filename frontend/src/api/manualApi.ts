@@ -1,23 +1,12 @@
-export const getManualsById = async (id: number) => {
-  const res = await fetch(`/api/manuals/${id}`, {
-    method: 'GET',
-  })
+import { apiClient } from '../helpers/apiClient'
+import type { BaseManual } from '../types/manualType'
 
-  if (!res.ok) {
-    throw new Error('No manuals found')
-  }
-
-  return res.json()
+export const getManualsById = (id: string): Promise<BaseManual> => {
+  return apiClient(`/manuals/${id}`)
 }
 
-export const getAllManuals = async (limit: number) => {
-  const res = await fetch(`/api/manuals?limit=${limit}`, {
-    method: 'GET',
+export const getAllManuals = ({ limit = 10 }: { limit?: number }): Promise<BaseManual[]> => {
+  return apiClient('/manuals', {
+    params: { limit },
   })
-
-  if (!res.ok) {
-    throw new Error('No manuals found')
-  }
-
-  return res.json()
 }

@@ -1,8 +1,10 @@
-import type { BaseManual } from '../../types/manualType'
-import { ItemList } from '../genericContent/ItemList'
-import { getAllManuals } from '../../api/manualApi'
 import { Link } from 'react-router'
-import { filterBySearch, filterByType } from '../../helpers/listFilters'
+import { useManuals } from '../../hooks/manualHooks'
+import type { BaseManual } from '../../types/manualType'
+import {
+  filterBySearch as matchesSearchQuery,
+  filterByType as matchesTypeFilter,
+} from '../../helpers/listFilters'
 
 type ManualListProps = {
   search?: string
@@ -10,6 +12,17 @@ type ManualListProps = {
 }
 
 export const ManualList = ({ search, filteredType }: ManualListProps) => {
+  const { data, isLoading, error } = useManuals({ limit: 50 })
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading manuals</div>
+  if (!data) return <div>Manuals not found</div>
+
+  const matchesManualFilters = (manual: BaseManual) =>
+    matchesSearchQuery(manual, search ?? '') && matchesTypeFilter(manual, filteredType ?? null)
+
+  const filteredManuals = matchesManualFilters ? data.filter(matchesManualFilters) : data
+
   return (
     <div className="w-full">
       <div className="flex items-center gap-4 px-4 py-2 text-xs font-medium text-gray-500 border-b border-gray-200">
@@ -18,28 +31,22 @@ export const ManualList = ({ search, filteredType }: ManualListProps) => {
         <span>Senast uppdaterad</span>
       </div>
       <ul className="divide-y divide-gray-200">
-        <ItemList<BaseManual>
-          fetchService={() => getAllManuals(50)}
-          filter={(manual: BaseManual) =>
-            filterBySearch(manual, search ?? '') && filterByType(manual, filteredType ?? null)
-          }
-          renderItem={(manual) => (
-            <li key={manual.id}>
-              <Link
-                to={`${manual.id}`}
-                className="flex items-center gap-4 px-4 py-4 transition-colors hover:bg-gray-50"
-              >
-                <img src="/images/bikeIcon.png" alt="" className="flex-shrink-0 w-9 h-9" />
+        {filteredManuals.map((manual: BaseManual) => (
+          <li key={manual.id}>
+            <Link
+              to={`${manual.id}`}
+              className="flex items-center gap-4 px-4 py-4 transition-colors hover:bg-gray-50"
+            >
+              <img src="/images/bikeIcon.png" alt="" className="flex-shrink-0 w-9 h-9" />
 
-                <span className="w-64 text-sm text-gray-800 truncate">{manual.title}</span>
+              <span className="w-64 text-sm text-gray-800 truncate">{manual.title}</span>
 
-                <span className="flex-shrink-0 text-sm text-gray-500">
-                  {String(manual.resources[0].createdAt).substring(0, 10)}
-                </span>
-              </Link>
-            </li>
-          )}
-        />
+              <span className="flex-shrink-0 text-sm text-gray-500">
+                {String(manual.resources[0].createdAt).substring(0, 10)}
+              </span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   )
