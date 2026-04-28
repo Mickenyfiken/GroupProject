@@ -22,15 +22,12 @@ builder.Configuration
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-if (!env.IsDevelopment()) // Required to build the database locally
+var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+if (!string.IsNullOrWhiteSpace(keyVaultUri))
 {
-    var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-    if (!string.IsNullOrWhiteSpace(keyVaultUri))
-    {
-        builder.Configuration.AddAzureKeyVault(
-            new Uri(keyVaultUri),
-            new DefaultAzureCredential());
-    }
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(keyVaultUri),
+        new DefaultAzureCredential());
 }
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
