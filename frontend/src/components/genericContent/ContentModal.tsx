@@ -15,7 +15,7 @@ export const ContentModal = ({
           <div className="p-6 overflow-y-auto md:p-14 max-md:h-[70vh] md:aspect-[4/3]">
             {children}
             <button
-              className="absolute top-0 right-0 flex justify-center w-10 h-10 mt-5 mr-5"
+              className="bg-surface-yellow rounded-full absolute top-0 right-0 flex justify-center w-10 h-10 mt-5 mr-5"
               onClick={onClose}
               title="Close"
             >

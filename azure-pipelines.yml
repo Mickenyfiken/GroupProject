@@ -63,6 +63,7 @@ stages:
     parameters:
       azureSubscription: sportson-connection
       backendAppName: $(BACKEND_APP_NAME_PROD)
+      backendAppSettings: '-ConnectionStrings__DefaultConnection "$(CONNECTION_STRING_PROD)"'
       backendArtifactName: backend
       backendAppType: $(BACKEND_APP_TYPE)
       branch: main

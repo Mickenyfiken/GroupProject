@@ -29,7 +29,7 @@ const ManualContent = ({ data }: { data: BaseManual }) => {
         {files.length > 0 && (
           <div className="flex flex-col gap-4 mt-8">
             {files.map((r) => (
-              <PDFViewer key={r.id} pdfURL={`/TempPdfs/SportsonManual${r.id}.pdf`} />
+              <PDFViewer key={r.id} pdfURL={`/TempPdfs/SportsonManual${r.manualId}.pdf`} />
             ))}
           </div>
         )}

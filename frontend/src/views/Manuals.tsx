@@ -10,15 +10,20 @@ const Manuals = () => {
 
   return (
     <div>
-      <h1>Manuals</h1>
-      <SearchField value={searchTerm} onChange={setSearchTerm} placeholder="Sök manualer..." />
-      <select
-        onChange={(e) => setFilteredManuals(e.target.value === '' ? null : Number(e.target.value))}
-      >
-        <option value="">Alla typer</option>
-        <option value={ManualResourceType.File}>Filer</option>
-        <option value={ManualResourceType.Video}>Video</option>
-      </select>
+      <div id="searchRow" className="flex flex-row items-center gap-4 pl-8">
+        <h3 className="w-48 m-0">ALLA MANUALER</h3>
+        <SearchField value={searchTerm} onChange={setSearchTerm} placeholder="Sök manualer..." />
+        <select
+          className="w-32"
+          onChange={(e) =>
+            setFilteredManuals(e.target.value === '' ? null : Number(e.target.value))
+          }
+        >
+          <option value="">Alla resurser</option>
+          <option value={ManualResourceType.File}>Filer</option>
+          <option value={ManualResourceType.Video}>Video</option>
+        </select>
+      </div>
       <ManualList search={searchTerm} filteredType={filteredManuals} />
     </div>
   )

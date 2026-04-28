@@ -12,7 +12,7 @@ type ManualListProps = {
 }
 
 export const ManualList = ({ search, filteredType }: ManualListProps) => {
-  const { data, isLoading, error } = useManuals({ limit: 25 })
+  const { data, isLoading, error } = useManuals({ limit: 50 })
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error loading manuals</div>

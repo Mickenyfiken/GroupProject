@@ -3,6 +3,7 @@ parameters:
   appType: ''
   artifactName: ''
   azureSubscription: ''
+  appSettings: ''
 
 steps:
   - download: current
@@ -15,3 +16,4 @@ steps:
       appType: ${{ parameters.appType }}
       appName: ${{ parameters.appName }}
       package: $(Pipeline.Workspace)/${{ parameters.artifactName }}/**/*.zip
+      appSettings: ${{ parameters.appSettings }}
