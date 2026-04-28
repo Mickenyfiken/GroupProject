@@ -22,25 +22,20 @@ builder.Configuration
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-if (!string.IsNullOrWhiteSpace(keyVaultUri))
+if (!env.IsDevelopment()) // Required to build the database locally
 {
-    builder.Configuration.AddAzureKeyVault(
-        new Uri(keyVaultUri),
-        new DefaultAzureCredential());
+    var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+    if (!string.IsNullOrWhiteSpace(keyVaultUri))
+    {
+        builder.Configuration.AddAzureKeyVault(
+            new Uri(keyVaultUri),
+            new DefaultAzureCredential());
+    }
 }
-// if (!env.IsDevelopment())
-// {
-//     var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
-//     if (!string.IsNullOrWhiteSpace(keyVaultUri))
-//     {
-//         builder.Configuration.AddAzureKeyVault(
-//             new Uri(keyVaultUri),
-//             new DefaultAzureCredential());
-//     }
-// }
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+Console.WriteLine(connectionString);
 
 if (string.IsNullOrWhiteSpace(connectionString))
 {
@@ -86,9 +81,9 @@ var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<SportsonContext>();
 
-if (app.Environment.IsDevelopment()) await SeedData.SeedAsync(db);
+await db.Database.MigrateAsync();
 
-if (!app.Environment.IsDevelopment()) db.Database.Migrate();
+if (app.Environment.IsDevelopment()) await SeedData.SeedAsync(db);
 
 
 app.UseRouting();
