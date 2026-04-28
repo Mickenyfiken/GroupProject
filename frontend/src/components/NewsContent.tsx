@@ -25,8 +25,6 @@ const NewsContent = ({
     adjacentArticles: { prevArticle, nextArticle },
   } = data!
 
-  console.log(data)
-
   return (
     <>
       <div

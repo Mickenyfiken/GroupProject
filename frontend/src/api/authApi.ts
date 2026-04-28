@@ -2,26 +2,26 @@ import { apiClient } from '../helpers/apiClient'
 import type { TLoginUser } from '../types/userTypes'
 
 export const login = (user: TLoginUser) => {
-  return apiClient('/login', {
+  return apiClient('/auth/login', {
     method: 'POST',
     body: JSON.stringify(user),
   })
 }
 
 export const fetchMe = () => {
-  return apiClient('/authentication/me', {
+  return apiClient('/auth/me', {
     method: 'GET',
   })
 }
 
 export const logOut = () => {
-  return apiClient('/logout', {
+  return apiClient('/auth/logout', {
     method: 'POST',
   })
 }
 
 export const refreshAccessToken = () => {
-  return apiClient('/refresh-jwt', {
+  return apiClient('/auth/refresh-jwt', {
     method: 'POST',
   })
 }
