@@ -1,6 +1,7 @@
 parameters:
   azureSubscription: ''
   backendAppName: ''
+  backendAppSettings: ''
   backendArtifactName: ''
   backendAppType: ''
   branch: ''
@@ -26,6 +27,7 @@ stages:
                 - template: deploy-backend.yml
                   parameters:
                     appName: ${{ parameters.backendAppName }}
+                    appSettings: ${{ parameters.backendAppSettings }}
                     artifactName: ${{ parameters.backendArtifactName }}
                     appType: ${{ parameters.backendAppType }}
                     azureSubscription: ${{ parameters.azureSubscription }}
