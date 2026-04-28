@@ -58,6 +58,7 @@ stages:
       frontendArtifactName: frontend
       frontendToken: $(SWA_DEPLOYMENT_TOKEN)
       stageName: Deploy_Dev
+      viteApiTarget: $(VITE_API_TARGET)
 
   - template: .azure-pipelines/templates/deploy-stage.yml
     parameters:

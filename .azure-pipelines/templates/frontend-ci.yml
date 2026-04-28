@@ -1,6 +1,7 @@
 parameters:
   frontendPath: ''
   nodeVersion: ''
+  viteApiTarget: ''
 
 steps:
   - task: NodeTool@0
@@ -43,7 +44,7 @@ steps:
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run build
     env:
-      VITE_API_TARGET: $(VITE_API_TARGET)
+      VITE_API_TARGET: ${{ parameters.viteApiTarget }}
 
   - task: PublishPipelineArtifact@1
     displayName: Publish frontend artifact
