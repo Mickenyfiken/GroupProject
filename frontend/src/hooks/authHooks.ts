@@ -1,8 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
-import { fetchMe, logOut } from '../api/authApi'
+import { fetchMe, logOut, refreshAccessToken } from '../api/authApi'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { refreshAccessToken } from '../api/tokenApi'
 
 export const useAuth = () => {
   return useQuery({

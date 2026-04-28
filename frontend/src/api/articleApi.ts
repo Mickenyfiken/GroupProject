@@ -1,29 +1,12 @@
+import { apiClient } from '../helpers/apiClient'
 import type { NewsArticle } from '../types/NewsType'
 
-export const getArticleById = async (id: string) => {
-  const response = await fetch(`/api/news/${id}`, {
-    credentials: 'include',
-  })
-
-  if (!(await response).ok) {
-    const errorText = await response.text()
-    throw new Error(errorText)
-  }
-
-  const data = await response.json()
-
-  return data
+export const getArticleById = (id: string): Promise<NewsArticle> => {
+  return apiClient(`/news/${id}`)
 }
 
-export const getArticles = async ({ limit = 10 }: { limit?: number }): Promise<NewsArticle[]> => {
-  const response = await fetch(`/api/news?limit=${limit}`, {
-    credentials: 'include',
+export const getArticles = ({ limit = 10 }: { limit?: number }): Promise<NewsArticle[]> => {
+  return apiClient('/news', {
+    params: { limit },
   })
-
-  if (!(await response).ok) {
-    const errorText = await response.text()
-    throw new Error(errorText)
-  }
-
-  return await response.json()
 }

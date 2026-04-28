@@ -1,25 +1,25 @@
-import type { NewsSummary } from '../../types/NewsType'
-import NewsCard from './NewsCard'
-import NewsListService from '../../api/newsListService'
-import { Link } from 'react-router'
-import { ItemList } from '../genericContent/ItemList'
 import type { Location } from 'react-router'
+import { Link } from 'react-router'
+import { useArticles } from '../../hooks/articleHooks'
+import type { NewsArticle } from '../../types/NewsType'
+import NewsCard from './NewsCard'
 
 const NewsList = ({ location }: { location: Location }) => {
-  return (
-    <ItemList<NewsSummary>
-      fetchService={NewsListService}
-      renderItem={(item) => (
-        <Link
-          className="w-fit"
-          key={item.id}
-          to={`/nyheter/${item.id}/${item.slug}`}
-          state={{ backgroundLocation: location }}
-        >
-          <NewsCard {...item} />
-        </Link>
-      )}
-    />
-  )
+  const { data, isLoading, error } = useArticles({ limit: 25 })
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading article</div>
+  if (!data) return <div>Article not found</div>
+
+  return data.map((newsArticle: NewsArticle) => (
+    <Link
+      className="w-fit"
+      key={newsArticle.id}
+      to={`/nyheter/${newsArticle.id}/${newsArticle.slug}`}
+      state={{ backgroundLocation: location }}
+    >
+      <NewsCard {...newsArticle} />
+    </Link>
+  ))
 }
 export default NewsList
