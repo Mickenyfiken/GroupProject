@@ -13,10 +13,10 @@ const NewsList = ({ location }: { location: Location }) => {
 
   return data.map((newsArticle: NewsArticle) => (
     <Link
-      className="w-fit"
       key={newsArticle.id}
       to={`/nyheter/${newsArticle.id}/${newsArticle.slug}`}
       state={{ backgroundLocation: location }}
+      className="block w-fit"
     >
       <NewsCard {...newsArticle} />
     </Link>

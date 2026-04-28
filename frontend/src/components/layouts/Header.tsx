@@ -11,27 +11,20 @@ const Header = () => {
 
   const { mutate: logoutMutation } = useMutation({
     mutationFn: logOut,
-    // onSuccess: () => {
-    //   queryClient.clear()
-    //   navigate('/login')
-    // },
+    onSuccess: () => {
+      queryClient.clear()
+      navigate('/login')
+    },
   })
-
-  const handleLogOut = async () => {
-    await logoutMutation()
-    queryClient.clear()
-    navigate('/login')
-  }
 
   return (
     <header className="sticky top-0 flex items-center justify-end gap-2 p-2">
-      Header
       {warningShown && (
         <p className="text-sm text-red-500">
           Due to inactivity you are being logged out in {countdown} sec
         </p>
       )}
-      <Button variant="ghost" className="px-2 py-1 text-sm" onClick={() => handleLogOut()}>
+      <Button variant="ghost" className="px-2 py-1 text-sm" onClick={() => logoutMutation()}>
         Logga ut
       </Button>
     </header>
