@@ -1,0 +1,19 @@
+parameters:
+  appName: ''
+  appType: ''
+  artifactName: ''
+  azureSubscription: ''
+  appSettings: ''
+
+steps:
+  - download: current
+    artifact: ${{ parameters.artifactName }}
+
+  - task: AzureWebApp@1
+    displayName: Deploy backend to Azure App Service
+    inputs:
+      azureSubscription: ${{ parameters.azureSubscription }}
+      appType: ${{ parameters.appType }}
+      appName: ${{ parameters.appName }}
+      package: $(Pipeline.Workspace)/${{ parameters.artifactName }}/**/*.zip
+      appSettings: ${{ parameters.appSettings }}

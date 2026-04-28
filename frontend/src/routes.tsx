@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, redirect } from 'react-router'
 import App from './App'
 import NewsModal from './components/news/NewsModal'
 import Dashboard from './views/Dashboard'
@@ -13,41 +13,40 @@ import Ordercentral from './views/Ordercentral'
 import Leverantorer from './views/Leverantorer'
 import Kontakter from './views/Kontakter'
 import Support from './views/Support'
+import { QueryClient } from '@tanstack/react-query'
+import { fetchMe } from './api/authApi'
+import ManualModal from './components/manuals/ManualModal'
 
-// const queryClient = new QueryClient()
+const queryClient = new QueryClient()
 
-// const authLoader = async () => {
-//   try {
-//     await queryClient.ensureQueryData({
-//       queryKey: ['me'],
-//       queryFn: fetchMe,
-//     })
+const authLoader = async () => {
+  try {
+    await queryClient.ensureQueryData({
+      queryKey: ['me'],
+      queryFn: fetchMe,
+    })
 
-//     return null
-//   } catch {
-//     return redirect('/login')
-//   }
-// }
+    return null
+  } catch {
+    return redirect('/login')
+  }
+}
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    // loader: authLoader, // Protects all child routes by checking for authentication
+    loader: authLoader, // Protects all child routes by checking for authentication
     HydrateFallback: () => <p>Loading...</p>,
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <Dashboard /> },
       {
-        path: '/',
-        element: <Dashboard />,
-        children: [
-          {
-            path: 'nyheter/:id/:slug',
-            element: <NewsModal />,
-          },
-        ],
+        path: '/nyheter/:id/:slug',
+        element: <NewsModal />,
       },
-      { path: '/manualer', element: <Manuals /> },
+      { path: '/butiksservice', element: <Manuals /> },
+      { path: '/butiksservice/:id', element: <ManualModal /> },
       { path: '/nyheter', element: <Nyheter /> },
       { path: '/kampanjer', element: <Kampanjer /> },
       { path: '/butiksservice', element: <Butiksservice /> },

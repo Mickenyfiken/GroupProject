@@ -1,6 +1,6 @@
 export const refreshAccessToken = async () => {
   try {
-    const result = await fetch('/api/login/refresh-jwt', {
+    const result = await fetch(`/api/login/refresh-jwt`, {
       method: 'POST',
       credentials: 'include',
     })

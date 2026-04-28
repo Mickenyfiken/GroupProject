@@ -1,5 +1,5 @@
 import { formatDate } from '../../helpers/formatDate'
-import type { NewsArticle, Tag } from '../../types/NewsType'
+import type { NewsSummary, Tag } from '../../types/NewsType'
 import Pill from '../ui/Pill'
 
 const NewsCard = ({
@@ -10,7 +10,7 @@ const NewsCard = ({
   body,
   author,
   createdAt,
-}: NewsArticle) => {
+}: NewsSummary) => {
   return (
     <div className="flex flex-col max-w-3xl p-4 bg-white rounded-lg shadow-md h-60 just">
       <div className="flex flex-row flex-wrap items-center text-base text-black/50 font-family-FSE-Text">
@@ -26,7 +26,7 @@ const NewsCard = ({
       <h2 className="mt-2 text-base font-bold text-article-title">{title}</h2>
       <div className="flex flex-row flex-1 h-5 gap-2 mt-2 text-sm text-gray-700">
         <p className="text-sm text-gray-700 omt-2 line-clamp-4">
-          <div
+          <span
             className="mt-8
                   [&_p]:mb-4
                   [&_p]:leading-relaxed

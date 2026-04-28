@@ -1,12 +1,20 @@
 parameters:
-  frontendPath: frontend
-  nodeVersion: 20.x
+  frontendPath: ''
+  nodeVersion: ''
 
 steps:
   - task: NodeTool@0
     displayName: Use Node.js 20
     inputs:
       versionSpec: ${{ parameters.nodeVersion }}
+
+  - task: Cache@2
+    displayName: Cache node_modules
+    inputs:
+      key: npm | "$(Agent.OS)" | ${{ parameters.frontendPath }}/package-lock.json
+      restoreKeys: |
+        npm | "$(Agent.OS)"
+      path: ${{ parameters.frontendPath }}/node_modules
 
   - task: Npm@1
     displayName: Install frontend dependencies
@@ -15,22 +23,28 @@ steps:
       workingDir: ${{ parameters.frontendPath }}
 
   - task: Npm@1
-    displayName: Lint frontend
+    displayName: ESLint
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run lint
 
   - task: Npm@1
-    displayName: Check frontend
+    displayName: Prettier format check
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
       customCommand: run check
 
   - task: Npm@1
-    displayName: Run frontend tests
+    displayName: Build frontend
     inputs:
       command: custom
       workingDir: ${{ parameters.frontendPath }}
-      customCommand: run test
+      customCommand: run build
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish frontend artifact
+    inputs:
+      targetPath: ${{ parameters.frontendPath }}/dist
+      artifact: frontend

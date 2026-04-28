@@ -1,4 +1,4 @@
-using Azure.Identity;
+﻿using Azure.Identity;
 using backend.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,8 +14,13 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text;
 
-
 var builder = WebApplication.CreateBuilder(args);
+var env = builder.Environment;
+
+builder.Configuration
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
 
 var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
 if (!string.IsNullOrWhiteSpace(keyVaultUri))
@@ -24,12 +29,28 @@ if (!string.IsNullOrWhiteSpace(keyVaultUri))
         new Uri(keyVaultUri),
         new DefaultAzureCredential());
 }
+// if (!env.IsDevelopment())
+// {
+//     var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+//     if (!string.IsNullOrWhiteSpace(keyVaultUri))
+//     {
+//         builder.Configuration.AddAzureKeyVault(
+//             new Uri(keyVaultUri),
+//             new DefaultAzureCredential());
+//     }
+// }
 
-builder.Services.AddControllers();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'DefaultConnection' is missing.");
+}
 
 builder.Services.AddDbContext<SportsonContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Development")));
+    options.UseSqlServer(connectionString));
 
+builder.Services.AddControllers();
 builder.Services.AddCors(builder.Configuration);
 builder.Services.AddSwaggerGen();
 
@@ -61,20 +82,24 @@ builder.Services.AddJwtAuthentication(builder.Configuration, signingKey);
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var context =
-    scope.ServiceProvider.GetRequiredService<SportsonContext>();
-    await SeedData.SeedAsync(context);
-}
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<SportsonContext>();
+
+if (app.Environment.IsDevelopment()) await SeedData.SeedAsync(db);
+
+if (!app.Environment.IsDevelopment()) db.Database.Migrate();
+
 
 app.UseRouting();
 app.UseCors("ReactPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.MapControllers();
+
 app.Run();
+

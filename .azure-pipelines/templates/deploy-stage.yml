@@ -1,0 +1,46 @@
+parameters:
+  azureSubscription: ''
+  backendAppName: ''
+  backendAppSettings: ''
+  backendArtifactName: ''
+  backendAppType: ''
+  branch: ''
+  environment: ''
+  frontendAppName: ''
+  frontendArtifactName: ''
+  frontendToken: ''
+  stageName: ''
+
+stages:
+  - stage: ${{ parameters.stageName }}
+    condition: eq(variables['Build.SourceBranchName'], '${{ parameters.branch }}')
+    dependsOn: CI
+
+    jobs:
+      - deployment: deploy_backend
+        displayName: Deploy Backend
+        environment: ${{ parameters.environment }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-backend.yml
+                  parameters:
+                    appName: ${{ parameters.backendAppName }}
+                    appSettings: ${{ parameters.backendAppSettings }}
+                    artifactName: ${{ parameters.backendArtifactName }}
+                    appType: ${{ parameters.backendAppType }}
+                    azureSubscription: ${{ parameters.azureSubscription }}
+
+      - deployment: deploy_frontend
+        displayName: Deploy Frontend
+        environment: ${{ parameters.environment }}
+        dependsOn: deploy_backend
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-frontend.yml
+                  parameters:
+                    artifactName: ${{ parameters.frontendArtifactName }}
+                    deploymentToken: ${{ parameters.frontendToken }}

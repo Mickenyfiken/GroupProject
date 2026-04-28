@@ -10,6 +10,7 @@ public class ManualProfile : Profile
     public ManualProfile()
     {
         CreateMap<Manual, ManualDto>();
-        CreateMap<ManualResource, ManualResourceDto>();
+        CreateMap<ManualResource, ManualResourceDto>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt.ToString("o")));
     }
 }
