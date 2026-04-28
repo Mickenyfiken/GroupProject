@@ -1,6 +1,10 @@
 import { Link } from 'react-router'
 import { useManuals } from '../../hooks/manualHooks'
 import type { BaseManual } from '../../types/manualType'
+import {
+  filterBySearch as matchesSearchQuery,
+  filterByType as matchesTypeFilter,
+} from '../../helpers/listFilters'
 
 type ManualListProps = {
   search?: string
@@ -14,6 +18,11 @@ export const ManualList = ({ search, filteredType }: ManualListProps) => {
   if (error) return <div>Error loading manuals</div>
   if (!data) return <div>Manuals not found</div>
 
+  const matchesManualFilters = (manual: BaseManual) =>
+    matchesSearchQuery(manual, search ?? '') && matchesTypeFilter(manual, filteredType ?? null)
+
+  const filteredManuals = matchesManualFilters ? data.filter(matchesManualFilters) : data
+
   return (
     <div className="w-full">
       <div className="flex items-center gap-4 px-4 py-2 text-xs font-medium text-gray-500 border-b border-gray-200">
@@ -22,7 +31,7 @@ export const ManualList = ({ search, filteredType }: ManualListProps) => {
         <span>Senast uppdaterad</span>
       </div>
       <ul className="divide-y divide-gray-200">
-        {data.map((manual: BaseManual) => (
+        {filteredManuals.map((manual: BaseManual) => (
           <li key={manual.id}>
             <Link
               to={`${manual.id}`}

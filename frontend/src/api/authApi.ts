@@ -21,7 +21,7 @@ export const logOut = () => {
 }
 
 export const refreshAccessToken = () => {
-  return apiClient('/login/refresh-jwt', {
+  return apiClient('/refresh-jwt', {
     method: 'POST',
   })
 }

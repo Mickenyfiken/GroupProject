@@ -1,5 +1,6 @@
-const BASE_URL =
-  import.meta.env.VITE_API_URL || 'https://sportson-backend-dev.azurewebsites.net/api'
+const BASE_URL = 'http://localhost:5277'
+// const BASE_URL =
+//   import.meta.env.VITE_API_URL || 'https://sportson-backend-dev.azurewebsites.net/api'
 
 type Params = Record<string, string | number | undefined>
 type ApiOptions = RequestInit & {
@@ -11,7 +12,7 @@ export const apiClient = async <T = unknown>(url: string, options: ApiOptions = 
 
   const query = getQuery(params)
 
-  const res = await fetchResponse(`${url}${query}`, fetchOptions)
+  const res = await fetchResponse(`/api${url}${query}`, fetchOptions)
 
   if (!res.ok) {
     const errorText = await res.text()
