@@ -32,8 +32,6 @@ if (!string.IsNullOrWhiteSpace(keyVaultUri))
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-Console.WriteLine(connectionString);
-
 if (string.IsNullOrWhiteSpace(connectionString))
 {
     throw new InvalidOperationException("Connection string 'DefaultConnection' is missing.");
