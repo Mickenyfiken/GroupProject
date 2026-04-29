@@ -18,7 +18,7 @@ const NewsModal = () => {
   }
 
   return (
-    <ContentModal onClose={() => navigate('/')}>
+    <ContentModal onClose={() => navigate(-1)}>
       <NewsContent data={data} modalState={modalState} />
     </ContentModal>
   )

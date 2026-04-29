@@ -18,18 +18,18 @@ const ManualContent = ({ data }: { data: BaseManual }) => {
 
         {description && <p className="mt-8 leading-relaxed text-black/65">{description}</p>}
 
-        {videos.length > 0 && (
-          <div className="flex flex-col gap-4 mt-8">
-            {videos.map((r) => (
-              <YouTubeEmbed key={r.id} youtubeURL={r.url!} />
-            ))}
-          </div>
-        )}
-
         {files.length > 0 && (
           <div className="flex flex-col gap-4 mt-8">
             {files.map((r) => (
               <PDFViewer key={r.id} pdfURL={`/TempPdfs/SportsonManual${r.manualId}.pdf`} />
+            ))}
+          </div>
+        )}
+
+        {videos.length > 0 && (
+          <div className="flex flex-col gap-4 mt-8">
+            {videos.map((r) => (
+              <YouTubeEmbed key={r.id} youtubeURL={r.url!} />
             ))}
           </div>
         )}

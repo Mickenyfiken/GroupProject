@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import sportsonLogo from '../assets/sportson-logo.svg'
 import clsx from 'clsx'
 
-const stores = ['Sportson Göteborg', 'Sportson Stockholm', 'Sportson Malmö', 'Sportson Uppsala']
+// const stores = ['Sportson Göteborg', 'Sportson Stockholm', 'Sportson Malmö', 'Sportson Uppsala']
 
 const links = [
   {
@@ -21,20 +21,20 @@ const links = [
       </svg>
     ),
   },
-  {
-    name: 'Kampanjer',
-    href: '/kampanjer',
-    icon: (
-      <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-        />
-      </svg>
-    ),
-  },
+  // {
+  //   name: 'Kampanjer',
+  //   href: '/kampanjer',
+  //   icon: (
+  //     <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+  //       />
+  //     </svg>
+  //   ),
+  // },
   {
     name: 'Butiksservice',
     href: '/butiksservice',
@@ -49,53 +49,53 @@ const links = [
       </svg>
     ),
   },
-  {
-    name: 'Hantera Order',
-    href: '/ordercentral',
-    icon: (
-      <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: 'Leverantörer',
-    href: '/leverantorer',
-    icon: (
-      <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: 'Kontakter',
-    href: '/kontakter',
-    icon: (
-      <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-        />
-      </svg>
-    ),
-  },
+  // {
+  //   name: 'Hantera Order',
+  //   href: '/ordercentral',
+  //   icon: (
+  //     <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+  //       />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   name: 'Leverantörer',
+  //   href: '/leverantorer',
+  //   icon: (
+  //     <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+  //       />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   name: 'Kontakter',
+  //   href: '/kontakter',
+  //   icon: (
+  //     <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+  //       />
+  //     </svg>
+  //   ),
+  // },
 ]
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true)
-  const [storeOpen, setStoreOpen] = useState(false)
+  // const [storeOpen, setStoreOpen] = useState(false)
 
   return (
     <>
@@ -112,9 +112,9 @@ const Sidebar = () => {
               isOpen ? 'px-4 justify-between' : 'flex-col gap-2 justify-center',
             )}
           >
-            <div className={clsx('overflow-hidden', !isOpen && 'w-[30px]')}>
+            <Link to="/" className={clsx('overflow-hidden', !isOpen && 'w-[30px]')}>
               <img src={sportsonLogo} alt="Sportson" className="w-auto h-8" />
-            </div>
+            </Link>
             <button
               onClick={() => setIsOpen((prev) => !prev)}
               className="p-1 rounded text-gray-400 hover:bg-gray-700 hover:text-white transition-colors shrink-0"
@@ -163,7 +163,7 @@ const Sidebar = () => {
               </NavLink>
             ))}
           </nav>
-
+          {/* 
           <div
             className={clsx(
               'px-3 pt-3 pb-3',
@@ -211,7 +211,7 @@ const Sidebar = () => {
             >
               HK-HJÄLP
             </NavLink>
-          </div>
+          </div> */}
         </div>
       </aside>
     </>
