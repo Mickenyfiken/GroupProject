@@ -98,88 +98,123 @@ const Sidebar = () => {
   const [storeOpen, setStoreOpen] = useState(false)
 
   return (
-    <aside
-      className={clsx(
-        'bg-gray-900 min-w-[60px]  row-span-2 sticky top-0 h-screen text-white transition-all duration-300',
-        isOpen && 'w-56',
-      )}
-      onMouseOver={() => setIsOpen(true)}
-      onMouseOut={() => setIsOpen(false)}
-    >
-      <div className={clsx(!isOpen && 'w-0', 'flex-col shrink-0  shadow-xl', !isOpen && 'hidden')}>
-        <div
-          className={clsx('px-4 py-4', isOpen && 'border-b border-gray-700', !isOpen && 'hidden')}
-        >
-          <img src={sportsonLogo} alt="Sportson" className="w-auto h-8" />
-        </div>
+    <>
+      <aside
+        className={clsx(
+          'bg-gray-900 min-w-[60px] row-span-2 sticky top-0 h-screen text-white transition-all duration-300',
+          isOpen && 'w-56',
+        )}
+      >
+        <div className="flex flex-col h-full shadow-xl">
+          <div
+            className={clsx(
+              'py-3 border-b border-gray-700 flex items-center',
+              isOpen ? 'px-4 justify-between' : 'flex-col gap-2 justify-center',
+            )}
+          >
+            <div className={clsx('overflow-hidden', !isOpen && 'w-[30px]')}>
+              <img src={sportsonLogo} alt="Sportson" className="w-auto h-8" />
+            </div>
+            <button
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="p-1 rounded text-gray-400 hover:bg-gray-700 hover:text-white transition-colors shrink-0"
+            >
+              <svg
+                className={clsx(
+                  'w-4 h-4 transition-transform duration-300',
+                  !isOpen && 'rotate-180',
+                )}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          </div>
 
-        <nav className="flex flex-col flex-1 gap-1 px-3 py-4 overflow-y-auto">
-          {links.map((link) => (
+          <nav className="flex flex-col flex-1 gap-1 px-2 py-4 overflow-y-auto">
+            {links.map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.href}
+                className={({ isActive }) =>
+                  clsx(
+                    'flex items-center py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap',
+                    isOpen ? 'gap-3 px-3' : 'justify-center px-2',
+                    isActive ? 'bg-surface-yellow text-gray-900' : 'text-white hover:bg-gray-700',
+                  )
+                }
+              >
+                {link.icon}
+                <span
+                  className={clsx(
+                    'overflow-hidden whitespace-nowrap transition-opacity',
+                    isOpen ? 'opacity-100 duration-200 delay-150' : 'opacity-0 duration-100 w-0',
+                  )}
+                >
+                  {link.name}
+                </span>
+              </NavLink>
+            ))}
+          </nav>
+
+          <div
+            className={clsx(
+              'px-3 pt-3 pb-3',
+              isOpen && 'border-t border-gray-700',
+              !isOpen && 'hidden',
+            )}
+          >
+            <button
+              onClick={() => setStoreOpen((prev) => !prev)}
+              className="flex items-center justify-between w-full px-3 py-2 text-sm font-bold text-gray-300 transition-colors rounded-lg hover:bg-gray-700"
+            >
+              <span className="whitespace-nowrap">MIN BUTIK</span>
+              <svg
+                className={`w-4 h-4 transition-transform ${storeOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {storeOpen && (
+              <ul className="mt-1 ml-2 flex flex-col gap-0.5">
+                {stores.map((store) => (
+                  <li key={store}>
+                    <button className="w-full text-left px-3 py-1.5 rounded text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors whitespace-nowrap">
+                      {store}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div className={clsx('px-3 pb-4', !isOpen && 'hidden')}>
             <NavLink
-              key={link.name}
-              to={link.href}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
-                  isActive ? 'bg-surface-yellow text-gray-900' : 'text-white hover:bg-gray-700'
-                }`
-              }
+              to="/support"
+              className="block px-4 py-2 text-sm font-bold text-center text-gray-900 transition-all rounded-lg bg-surface-yellow hover:brightness-110 whitespace-nowrap"
             >
-              {link.icon}
-              {link.name}
+              HK-HJÄLP
             </NavLink>
-          ))}
-        </nav>
-
-        <div
-          className={clsx(
-            'px-3 pt-3 pb-3',
-            isOpen && 'border-t border-gray-700',
-            !isOpen && 'hidden',
-          )}
-        >
-          <button
-            onClick={() => setStoreOpen((prev) => !prev)}
-            className="flex items-center justify-between w-full px-3 py-2 text-sm font-bold text-gray-300 transition-colors rounded-lg hover:bg-gray-700"
-          >
-            <span className="whitespace-nowrap">MIN BUTIK</span>
-            <svg
-              className={`w-4 h-4 transition-transform ${storeOpen ? 'rotate-180' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-
-          {storeOpen && (
-            <ul className="mt-1 ml-2 flex flex-col gap-0.5">
-              {stores.map((store) => (
-                <li key={store}>
-                  <button className="w-full text-left px-3 py-1.5 rounded text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors whitespace-nowrap">
-                    {store}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
+          </div>
         </div>
-
-        <div className={clsx('px-3 pb-4', !isOpen && 'hidden')}>
-          <NavLink
-            to="/support"
-            className="block px-4 py-2 text-sm font-bold text-center text-gray-900 transition-all rounded-lg bg-surface-yellow hover:brightness-110 whitespace-nowrap"
-          >
-            HK-HJÄLP
-          </NavLink>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   )
 }
 
