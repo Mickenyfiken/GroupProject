@@ -1,10 +1,11 @@
+import { type BaseManual } from '../../types/manualType'
 import { Link } from 'react-router'
 import { useManuals } from '../../hooks/manualHooks'
-import type { BaseManual } from '../../types/manualType'
 import {
   filterBySearch as matchesSearchQuery,
   filterByType as matchesTypeFilter,
 } from '../../helpers/listFilters'
+import { usePdfTextMap } from '../../hooks/usePdfTextMap'
 
 type ManualListProps = {
   search?: string
@@ -13,13 +14,14 @@ type ManualListProps = {
 
 export const ManualList = ({ search, filteredType }: ManualListProps) => {
   const { data, isLoading, error } = useManuals({ limit: 50 })
+  const pdfTextMap = usePdfTextMap(data ?? [])
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error loading manuals</div>
   if (!data) return <div>Manuals not found</div>
-
   const matchesManualFilters = (manual: BaseManual) =>
-    matchesSearchQuery(manual, search ?? '') && matchesTypeFilter(manual, filteredType ?? null)
+    matchesSearchQuery(manual, search ?? '', pdfTextMap) &&
+    matchesTypeFilter(manual, filteredType ?? null)
 
   const filteredManuals = matchesManualFilters ? data.filter(matchesManualFilters) : data
 

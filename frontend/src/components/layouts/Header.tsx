@@ -18,7 +18,7 @@ const Header = () => {
   })
 
   return (
-    <header className="sticky top-0 flex items-center justify-end gap-2 p-2">
+    <header className="sticky top-0 flex justify-end items-center p-2 gap-2">
       {warningShown && (
         <p className="text-sm text-red-500">
           Due to inactivity you are being logged out in {countdown} sec

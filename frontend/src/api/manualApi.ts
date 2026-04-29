@@ -9,4 +9,11 @@ export const getAllManuals = ({ limit = 10 }: { limit?: number }): Promise<BaseM
   return apiClient('/manuals', {
     params: { limit },
   })
+
+  // if (!res.ok) {
+  //   const { mockManuals } = await import('./mockManuals')
+  //   return mockManuals.slice(0, limit)
+  // }
+
+  // return res.json()
 }
