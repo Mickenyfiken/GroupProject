@@ -1,6 +1,6 @@
 # Introduction
 
-[Title](https://github.com/Mickenyfiken/ReadmeImages/blob/main/SportsonImage/Sk%C3%A4rmbild%202026-05-04%20101140.png)
+![alt text](https://github.com/Mickenyfiken/ReadmeImages/blob/main/SportsonImage/Sk%C3%A4rmbild%202026-05-04%20101140.png)
 
 # Getting Started
 
