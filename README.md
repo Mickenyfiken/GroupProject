@@ -1,7 +1,17 @@
 # Introduction
+A group project with sportson.
 
+**Login Page**
 ![alt text](https://github.com/Mickenyfiken/ReadmeImages/blob/main/SportsonImage/Sk%C3%A4rmbild%202026-05-04%20101140.png)
 
+**News Page**
+![alt text](https://github.com/Mickenyfiken/ReadmeImages/blob/main/SportsonImage/Sk%C3%A4rmbild%202026-05-04%20101233.png)
+
+**News Modal**
+![alt text](https://github.com/Mickenyfiken/ReadmeImages/blob/main/SportsonImage/Sk%C3%A4rmbild%202026-05-04%20101259.png)
+
+**Manual Page**
+![alt text](https://github.com/Mickenyfiken/ReadmeImages/blob/main/SportsonImage/Sk%C3%A4rmbild%202026-05-04%20101318.png)
 # Getting Started
 
 ## 1. Install:
